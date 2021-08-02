@@ -27,12 +27,4 @@ urlpatterns = [
     path('user/add_dog/', views.add_dog, name='add_dog'),
     path('user/edit/', views.user_profile_edit ,name='edit'),
     path('user/register_competition/', views.add_competition, name='register_competition'),
-
-    """
-    NOT INCLUDED: 
-    UPLOAD,
-    MAILFORM,
-    search 
-    explot
-    """
 ]

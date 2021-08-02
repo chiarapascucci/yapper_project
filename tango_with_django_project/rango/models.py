@@ -39,3 +39,30 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+"""
+Yapper models 
+"""
+
+class Dog:
+    pass
+
+class Sport:
+    pass
+
+class Competition:
+    pass
+
+class Breed:
+    pass
+
+class Participation:
+    pass
+
+class Award:
+    pass
+
+
+
+
