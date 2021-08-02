@@ -201,6 +201,9 @@ def add_competition(request):
 def user_profile(request):
     return render(request, 'rango/yapper/user_profile.html', {})
 
+def user_profile_edit(request):
+    return render(request, 'rango/yapper/user_profile_edit.html', {})
+
 def faq(request):
     return render(request, 'rango/yapper/faq.html', {})
 
