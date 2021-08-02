@@ -163,3 +163,46 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
     
     request.session['visits'] = visits
+
+
+
+"""
+ ====================== 
+ Yapper views 
+ ====================== 
+"""
+def breed_homepage:
+    return render(request, 'rango/yapper/breed_homepage.html', {})
+
+def breed_profile: 
+    return render(request, 'rango/yapper/breed_profile.html', {})
+
+def dog_profile:
+    return render(request, 'rango/yapper/dog_profile.html', {})
+
+def add_dog:
+    return render(request, 'rango/yapper/add_dog.html', {})
+
+def sports_homepage:
+    return render(request, 'rango/yapper/sports_homepage.html', {})
+
+def sports_profile:
+    return render(request, 'rango/yapper/sports_profile.html', {})
+
+def competition_homepage:
+    return render(request, 'rango/yapper/competition_homepage.html', {})
+
+def competition_profile:
+    return render(request, 'rango/yapper/competition_profile.html', {})
+
+def add_competition:
+    return render(request, 'rango/yapper/add_competition.html', {})
+
+def user_profile:
+    return render(request, 'rango/yapper/user_profile.html', {})
+
+def faq:
+    return render(request, 'rango/yapper/faq.html', {})
+
+
+
