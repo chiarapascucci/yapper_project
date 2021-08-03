@@ -60,6 +60,7 @@ class Sport(models.Model):
     description = models.TextField()
     breed_restricitons = models.TextField()
 
+    # Slug attributes
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -83,12 +84,21 @@ class Competition(models.Model):
     description = models.TextField()                            # Description about competition
     address = models.CharField(max_length=ADDRESS_MAX_LENGTH)   # Address of compititon
     location = models.CharField(max_length=100)                 # Google API information in String form
-    date = models.DateField                                     # Date object
+    date = models.DateField()                                   # Date object
     eventpage = models.URLField()                               # Url of event page if avaialble
+    isCompleted = models.BooleanField()                         # Boolean field for is completed or not 
 
     # Relationship attribute 
     sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
 
+    # Slug attributes
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Competition, self).save(*args, **kwargs)
+
+    # Verbose print
     def __str__(self):
         return self.name
 

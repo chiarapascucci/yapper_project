@@ -2,7 +2,29 @@
 {% load staticfiles %}
 
 {% block title_block %}
+{{competition.name}}
 {% endblock %}
 
 {% block body_block %}
+<!-- Title -->
+<h1>{{competition.name}}</h1>
+
+<div>
+    {{competition.description}}
+</div>
+
+<div>
+    Address: {{competition.address}}<br>
+    Date: {{competition.date}}<br>
+    Event page: {{competiton.eventpage}}<br>
+    Sport: {{competition.sport}}<br>
+</div>
+
+
+<!-- Add list of competing dogs -->
+<!-- Add list of rankings for dogs -->
+<!-- Add list of sports invovled? We're just doing on sport now.-->
+
+
+
 {% endblock %}

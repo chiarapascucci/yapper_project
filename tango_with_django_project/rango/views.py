@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from rango.models import Category, Page, Sport
+from rango.models import Category, Page, Sport, Competition, Participation, Award, Breed, Dog
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
 
@@ -142,7 +142,7 @@ def sports_homepage(request):
     # Context dictionary to input any external variables into the HTML template
     context_dict = {}
    
-    sports_list = Sport.objects.order_by('-name')[:5]
+    sports_list = Sport.objects.order_by('-name')
     context_dict['sports'] = sports_list
 
     return render(request, 'rango/yapper/sports_homepage.html', context_dict)
@@ -156,16 +156,41 @@ def sports_profile(request, sports_name_slug):
     try:
         sport = Sport.objects.get(slug=sports_name_slug)
         context_dict['sport'] = sport
+
+        # Get competitions of that sport
+        competition_list = Competition.objects.filter(sport=sport)
+        context_dict['competitions'] = competition_list
+
     except Sport.DoesNotExist:
         context_dict['sport'] = None
+        context_dict['competitions'] = None
 
     return render(request, 'rango/yapper/sports_profile.html', context_dict)
 
 def competition_homepage(request):
-    return render(request, 'rango/yapper/competition_homepage.html', {})
 
-def competition_profile(request):
-    return render(request, 'rango/yapper/competition_profile.html', {})
+    # Context dictionary to input any external variables into the HTML template
+    context_dict = {}
+   
+    competition_list = Competition.objects.order_by('-name')
+    context_dict['competitions'] = competition_list
+
+    return render(request, 'rango/yapper/competition_homepage.html', context_dict)
+
+
+def competition_profile(request, competition_name_slug):
+    
+    # Context dictionary to input any external variables into the HTML template
+    context_dict = {}
+
+    # Get the sport instance associated with the sport_name_slug
+    try:
+        competition = Competition.objects.get(slug=competition_name_slug)
+        context_dict['competition'] = competition
+    except Competition.DoesNotExist:
+        context_dict['competition'] = None
+
+    return render(request, 'rango/yapper/competition_profile.html', context_dict)
 
 def add_competition(request):
     return render(request, 'rango/yapper/add_competition.html', {})

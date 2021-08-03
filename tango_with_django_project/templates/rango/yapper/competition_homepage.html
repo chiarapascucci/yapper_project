@@ -2,7 +2,23 @@
 {% load staticfiles %}
 
 {% block title_block %}
+Competition homepage
 {% endblock %}
 
 {% block body_block %}
+<h1> 
+    Dog competition list:
+</h1>
+
+<div>
+    {% if competitions %} 
+        <ul>
+        {% for competition in competitions %}
+            <li> <a href="{% url 'rango:competition_name' competition.slug %}">{{ competition.name }}</a> </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no competitions present.</strong>
+    {% endif %}
+</div>
 {% endblock %}
