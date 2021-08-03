@@ -1,8 +1,29 @@
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 
+
+{% block greet_block %}
+    Any Questions?
+{% endblock %}
 {% block title_block %}
+    Frequently Asked Questions
 {% endblock %}
 
 {% block body_block %}
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+      <h1>You got questions?</h1>
+      <p class="lead">So do we<br> The answer to most is 42. For the rest there is Google</p>
+      <br>
+      <p class="lead">...We know it better than most</p>
+    </div>
+
+    <div >
+        <img id="meme" src="{% static 'images/meme.jpg' %}"   alt="meme"> 
+    </div>
+
+  </main><!-- /.container -->
+
 {% endblock %}
