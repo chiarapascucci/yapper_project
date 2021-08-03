@@ -52,13 +52,9 @@ class Sport(models.Model):
     NAME_MAX_LENGTH = 128
 
     # Model attributes 
-    name        = models.CharField(max_length=TITLE_MAX_LENGTH)
+    name        = models.CharField(max_length=NAME_MAX_LENGTH)
     description = models.TextField()
     breed_restricitons = models.TextField()
-
-
-
-
 
     def __str__(self):
         return self.title
