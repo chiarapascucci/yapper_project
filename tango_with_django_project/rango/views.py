@@ -188,7 +188,7 @@ def sports_homepage(request):
     # Context dictionary to input any external variables into the HTML template
     context_dict = {}
    
-    sports_list = Sport.objects.order_by('-name')[:5]
+    sports_list = Sport.objects.order_by('-name')
     context_dict['sports'] = sports_list
 
     return render(request, 'rango/yapper/sports_homepage.html', context_dict)
@@ -202,8 +202,14 @@ def sports_profile(request, sports_name_slug):
     try:
         sport = Sport.objects.get(slug=sports_name_slug)
         context_dict['sport'] = sport
+
+        # Get competitions of that sport
+        competition_list = Competition.objects.filter(sport=sport)
+        context_dict['competitions'] = competition_list
+
     except Sport.DoesNotExist:
         context_dict['sport'] = None
+        context_dict['competitions'] = None
 
     return render(request, 'rango/yapper/sports_profile.html', context_dict)
 
@@ -212,7 +218,7 @@ def competition_homepage(request):
     # Context dictionary to input any external variables into the HTML template
     context_dict = {}
    
-    competition_list = Competition.objects.order_by('-name')[:5]
+    competition_list = Competition.objects.order_by('-name')
     context_dict['competitions'] = competition_list
 
     return render(request, 'rango/yapper/competition_homepage.html', context_dict)
