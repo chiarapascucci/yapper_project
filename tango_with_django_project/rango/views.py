@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from rango.models import Category, Page
+from rango.models import Category, Page, Sport
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
 
@@ -184,10 +184,28 @@ def add_dog(request):
     return render(request, 'rango/yapper/add_dog.html', {})
 
 def sports_homepage(request):
-    return render(request, 'rango/yapper/sports_homepage.html', {})
+    
+    # Context dictionary to input any external variables into the HTML template
+    context_dict = {}
+   
+    sports_list = Sport.objects.order_by('-name')[:5]
+    context_dict['sports'] = sports_list
 
-def sports_profile(request):
-    return render(request, 'rango/yapper/sports_profile.html', {})
+    return render(request, 'rango/yapper/sports_homepage.html', context_dict)
+
+def sports_profile(request, sports_name_slug):
+
+    # Context dictionary to input any external variables into the HTML template
+    context_dict = {}
+
+    # Get the sport instance associated with the sport_name_slug
+    try:
+        sport = Sport.objects.get(slug=sports_name_slug)
+        context_dict['sport'] = sport
+    except Sport.DoesNotExist:
+        context_dict['sport'] = None
+
+    return render(request, 'rango/yapper/sports_profile.html', context_dict)
 
 def competition_homepage(request):
     return render(request, 'rango/yapper/competition_homepage.html', {})

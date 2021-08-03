@@ -2,7 +2,23 @@
 {% load staticfiles %}
 
 {% block title_block %}
+Sports homepage
 {% endblock %}
 
 {% block body_block %}
+<h1> 
+    Dog sports list:
+</h1>
+
+<div>
+    {% if sports %} 
+        <ul>
+        {% for sport in sports %}
+            <li> <a href="{% url 'rango:sports_name' sport.slug %}">{{ sport.name }}</a> </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no Sports present.</strong>
+    {% endif %}
+</div>
 {% endblock %}

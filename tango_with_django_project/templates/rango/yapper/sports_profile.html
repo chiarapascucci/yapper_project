@@ -2,7 +2,22 @@
 {% load staticfiles %}
 
 {% block title_block %}
+{{sport.name}}
 {% endblock %}
 
 {% block body_block %}
+<!-- Title -->
+<h1>{{sport.name}}</h1>
+
+<div>
+    {{sport.description}}
+</div>
+
+<div>
+    Breed restrictions: {{sport.breed_restricitons}}
+</div>
+
+<!-- Add competition list -->
+
+
 {% endblock %}
