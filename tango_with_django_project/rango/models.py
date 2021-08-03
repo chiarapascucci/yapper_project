@@ -45,22 +45,34 @@ class UserProfile(models.Model):
 Yapper models 
 """
 
-class Dog:
+class Dog(models.Model):
     pass
 
-class Sport:
+class Sport(models.Model):
+    NAME_MAX_LENGTH = 128
+
+    # Model attributes 
+    name        = models.CharField(max_length=TITLE_MAX_LENGTH)
+    description = models.TextField()
+    breed_restricitons = models.TextField()
+
+
+
+
+
+    def __str__(self):
+        return self.title
+
+class Competition(models.Model):
     pass
 
-class Competition:
+class Breed(models.Model):
     pass
 
-class Breed:
+class Participation(models.Model):
     pass
 
-class Participation:
-    pass
-
-class Award:
+class Award(models.Model):
     pass
 
 
