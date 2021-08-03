@@ -1,7 +1,45 @@
-{% extends 'rango/base-bootstrap.html' %}
+{% extends 'rango/base.html' %}
 {% load staticfiles %}
+
+
+<link  href="https://getbootstrap.com/docs/4.1/examples/jumbotron/" rel="stylesheet">
 
 {% block title_block %}
     Homepage
 {% endblock %}
 
+{% block greet_block %}
+    Welcome to Yapper
+{% endblock %}
+
+{% block body_block%}
+
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+      <div class="col-md-4">
+        <h2>Top Breeds</h2>
+        <p>this will be a dynamically populated list of most popular breeds </p>
+        
+      </div>
+      <div class="col-md-4">
+        <h2>Top Sports</h2>
+        <p>this will be a dynamically populated list of most popular sposrts  </p>
+      </div>
+      <div class="col-md-4">
+        {% if user.is_authenticated %}
+            <h2>Your Dogs</h2>
+            <p>List of user's dogs</p>
+        {% else %}
+            <h2>Register</h2>
+            <p>register today to access all features</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <hr>
+
+  </div> <!-- /container -->
+
+
+{% endblock %}
