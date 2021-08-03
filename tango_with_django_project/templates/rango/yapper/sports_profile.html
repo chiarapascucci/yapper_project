@@ -14,10 +14,21 @@
 </div>
 
 <div>
-    Breed restrictions: {{sport.breed_restricitons}}
+    Breed restrictions: {{sport.breed_restricitons}}<br>
 </div>
 
 <!-- Add competition list -->
-
+<div>
+    <h4> Competitions for this sport: </h4>
+    {% if competitions %} 
+        <ul>
+        {% for competition in competitions %}
+            <li> <a href="{% url 'rango:competition_name' competition.slug %}">{{ competition.name }}</a> </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no competitions present.</strong>
+    {% endif %}
+</div>
 
 {% endblock %}
