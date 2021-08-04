@@ -16,8 +16,8 @@ urlpatterns = [
     path('sports/', views.sports_homepage, name='sports'),                          # =========== Start of yapper urls
     path('sports/<slug:sports_name_slug>/', views.sports_profile, name='sports_name'),        
     path('breeds/', views.breed_homepage ,name='breeds'),
-    path('breeds/<slug:breed_name_slug>/', views.breed_profile ,name='breed_profile'),             # Requires dynamic slug field
-    path('breeds/<slug:breed_name_slug>/<slug:dog_name_slug>/', views.dog_profile ,name='dog_profile'),        # Requires dynamic slug field
+    path('breeds/<slug:breed_name_slug>/', views.breed_profile ,name='breed_profile'),             
+    path('breeds/<slug:breed_name_slug>/<slug:dog_name_slug>/', views.dog_profile ,name='dog_profile'), 
     path('competitions/', views.competition_homepage, name='competitions'), 
     path('competitions/<slug:competition_name_slug>/', views.competition_profile ,name='competition_name'),    
     path('help/', views.faq ,name='help'),  # Should this not be url faq/ ?

@@ -13,7 +13,7 @@
 
     {% if breed %}
         <h1>{{ breed.name }}</h1><br>
-        <img src="{% static 'images/breed_media/'|add:breed.slug|add:'.jpg' %}" alt="{{ breed.name }}" /><br>
+        <img src="{% static 'breed_content/breed_media/images/'|add:breed.slug|add:'.jpg' %}" alt="{{ breed.name }}" /><br>
 
         <p>
             {{ breed.description }}

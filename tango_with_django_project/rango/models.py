@@ -72,7 +72,9 @@ class Dog(models.Model):
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE)
     #owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True)        # Temp blank until Users properly implemented
 
-   # Optionally filled
+    # Add follows
+
+    # Optionally filled
     main_about = models.TextField(blank=True, default="")    # Dog's editable description, allow blank
     # Temp location before dynamic file path
     display_pic = models.ImageField(upload_to="dog_profiles/temp", blank=True) # Specify dimension max/resize later
