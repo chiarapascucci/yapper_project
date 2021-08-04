@@ -134,6 +134,7 @@ def populate():
             add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
 
     # Dog & Breed population
+    # Messy version for testing purposes for now
 
     bernese_mountain_dog = {'name':'Bernese Mountain Dog',
                             'description':'Descrip A',}
@@ -145,19 +146,23 @@ def populate():
             'description':'Descrip D',}
     leonberger = {'name':'Leonberger',
                 'description':'Descrip E',}
+
+    # Dogs
+    anaconda = {'name':'anaconda',
+            'breed':dachshund,}
     
     b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"])
     print(b)
     b = add_breed(chow_chow["name"],chow_chow["description"])
     print(b)
     b = add_breed(dachshund["name"],dachshund["description"])
+    d = add_dog(anaconda["name"],b)
     print(b)
+    print(d)
     b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"])
     print(b)
     b = add_breed(leonberger["name"],leonberger["description"])
     print(b)
-
-
 
 
 # Add methods 
@@ -175,16 +180,21 @@ def add_cat(name, views=0, likes=0):
     c.save()
     return c
 
+
+
 def add_breed(name, descrip):
     b = Breed.objects.get_or_create(name=name)[0]
     b.description = descrip
     b.save()
     return b
 
-def add_dog(name, breed, owner):
-    d = Dog.objects.get_or_create(name=name, breed=breed, owner=owner)[0]
+# Add owner to this later
+def add_dog(name, breed):
+    d = Dog.objects.get_or_create(name=name, breed=breed)[0]
     d.save()
     return d
+
+    
 
 def add_sport(name, description, breed_restrictions):
     s = Sport.objects.get_or_create(name=name)[0]

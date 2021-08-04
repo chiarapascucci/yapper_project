@@ -163,17 +163,15 @@ def breed_profile(request, breed_name_slug):
 def dog_profile(request, breed_name_slug, dog_name_slug):
 
     dprofile_context = {}
+    breed = Breed.objects.get(slug=breed_name_slug)
 
     try:
-        breed = Breed.objects.get(slug=breed_name_slug)
-        dogs = Dog.objects.filter(breed=breed)
+        dog = Dog.objects.filter(slug=dog_name_slug,breed=breed)
 
-        dprofile_context['dogs'] = dogs
-        dprofile_context['breed'] = breed
+        dprofile_context['dog'] = dog
 
-    except Breed.DoesNotExist:
-        dprofile_context['dogs'] = None
-        dprofile_context['breed'] = None
+    except Dog.DoesNotExist:
+        dprofile_context['dog'] = None
 
     return render(request, 'rango/yapper/dog_profile.html', dprofile_context)
 

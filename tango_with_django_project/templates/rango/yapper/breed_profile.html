@@ -26,7 +26,7 @@
             {% if dogs %}
                 <ul>
                     {% for dog in dogs %}
-                        <li><a href="{% url 'rango:dog_profile' breed.slug dog.name_slug %}">{{ dog.name }}</a></li>
+                        <li><a href="{% url 'rango:dog_profile' breed.slug dog.slug %}">{{ dog.name }}</a></li>
                     {% endfor %}
                 </ul>
             {% else %}

@@ -2,7 +2,35 @@
 {% load staticfiles %}
 
 {% block title_block %}
+    
+    {% if dog %}
+        {{ dog.name }}
+    {% endif %}
+
 {% endblock %}
 
 {% block body_block %}
+
+    {% if dog %}
+
+        {% for d in dog %}
+            <h1>{{ dog.name }}</h1><br>
+
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{ d.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Breed</td>
+                        <td>{{ d.breed.name }}</td>
+                    </tr>
+                </table>
+
+        {% endfor %}
+
+    {% else %}
+        Dog not found.
+    {% endif %}
+
 {% endblock %}
