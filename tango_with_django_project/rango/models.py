@@ -74,7 +74,7 @@ class Sport(models.Model):
 
 class Competition(models.Model):
     
-    # Enforce consistent name length accross all instances
+    # Enforce consistent name length accross all instance
     NAME_MAX_LENGTH = 128
     ADDRESS_MAX_LENGTH = 200
     URL_MAX_LENGTH = 200
