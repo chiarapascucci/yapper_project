@@ -1,4 +1,5 @@
-    #top_page {
+   
+   #top_page {
     width:100%;
     height: 683px;
     overflow: hidden;
@@ -25,4 +26,10 @@
     height: 60%;
     padding-right: 60px;
     padding-left: 60px;
+    }
+
+    #categorytitle {
+        font: garamond !important;
+        font-size: 10px; 
+        color: red;
     }
