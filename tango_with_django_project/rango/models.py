@@ -93,7 +93,8 @@ class Dog(models.Model):
  
     def save(self, *args, **kwargs):
         # Update slug
-        self.slug = slugify(self.name)
+        self.slug = slugify("{self.dog_id}-{self.name}".format(self=self))
+        print(str(self.slug))
 
         # Set media path dynamically if still set to default --- probably wrong now, just do this when a form is sent
 #        if self.display_pic.storage.location == "dog_profiles/temp":

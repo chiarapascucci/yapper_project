@@ -160,13 +160,13 @@ def breed_profile(request, breed_name_slug):
 
 
 # Individual dog profile
-def dog_profile(request, breed_name_slug, dog_name_slug):
+def dog_profile(request, breed_name_slug, dog_slug):
 
     dprofile_context = {}
-    breed = Breed.objects.get(slug=breed_name_slug)
+
 
     try:
-        dog = Dog.objects.filter(slug=dog_name_slug,breed=breed)
+        dog = Dog.objects.filter(slug=dog_slug)
 
         dprofile_context['dog'] = dog
 
