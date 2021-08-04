@@ -152,12 +152,12 @@ def populate():
                 'description':'Descrip E',}
 
     # Dogs
-    anaconda = {'name':'anaconda',
+    anaconda = {'name':'Anaconda',
             'breed':dachshund,}
     
     b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
     print(b)
-    b = add_breed(chow_chow["name"],chow_chow["description"],7)
+    b = add_breed(chow_chow["name"],chow_chow["description"])
     print(b)
     b = add_breed(dachshund["name"],dachshund["description"],2)
     d = add_dog(anaconda["name"],b,3)
