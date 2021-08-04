@@ -1,3 +1,4 @@
+from rango.models import UserProfile
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
@@ -8,14 +9,13 @@ from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
 
 def index(request):
-    category_list = Category.objects.order_by('-likes')[:5]
-    page_list = Page.objects.order_by('-views')[:5]
+    sport_list = Sport.objects.order_by('-follows')[:3]
+    
 
     context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
-    context_dict['categories'] = category_list
-    context_dict['pages'] = page_list
-    context_dict['extra'] = 'From the model solution on GitHub'
+    
+    context_dict['sports'] = sport_list
+    
     
     visitor_cookie_handler(request)
 
@@ -120,6 +120,7 @@ def visitor_cookie_handler(request):
 
 
 
+
 """
  ====================== 
  Yapper views 
@@ -195,8 +196,15 @@ def competition_profile(request, competition_name_slug):
 def add_competition(request):
     return render(request, 'rango/yapper/add_competition.html', {})
 
-def user_profile(request):
-    return render(request, 'rango/yapper/user_profile.html', {})
+def user_profile(request, user_name_slug):
+    context_dict = {}
+    try:
+        user = UserProfile.objects.get(slug=user_name_slug)
+        context_dict['user'] = user
+    except UserProfile.DoesNotExist:
+        context_dict ['user'] = None
+
+    return render(request, 'rango/yapper/user_profile.html', context=context_dict)
 
 def user_profile_edit(request):
     return render(request, 'rango/yapper/user_profile_edit.html', {})

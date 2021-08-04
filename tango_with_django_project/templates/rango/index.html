@@ -24,7 +24,17 @@
       </div>
       <div class="col-md-4">
         <h2>Top Sports</h2>
-        <p>this will be a dynamically populated list of most popular sposrts  </p>
+        {% if sports %}
+        <ol>
+          {% for sport in sports %}
+            <li><a href = "{% url 'rango:sports_name' sport.slug %}">{{ sport.name }}</a></li>
+          {% endfor %}
+        </ol>
+        {% else %}
+          <p>No sports to display at the moment</p>
+        {% endif %}
+
+     
         
         
       </div>

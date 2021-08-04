@@ -32,18 +32,30 @@ class Page(models.Model):
     def __str__(self):
         return self.title
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    website = models.URLField(blank=True)
+    
+    id = models.UUIDField(primary_key=True, editable=False)
+    follows = models.ManyToManyField('self', symmetrical=False, blank=True)
+    bio = models.CharField(max_length=300, blank=True)
+    location = models.CharField(max_length=128, blank=True) 
     picture = models.ImageField(upload_to='profile_images', blank=True)
+    user_slug = models.SlugField(unique=True)
+    
+    def save(self, *args, **kwargs):
+        self.user_slug = slugify(self.user.username)
+        super(UserProfile, self).save(*args, **kwargs)
+
+    def set_Follows(self, field):
+        self.follows = field
 
     def __str__(self):
         return self.user.username
 
 
-"""
-Yapper models 
-"""
+
+
 
 class Dog(models.Model):
     pass

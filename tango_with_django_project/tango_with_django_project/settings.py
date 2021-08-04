@@ -42,6 +42,9 @@ SOCIAL_AUTH_FACEBOOK_SECRET = 'e234b2b0ed1b81c6c3b7ed08088d38cc'
 
 SOCIAL_AUTH_TWITTER_KEY = 'ApD9MlPBzuTtKqevEd4q89E0u'
 SOCIAL_AUTH_TWITTER_SECRET = 'HRpioUYWjvQ67itqxZH8uehCasXPCm5KD235PsCOv7BQE1S6Ul'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '51946566920-b7t6u67pmsgmv2u6jrsqhgj480qflu8u.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'sMyKpOhzqkfLNW0cLZXpKl0w'
 # Application definition
 
 INSTALLED_APPS = [
@@ -71,7 +74,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
-
+    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
