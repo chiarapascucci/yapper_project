@@ -2,7 +2,22 @@
 {% load staticfiles %}
 
 {% block title_block %}
+    Breeds
 {% endblock %}
 
 {% block body_block %}
+    {% if breeds %}
+
+    <h1>Breeds</h1>
+
+        {% for b in breeds %}
+            <ul>
+                <li><a href="{% url 'rango:breed_profile' b.slug %}">{{ b.name }}</a></li>
+            </ul>
+        {% endfor %}
+
+    {% else %}
+        No breeds registered.
+    {% endif %}
+
 {% endblock %}

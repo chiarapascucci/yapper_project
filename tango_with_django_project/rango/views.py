@@ -129,6 +129,14 @@ def breed_homepage(request):
 
     bhome_context = {}
 
+    try:
+        breeds = Breed.objects.all()
+
+        bhome_context['breeds'] = breeds
+
+    except Breed.DoesNotExist:
+        bhome_context['breeds'] = None
+
     return render(request, 'rango/yapper/breeds_homepage.html', bhome_context)
 
     

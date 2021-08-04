@@ -51,10 +51,10 @@ class Breed(models.Model):
 
     main_pic = models.ImageField(upload_to="breed_media/", blank=True)
 
-    breed_slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
-        self.breed_slug = slugify(self.name)
+        self.slug = slugify(self.name)
 
         super(Breed, self).save(*args, **kwargs)
 

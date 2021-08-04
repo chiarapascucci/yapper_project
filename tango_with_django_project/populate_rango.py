@@ -133,6 +133,15 @@ def populate():
             print(type(c['description']))
             add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
 
+    # Dog & Breed population
+    bernese_mountain_dog = {'name':'Bernese Mountain Dog',
+                            'description':'Descrip A',
+                            'main_pic': "breed_media/bernese_mountain_dog.jpg"}
+
+    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],bernese_mountain_dog["main_pic"])
+    print(b)
+
+
 # Add methods 
 def add_page(cat, title, url, views=0):
     p = Page.objects.get_or_create(category=cat, title=title)[0]
@@ -147,6 +156,18 @@ def add_cat(name, views=0, likes=0):
     c.likes = likes
     c.save()
     return c
+
+def add_breed(name, descrip, main_pic):
+    b = Breed.objects.get_or_create(name=name)[0]
+    b.description = descrip
+    b.main_pic
+    b.save()
+    return b
+
+def add_dog(name, breed, owner):
+    d = Dog.objects.get_or_create(name=name, breed=breed, owner=owner)[0]
+    d.save()
+    return d
 
 def add_sport(name, description, breed_restrictions):
     s = Sport.objects.get_or_create(name=name)[0]

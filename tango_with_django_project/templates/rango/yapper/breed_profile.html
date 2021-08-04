@@ -11,27 +11,27 @@
 
 {% block body_block %}
 
-    {{% if breed %}}
+    {% if breed %}
         <h1>{{ breed.name }}</h1><br>
-        <img scr="{{ breed.main_pic }}" alt="Dog pictures" /><br>
+        <img scr="{{ breed.main_pic.url }}" alt="{{ breed.name }}" /><br>
 
         <p>
 
-            {{% if dogs %}}
+            {% if dogs %}
                 <ul>
-                    {{% for dog in dogs %}}
-                        <li><a href="{{% url 'rango:dog_profile' breed.breed_slug dog.name_slug %}}">{{ dog.name }}</a></li>
-                    {{% endfor %}}
+                    {% for dog in dogs %}
+                        <li><a href="{% url 'rango:dog_profile' breed.slug dog.name_slug %}">{{ dog.name }}</a></li>
+                    {% endfor %}
                 </ul>
-            {{% else %}}
+            {% else %}
                 No dogs of this breed registered.
-            {{% endif %}}
+            {% endif %}
             
         </p>
 
 
-    {{% else %}}
+    {% else %}
         No breed found.
-    {{% endif %}}
+    {% endif %}
 
 {% endblock %}
