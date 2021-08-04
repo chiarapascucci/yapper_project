@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from rango.models import Page, Category, UserProfile
+from rango.models import Page, Category, UserProfile, Dog
 
 # We could add these forms to views.py, but it makes sense to split them off into their own file.
 
@@ -44,3 +44,14 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('website', 'picture',)
+
+
+"""
+    Yapper forms
+"""
+
+#class AddDogForm(forms.ModelForm):
+
+
+#    class Meta:
+#        model = Dog
