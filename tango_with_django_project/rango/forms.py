@@ -43,7 +43,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('website', 'picture',)
+        fields = ('bio', 'picture', 'location',)
 
 
 """
@@ -88,4 +88,4 @@ class CompetitionForm(forms.ModelForm):
         if url and not url.startswith('http://'):
             url = f'http://{url}'
             cleaned_data['url'] = url
-            fields = ('bio', 'picture',)
+            
