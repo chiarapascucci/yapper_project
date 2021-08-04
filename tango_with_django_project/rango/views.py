@@ -204,5 +204,7 @@ def user_profile_edit(request):
 def faq(request):
     return render(request, 'rango/yapper/faq.html', {})
 
+def explore(request):
+    return render(request, 'rango/yapper/explore.html', {})
 
 
