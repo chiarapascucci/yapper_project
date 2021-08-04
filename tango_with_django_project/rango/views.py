@@ -130,7 +130,7 @@ def breed_homepage(request):
     bhome_context = {}
 
     try:
-        breeds = Breed.objects.all()
+        breeds = Breed.objects.order_by("name")
 
         bhome_context['breeds'] = breeds
 

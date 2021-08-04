@@ -134,12 +134,25 @@ def populate():
             add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
 
     # Dog & Breed population
+
     bernese_mountain_dog = {'name':'Bernese Mountain Dog',
                             'description':'Descrip A',}
+    chow_chow = {'name':'Chow Chow',
+            'description':'Descrip B',}
+    dachshund = {'name':'Dachshund',
+            'description':'Descrip C',}
+    irish_wolfhound = {'name':'Irish Wolfhound',
+            'description':'Descrip D',}
     leonberger = {'name':'Leonberger',
-                'description':'Descrip B',}
-
+                'description':'Descrip E',}
+    
     b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"])
+    print(b)
+    b = add_breed(chow_chow["name"],chow_chow["description"])
+    print(b)
+    b = add_breed(dachshund["name"],dachshund["description"])
+    print(b)
+    b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"])
     print(b)
     b = add_breed(leonberger["name"],leonberger["description"])
     print(b)
