@@ -50,11 +50,14 @@ class UserProfileForm(forms.ModelForm):
     Yapper forms
 """
 
+# Add owner here
 #class AddDogForm(forms.ModelForm):
-
-
+#    name = forms.CharField(max_length=128)
+#    breed = forms.CharField()
+#
 #    class Meta:
 #        model = Dog
+#        fields = ('name', 'breed', 'main_about')
 
 
 
