@@ -137,6 +137,38 @@ def populate():
             print(type(c['description']))
             add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
 
+    # Dog & Breed population
+    # Messy version for testing purposes for now
+
+    bernese_mountain_dog = {'name':'Bernese Mountain Dog',
+                            'description':'Descrip A',}
+    chow_chow = {'name':'Chow Chow',
+            'description':'Descrip B',}
+    dachshund = {'name':'Dachshund',
+            'description':'Descrip C',}
+    irish_wolfhound = {'name':'Irish Wolfhound',
+            'description':'Descrip D',}
+    leonberger = {'name':'Leonberger',
+                'description':'Descrip E',}
+
+    # Dogs
+    anaconda = {'name':'Anaconda',
+            'breed':dachshund,}
+    
+    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
+    print(b)
+    b = add_breed(chow_chow["name"],chow_chow["description"])
+    print(b)
+    b = add_breed(dachshund["name"],dachshund["description"],2)
+    d = add_dog(anaconda["name"],b,3)
+    print(b)
+    print(d)
+    b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"],2)
+    print(b)
+    b = add_breed(leonberger["name"],leonberger["description"],10)
+    print(b)
+
+
 # Add methods 
 def add_page(cat, title, url, views=0):
     p = Page.objects.get_or_create(category=cat, title=title)[0]
@@ -151,6 +183,24 @@ def add_cat(name, views=0, likes=0):
     c.likes = likes
     c.save()
     return c
+
+
+
+def add_breed(name, descrip, follows=0):
+    b = Breed.objects.get_or_create(name=name)[0]
+    b.description = descrip
+    b.follows = follows
+    print(b.follows)
+    b.save()
+    return b
+
+# Add owner to this later
+def add_dog(name, breed, follows=0):
+    d = Dog.objects.get_or_create(name=name, breed=breed)[0]
+    d.follows = follows
+    d.save()
+    return d
+
 
 def add_sport(name, description, breed_restrictions, follows):
     s = Sport.objects.get_or_create(name=name)[0]

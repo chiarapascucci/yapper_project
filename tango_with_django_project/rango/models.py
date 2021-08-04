@@ -40,6 +40,7 @@ class UserProfile(models.Model):
     bio = models.CharField(max_length=300, blank=True)
     location = models.CharField(max_length=128, blank=True) 
     picture = models.ImageField(upload_to='profile_images', blank=True)
+    website = models.URLField()
     user_slug = models.SlugField(unique=True)
     
     def save(self, *args, **kwargs):
@@ -56,8 +57,77 @@ class UserProfile(models.Model):
 
 
 
+class Breed(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.TextField(blank=True)
+
+    follows = models.PositiveIntegerField(default=0)
+
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+
+        super(Breed, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = "Breeds"
+
+
+    def __str__(self):
+        return self.name
+
+
 class Dog(models.Model):
-    pass
+    
+    # Necessary
+    dog_id = models.BigAutoField(primary_key = True)
+    name = models.CharField(max_length=128)
+    breed = models.ForeignKey(Breed, on_delete=models.CASCADE)
+    #owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True)        # Temp blank until Users properly implemented
+
+    follows = models.PositiveIntegerField(default=0)
+
+    # Optionally filled
+    main_about = models.TextField(blank=True, default="")    # Dog's editable description, allow blank
+    # Temp location before dynamic file path
+    display_pic = models.ImageField(upload_to="dog_profiles/temp", blank=True) # Specify dimension max/resize later
+
+    #competitions = models.ManyToManyField(Competition, on_delete=models.CASCADE)
+
+    # Name slug for use in URLs
+    slug = models.SlugField(unique=True)
+
+    # Table stat info
+    SEX_CHOICES = (("Female","Bitch"), ("Male","Dog"), ("Unknown","Unknown"), (None, " "))
+    sex = models.CharField(max_length = 10, choices=SEX_CHOICES, blank=True)
+    #dob = models.DateField(default = None, blank=True)
+
+ 
+    def save(self, *args, **kwargs):
+        # Update slug
+        self.slug = slugify("{self.dog_id}-{self.name}".format(self=self))
+        print(str(self.slug))
+
+        # Set media path dynamically if still set to default --- probably wrong now, just do this when a form is sent
+#        if self.display_pic.storage.location == "dog_profiles/temp":
+#            self.display_pic.storage.location = "dog_profiles/{}-{}".format(self.dog_id,self.slug)
+#            print(self.display_pic.storage.location)
+
+        # Finish up with normal save function
+        super(Dog, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = "Dogs"
+
+    def __str__(self):
+        return str(self.dog_id) + " " + self.name + ", " + self.breed.name
+
+    # Full debug method, prints all attributes of dog instance
+    def printDog(self):
+        for a in dir(self):
+            if not a.startswith("__") and not callable(getattr(self,a)):
+                print(a)
 
 
 
@@ -115,9 +185,6 @@ class Competition(models.Model):
         return self.name
 
 
-
-class Breed(models.Model):
-    pass
 
 class Participation(models.Model):
     pass

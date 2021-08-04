@@ -2,7 +2,27 @@
 {% load staticfiles %}
 
 {% block title_block %}
+    Breeds
 {% endblock %}
 
 {% block body_block %}
+    {% if breeds %}
+
+    <h1>Breeds</h1>
+
+        {% for b in breeds %}
+            <ul>
+                    <a href="{% url 'rango:breed_profile' b.slug %}">
+                        <img src="{% static 'breed_content/breed_media/images/'|add:b.slug|add:'.jpg' %}" alt="{{ b.name }}" /><br><br>
+                        <!---<img src="{% static 'images/BreedBoxTemplate.jpg' %}" alt="{{ b.name }}" /><br>--->
+                        {{ b.name }}<br>
+                    </a>
+
+            </ul>
+        {% endfor %}
+
+    {% else %}
+        No breeds registered.
+    {% endif %}
+
 {% endblock %}

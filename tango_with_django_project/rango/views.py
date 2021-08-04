@@ -5,17 +5,21 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page, Sport, Competition, Participation, Award, Breed, Dog
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from rango.forms import CategoryForm, CompetitionForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
 
 def index(request):
-    sport_list = Sport.objects.order_by('-follows')[:3]
-    
 
     context_dict = {}
-    
+
+    breed_list = Breed.objects.order_by('-follows')[:10]
+    sport_list = Sport.objects.order_by('-follows')[:3]
+
+    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    context_dict['topbreeds'] = breed_list
     context_dict['sports'] = sport_list
-    
+    context_dict['extra'] = 'From the model solution on GitHub'
+
     
     visitor_cookie_handler(request)
 
@@ -127,16 +131,59 @@ def visitor_cookie_handler(request):
  ====================== 
 """
 def breed_homepage(request):
-    return render(request, 'rango/yapper/breed_homepage.html', {})
 
-def breed_profile(request): 
-    return render(request, 'rango/yapper/breed_profile.html', {})
+    bhome_context = {}
 
-def dog_profile(request):
-    return render(request, 'rango/yapper/dog_profile.html', {})
+    try:
+        breeds = Breed.objects.order_by("name")
 
+        bhome_context['breeds'] = breeds
+
+    except Breed.DoesNotExist:
+        bhome_context['breeds'] = None
+
+    return render(request, 'rango/yapper/breeds_homepage.html', bhome_context)
+
+    
+# Individual breed page
+def breed_profile(request, breed_name_slug): 
+
+    bprofile_context = {}
+
+    try:
+        breed = Breed.objects.get(slug=breed_name_slug)
+        dogs = Dog.objects.filter(breed=breed)
+
+        bprofile_context['dogs'] = dogs
+        bprofile_context['breed'] = breed
+
+    except Breed.DoesNotExist:
+        bprofile_context['dogs'] = None
+        bprofile_context['breed'] = None
+
+    return render(request, 'rango/yapper/breed_profile.html', bprofile_context)
+
+
+# Individual dog profile
+def dog_profile(request, breed_name_slug, dog_slug):
+
+    dprofile_context = {}
+
+
+    try:
+        dog = Dog.objects.filter(slug=dog_slug)
+
+        dprofile_context['dog'] = dog
+
+    except Dog.DoesNotExist:
+        dprofile_context['dog'] = None
+
+    return render(request, 'rango/yapper/dog_profile.html', dprofile_context)
+
+    
 def add_dog(request):
     return render(request, 'rango/yapper/add_dog.html', {})
+
 
 def sports_homepage(request):
     

@@ -2,7 +2,45 @@
 {% load staticfiles %}
 
 {% block title_block %}
+
+    {% if breed %}
+        {{ breed.name }}
+    {% endif %}
+
 {% endblock %}
 
 {% block body_block %}
+
+    {% if breed %}
+        <h1>{{ breed.name }}</h1><br>
+        <p>
+            Follows: {{ breed.follows }}<br>
+        </p>
+        <img src="{% static 'breed_content/breed_media/images/'|add:breed.slug|add:'.jpg' %}" alt="{{ breed.name }}" /><br>
+
+        <p>
+            {{ breed.description }}
+        </p>
+
+        <hr>
+
+        <p>
+
+            {% if dogs %}
+                <ul>
+                    {% for dog in dogs %}
+                        <li><a href="{% url 'rango:dog_profile' breed.slug dog.slug %}">{{ dog.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                There are no registered dogs for this breed.
+            {% endif %}
+            
+        </p>
+
+
+    {% else %}
+        No breed found.
+    {% endif %}
+
 {% endblock %}
