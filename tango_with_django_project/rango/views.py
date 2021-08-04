@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page, Sport, Competition, Participation, Award, Breed, Dog
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, CompetitionForm
+from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
 
 def index(request):
