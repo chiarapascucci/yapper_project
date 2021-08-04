@@ -135,11 +135,16 @@ def populate():
 
     # Dog & Breed population
     bernese_mountain_dog = {'name':'Bernese Mountain Dog',
-                            'description':'Descrip A',
-                            'main_pic': "breed_media/bernese_mountain_dog.jpg"}
+                            'description':'Descrip A',}
+    leonberger = {'name':'Leonberger',
+                'description':'Descrip B',}
 
-    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],bernese_mountain_dog["main_pic"])
+    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"])
     print(b)
+    b = add_breed(leonberger["name"],leonberger["description"])
+    print(b)
+
+
 
 
 # Add methods 
@@ -157,10 +162,9 @@ def add_cat(name, views=0, likes=0):
     c.save()
     return c
 
-def add_breed(name, descrip, main_pic):
+def add_breed(name, descrip):
     b = Breed.objects.get_or_create(name=name)[0]
     b.description = descrip
-    b.main_pic
     b.save()
     return b
 

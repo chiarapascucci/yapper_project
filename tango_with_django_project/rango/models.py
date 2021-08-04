@@ -49,7 +49,7 @@ class Breed(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)
 
-    main_pic = models.ImageField(upload_to="breed_media/", blank=True)
+#    main_pic = models.ImageField(upload_to="breed_media", blank=True)  #not user uploaded
 
     slug = models.SlugField(unique=True)
 

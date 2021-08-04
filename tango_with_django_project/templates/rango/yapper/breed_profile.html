@@ -1,6 +1,10 @@
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 
+static_image = "images/breed_media/"
+static_image += "{{breed.slug}}
+static_image += ".jpg"
+
 {% block title_block %}
 
     {% if breed %}
@@ -13,7 +17,13 @@
 
     {% if breed %}
         <h1>{{ breed.name }}</h1><br>
-        <img scr="{{ breed.main_pic.url }}" alt="{{ breed.name }}" /><br>
+        <img src="{% static 'images/breed_media/'|add:breed.slug|add:'.jpg' %}" alt="{{ breed.name }}" /><br>
+
+        <p>
+            {{ breed.description }}
+        </p>
+
+        <hr>
 
         <p>
 
@@ -24,7 +34,7 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                No dogs of this breed registered.
+                There are no registered dogs for this breed.
             {% endif %}
             
         </p>
