@@ -79,7 +79,6 @@ class Dog(models.Model):
     # Temp location before dynamic file path
     display_pic = models.ImageField(upload_to="dog_profiles/temp", blank=True) # Specify dimension max/resize later
 
-    #sports = models.ManyToManyField(Sport, on_delete=models.CASCADE)
     #competitions = models.ManyToManyField(Competition, on_delete=models.CASCADE)
 
     # Name slug for use in URLs
