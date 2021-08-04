@@ -49,6 +49,8 @@ class Breed(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)
 
+    follows = models.PositiveIntegerField(default=0)
+
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -72,7 +74,7 @@ class Dog(models.Model):
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE)
     #owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True)        # Temp blank until Users properly implemented
 
-    # Add follows
+    follows = models.PositiveIntegerField(default=0)
 
     # Optionally filled
     main_about = models.TextField(blank=True, default="")    # Dog's editable description, allow blank

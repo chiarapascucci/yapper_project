@@ -151,17 +151,17 @@ def populate():
     anaconda = {'name':'anaconda',
             'breed':dachshund,}
     
-    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"])
+    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
     print(b)
-    b = add_breed(chow_chow["name"],chow_chow["description"])
+    b = add_breed(chow_chow["name"],chow_chow["description"],7)
     print(b)
-    b = add_breed(dachshund["name"],dachshund["description"])
-    d = add_dog(anaconda["name"],b)
+    b = add_breed(dachshund["name"],dachshund["description"],2)
+    d = add_dog(anaconda["name"],b,3)
     print(b)
     print(d)
-    b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"])
+    b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"],2)
     print(b)
-    b = add_breed(leonberger["name"],leonberger["description"])
+    b = add_breed(leonberger["name"],leonberger["description"],10)
     print(b)
 
 
@@ -182,15 +182,18 @@ def add_cat(name, views=0, likes=0):
 
 
 
-def add_breed(name, descrip):
+def add_breed(name, descrip, follows=0):
     b = Breed.objects.get_or_create(name=name)[0]
     b.description = descrip
+    b.follows = follows
+    print(b.follows)
     b.save()
     return b
 
 # Add owner to this later
-def add_dog(name, breed):
+def add_dog(name, breed, follows=0):
     d = Dog.objects.get_or_create(name=name, breed=breed)[0]
+    d.follows = follows
     d.save()
     return d
 

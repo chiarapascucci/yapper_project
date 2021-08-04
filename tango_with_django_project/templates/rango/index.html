@@ -19,7 +19,11 @@
     <div class="row">
       <div class="col-md-4">
         <h2>Top Breeds</h2>
-        <p>this will be a dynamically populated list of most popular breeds </p>
+        <p>
+          {% for b in topbreeds %}
+            <li><a href = "{% url 'rango:breed_profile' b.slug %}">{{ b.name }}</a></li> 
+          {% endfor %}
+        </p>
         
       </div>
       <div class="col-md-4">

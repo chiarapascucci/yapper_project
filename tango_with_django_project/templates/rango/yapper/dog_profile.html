@@ -14,16 +14,20 @@
     {% if dog %}
 
         {% for d in dog %}
-            <h1>{{ dog.name }}</h1><br>
+            <h1>{{ d.name }}</h1><br>
 
                 <table>
                     <tr>
-                        <td>Name</td>
+                        <td>Name </td>
                         <td>{{ d.name }}</td>
                     </tr>
                     <tr>
-                        <td>Breed</td>
+                        <td>Breed </td>
                         <td>{{ d.breed.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Follows </td>
+                        <td>{{ d.follows }}</td>
                     </tr>
                 </table>
 
