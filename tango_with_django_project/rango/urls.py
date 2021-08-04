@@ -1,4 +1,3 @@
-
 from django.urls import path
 from rango import views
 
@@ -21,8 +20,9 @@ urlpatterns = [
     path('competitions/', views.competition_homepage, name='competitions'), 
     path('competitions/<slug:competition_name_slug>/', views.competition_profile ,name='competition_name'),    
     path('help/', views.faq ,name='help'),  # Should this not be url faq/ ?
-    path('user/', views.user_profile ,name='user'),                                                 # Requires dynamic slug field
+    path('user/', views.user_profile, name='user'),                                                 # Requires dynamic slug field
     path('user/add_dog/', views.add_dog, name='add_dog'),
     path('user/edit/', views.user_profile_edit ,name='edit'),
     path('user/register_competition/', views.add_competition, name='register_competition'),
+    path('explore/', views.explore, name='explore'),
 ]

@@ -88,3 +88,4 @@ class CompetitionForm(forms.ModelForm):
         if url and not url.startswith('http://'):
             url = f'http://{url}'
             cleaned_data['url'] = url
+            fields = ('bio', 'picture',)

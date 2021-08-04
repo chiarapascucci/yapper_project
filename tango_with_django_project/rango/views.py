@@ -1,10 +1,11 @@
+from rango.models import UserProfile
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page, Sport, Competition, Participation, Award, Breed, Dog
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, CompetitionForm
+from rango.forms import CategoryForm, CompetitionForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
 
 def index(request):
@@ -12,10 +13,13 @@ def index(request):
     context_dict = {}
 
     breed_list = Breed.objects.order_by('-follows')[:10]
+    sport_list = Sport.objects.order_by('-follows')[:3]
 
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     context_dict['topbreeds'] = breed_list
+    context_dict['sports'] = sport_list
     context_dict['extra'] = 'From the model solution on GitHub'
+
     
     visitor_cookie_handler(request)
 
@@ -117,6 +121,7 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
     
     request.session['visits'] = visits
+
 
 
 
@@ -265,8 +270,15 @@ def add_competition(request):
     context_dict = {'form': form}
     return render(request, 'rango/yapper/add_competition.html', context=context_dict)
 
-def user_profile(request):
-    return render(request, 'rango/yapper/user_profile.html', {})
+def user_profile(request, user_name_slug):
+    context_dict = {}
+    try:
+        user = UserProfile.objects.get(slug=user_name_slug)
+        context_dict['user'] = user
+    except UserProfile.DoesNotExist:
+        context_dict ['user'] = None
+
+    return render(request, 'rango/yapper/user_profile.html', context=context_dict)
 
 def user_profile_edit(request):
     return render(request, 'rango/yapper/user_profile_edit.html', {})
@@ -274,5 +286,7 @@ def user_profile_edit(request):
 def faq(request):
     return render(request, 'rango/yapper/faq.html', {})
 
+def explore(request):
+    return render(request, 'rango/yapper/explore.html', {})
 
 

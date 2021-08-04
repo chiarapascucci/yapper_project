@@ -15,7 +15,13 @@ Login
 </form>
 <br>
 <h2>Login using:</h2><br>
-<p><a href ="/auth-social/login/github/"></a>GitHub</p><br>
+<ul> 
+    <li><a href ="{% url 'social:begin' 'github' %}">GitHub</a><br></li>
+    <li><a href ="{% url 'social:begin' 'facebook' %}">Facebook</a><br></li>
+    <li><a href ="{% url 'social:begin' 'twitter' %}">Twitter</a><br></li>
+    <li><a href ="{% url 'social:begin' 'google-oauth2' %}">Google</a><br></li>
+</ul>
+
 <p>
 Not registered?
 <a href="{% url 'registration_register' %}">Register here!</a>

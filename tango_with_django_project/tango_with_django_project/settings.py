@@ -35,8 +35,16 @@ LOGIN_URL = 'auth_login'
 LOGOUT_URL = 'auth_logout'
 
 SOCIAL_AUTH_GITHUB_KEY = '0b0ea408be0423a5aa27'
-SOCIAL_AUTH_GITHUB_SECRETE = 'f5aa112d09cca5dd84a1b6ff9eac4e2f6b3074b3'
+SOCIAL_AUTH_GITHUB_SECRET = '0668445f65af0c1a446e754a646f896e978289f7'
 
+SOCIAL_AUTH_FACEBOOK_KEY= '814197225947281'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'e234b2b0ed1b81c6c3b7ed08088d38cc'
+
+SOCIAL_AUTH_TWITTER_KEY = 'ApD9MlPBzuTtKqevEd4q89E0u'
+SOCIAL_AUTH_TWITTER_SECRET = 'HRpioUYWjvQ67itqxZH8uehCasXPCm5KD235PsCOv7BQE1S6Ul'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '51946566920-b7t6u67pmsgmv2u6jrsqhgj480qflu8u.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'sMyKpOhzqkfLNW0cLZXpKl0w'
 # Application definition
 
 INSTALLED_APPS = [
@@ -66,7 +74,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
-
+    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
