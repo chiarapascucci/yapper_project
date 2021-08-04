@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from rango.models import Page, Category, UserProfile
+from rango.models import Page, Category, UserProfile, Competition, Sport
 
 # We could add these forms to views.py, but it makes sense to split them off into their own file.
 
