@@ -41,6 +41,7 @@ class UserProfile(models.Model):
     bio = models.CharField(max_length=300, blank=True)
     location = models.CharField(max_length=128, blank=True) 
     picture = models.ImageField(upload_to='profile_images', blank=True)
+    website = models.URLField()
     user_slug = models.SlugField(unique=True)
     
     def save(self, *args, **kwargs):
