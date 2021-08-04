@@ -71,6 +71,77 @@ class Sport(models.Model):
         return self.name
 
 
+class Breed(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.TextField(blank=True)
+
+    main_pic = models.ImageField(upload_to="breed_media/", blank=True)
+
+    breed_slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.breed_slug = slugify(self.name)
+
+        super(Breed, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = "Breeds"
+
+
+    def __str__(self):
+        return self.name
+
+
+class Dog(models.Model):
+    
+    # Necessary
+    dog_id = models.BigAutoField(primary_key = True)
+    name = models.CharField(max_length=128)
+    breed = models.ForeignKey(Breed, on_delete=models.CASCADE)
+    owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+   # Optionally filled
+    main_about = models.TextField(blank=True, default="")    # Dog's editable description, allow blank
+    # Temp location before dynamic file path
+    display_pic = models.ImageField(upload_to="dog_profiles/temp", blank=True) # Specify dimension max/resize later
+
+    #sports = models.ManyToManyField(Sport, on_delete=models.CASCADE)
+    #competitions = models.ManyToManyField(Competition, on_delete=models.CASCADE)
+
+    # Name slug for use in URLs
+    name_slug = models.SlugField(unique=True)
+
+    # Table stat info
+    SEX_CHOICES = (("Female","Bitch"), ("Male","Dog"), ("Unknown","Unknown"), (None, " "))
+    sex = models.CharField(max_length = 10, choices=SEX_CHOICES)
+    dob = models.DateField(default = None)
+
+ 
+    def save(self, *args, **kwargs):
+        # Update slug
+        self.name_slug = self.dog_id + slugify(self.name)
+
+        # Set media path dynamically if still set to default
+        if self.display_pic.storage.location == "dog_profiles/temp":
+            self.display_pic.storage.location = "dog_profiles/{}-{}".format(self.dog_id,self.name_slug)
+            print(self.display_pic.storage.location)
+
+        # Finish up with normal save function
+        super(Dog, self).save(*args, *kwargs)
+
+    class Meta:
+        verbose_name_plural = "Dogs"
+
+    def __str__(self):
+        return self.dog_id + " " + self.name + ", " + self.breed
+
+    # Full debug method, prints all attributes of dog instance
+    def printDog(self):
+        for a in dir(self):
+            if not a.startswith("__") and not callable(getattr(self,a)):
+                print(a)
+
+
 
 class Competition(models.Model):
     

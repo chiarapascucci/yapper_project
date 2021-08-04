@@ -126,16 +126,53 @@ def visitor_cookie_handler(request):
  ====================== 
 """
 def breed_homepage(request):
-    return render(request, 'rango/yapper/breed_homepage.html', {})
 
-def breed_profile(request): 
-    return render(request, 'rango/yapper/breed_profile.html', {})
+    bhome_context = {}
 
-def dog_profile(request):
-    return render(request, 'rango/yapper/dog_profile.html', {})
+    return render(request, 'rango/yapper/breed_homepage.html', bhome_context)
 
+    
+# Individual breed page
+def breed_profile(request, breed_name_slug): 
+
+    bprofile_context = {}
+
+    try:
+        breed = Breed.objects.get(slug=breed_name_slug)
+        dogs = Dog.objects.filter(breed=breed)
+
+        bprofile_context['dogs'] = dogs
+        bprofile_context['breed'] = breed
+
+    except Breed.DoesNotExist:
+        bprofile_context['dogs'] = None
+        bprofile_context['breed'] = None
+
+    return render(request, 'rango/yapper/breed_profile.html', bprofile_context)
+
+
+# Individual dog profile
+def dog_profile(request, breed_name_slug, dog_name_slug):
+
+    dprofile_context = {}
+
+    try:
+        breed = Breed.objects.get(slug=breed_name_slug)
+        dogs = Dog.objects.filter(breed=breed)
+
+        dprofile_context['dogs'] = dogs
+        dprofile_context['breed'] = breed
+
+    except Breed.DoesNotExist:
+        dprofile_context['dogs'] = None
+        dprofile_context['breed'] = None
+
+    return render(request, 'rango/yapper/dog_profile.html', dprofile_context)
+
+    
 def add_dog(request):
     return render(request, 'rango/yapper/add_dog.html', {})
+
 
 def sports_homepage(request):
     
