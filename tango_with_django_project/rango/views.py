@@ -129,7 +129,7 @@ def breed_homepage(request):
 
     bhome_context = {}
 
-    return render(request, 'rango/yapper/breed_homepage.html', bhome_context)
+    return render(request, 'rango/yapper/breeds_homepage.html', bhome_context)
 
     
 # Individual breed page

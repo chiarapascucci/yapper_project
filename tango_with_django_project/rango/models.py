@@ -45,32 +45,6 @@ class UserProfile(models.Model):
 Yapper models 
 """
 
-class Dog(models.Model):
-    pass
-
-
-
-class Sport(models.Model):
-    
-    # Enforce consistent name length accross all instances
-    NAME_MAX_LENGTH = 128
-
-    # Model attributes 
-    name = models.CharField(max_length=NAME_MAX_LENGTH)
-    description = models.TextField()
-    breed_restricitons = models.TextField()
-
-    # Slug attributes
-    slug = models.SlugField(unique=True)
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Sport, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-
-
 class Breed(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)
@@ -143,6 +117,28 @@ class Dog(models.Model):
 
 
 
+class Sport(models.Model):
+    
+    # Enforce consistent name length accross all instances
+    NAME_MAX_LENGTH = 128
+
+    # Model attributes 
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    description = models.TextField()
+    breed_restricitons = models.TextField()
+
+    # Slug attributes
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Sport, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+
 class Competition(models.Model):
     
     # Enforce consistent name length accross all instance
@@ -174,9 +170,6 @@ class Competition(models.Model):
         return self.name
 
 
-
-class Breed(models.Model):
-    pass
 
 class Participation(models.Model):
     pass
