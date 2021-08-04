@@ -11,46 +11,19 @@
     <link rel="icon" href="{% static 'images/yapper_icon.ico' %}">
     <title>
         Yapper - {% block title_block %}{% endblock %}
-    </title>
-    <style type="text/css"> 
-        .top_page {
-        width:100%;
-        height: 683px;
-        overflow: hidden;
-        background-size: cover;
-        background-position: center;
-        background-image: url("{% static 'images/black-dog.jpg' %}");
-        background-color: grey;
-        
-        margin-top: 30px;
-        margin-bottom: 50px;
-        }
-        .display-3{
-        margin-top: 100px;
-        font-size: 10px;
-        font-weight: bold;
-        margin-left: 125px;    
-        }
-        #sub_title{
-        font-size: 20px;
-        
-        text-indent: 200px;  
-        }
-
-        #meme{
-        width: 60%;
-        height: 60%;
-        padding-right: 60px;
-        padding-left: 60px;
-       
-        }
-    </style>
-    <!-- Bootstrap core CSS -->
-    <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    </title> 
     
-    <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
+    <!-- Custom style for Yapper project -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+ 
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" >
+    
+    <!-- Custom styles for template used for this page -->
+    <link href="{% static 'css/examples/dashboard/dashboard.css' %}" rel="stylesheet">
+
    
+
     </head>
     
     <body>
@@ -93,9 +66,9 @@
            
             <div class="row">
                
-                <div class="top_page">
+                <div id="top_page">
                     <div id="backimg">
-                      <h1 class="display-3">{% block greet_block %} {% endblock %}</h1>
+                      <h1 id="site_banner">{% block greet_block %} {% endblock %}</h1>
                       <p id="sub_title">woff woff</p>
                     </div>
                 </div>
