@@ -108,16 +108,20 @@ def populate():
 
     sports = {'Jumping': {'competitions': jumping_competitions, 
                     'description':'Jumping sport description',
-                    'breed_restrictions': 'No cats allowed!!'},
+                    'breed_restrictions': 'No cats allowed!!',
+                    'follows': 100},
         'Running': {'competitions': running_competitions,
                     'description':'Running sport description',
-                    'breed_restrictions': 'No cats allowed!!'},
+                    'breed_restrictions': 'No cats allowed!!',
+                    'follows': 200},
         'Sniffing': {'competitions': sniffing_competitions, 
                     'description':'Sniffing sport description',
-                    'breed_restrictions': 'No cats allowed!!'},
+                    'breed_restrictions': 'No cats allowed!!',
+                    'follows': 300},
         'Pooing': {'competitions': pooing_competitions,
                     'description':'Pooing sport description',
-                    'breed_restrictions': 'No cats allowed!!'}}
+                    'breed_restrictions': 'No cats allowed!!',
+                    'follows': 1}}
     
 
     for cat, cat_data in cats.items():
@@ -128,7 +132,7 @@ def populate():
 
     # Yapper popultation
     for sport_name, sport_data in sports.items():
-        sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'])
+        sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'], sport_data['follows'])
         for c in sport_data['competitions']:
             print(type(c['description']))
             add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
@@ -197,12 +201,12 @@ def add_dog(name, breed, follows=0):
     d.save()
     return d
 
-    
 
-def add_sport(name, description, breed_restrictions):
+def add_sport(name, description, breed_restrictions, follows):
     s = Sport.objects.get_or_create(name=name)[0]
     s.description = description
     s.breed_restrictions = breed_restrictions
+    s.follows = follows
     s.save()
     return s
 

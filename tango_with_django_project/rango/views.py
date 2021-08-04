@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page, Sport, Competition, Participation, Award, Breed, Dog
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, CompetitionForm
 from datetime import datetime
 
 def index(request):
@@ -236,7 +236,34 @@ def competition_profile(request, competition_name_slug):
     return render(request, 'rango/yapper/competition_profile.html', context_dict)
 
 def add_competition(request):
-    return render(request, 'rango/yapper/add_competition.html', {})
+
+    form = CompetitionForm()
+
+    if request.method == 'POST':
+        
+        # Get the form from the user POST 
+        form = CompetitionForm(request.POST)
+
+        # Check if the form is valid
+        if form.is_valid():
+
+            cleaned_data = form.cleaned_data
+
+            # Get the sport from the form and then check if it exists 
+            sport = cleaned_data["sport"]
+
+            print(sport)
+            if sport:
+                competition = form.save(commit=False)
+                competition.sport = sport
+                competition.save()
+
+                return redirect(reverse('rango:competitions', kwargs ={}))
+        else:
+            print(form.errors)  # This could be better done; for the purposes of TwD, this is fine. DM.
+    
+    context_dict = {'form': form}
+    return render(request, 'rango/yapper/add_competition.html', context=context_dict)
 
 def user_profile(request):
     return render(request, 'rango/yapper/user_profile.html', {})
