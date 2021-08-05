@@ -117,7 +117,6 @@ def populate():
     for sport_name, sport_data in sports.items():
         sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'], sport_data['follows'])
         for c in sport_data['competitions']:
-            print(type(c['description']))
             add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
 
 
@@ -227,6 +226,14 @@ def populate():
         'dogs': malmute_dogs},
     ]
 
+    awards = [         
+        {'name':'Best girl',
+         'description':'Best girl description',
+         'certificate': None},
+        {'name':'Best boy',
+         'description':'Best boy description',
+         'certificate': None},    
+    ]
 
 
     # === Yapper popultation ===
@@ -240,6 +247,7 @@ def populate():
         for c in sport_data['competitions']:
             competitions.append(add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted']))
 
+
     # Populate Breeds and dogs
     dog_list = list()
     for breed_data in breeds:
@@ -248,39 +256,35 @@ def populate():
             dog = add_dog(dog_data['name'], breed,rand.randint(0,1000))
             dog_list.append(dog)
 
-    
-
-
     # Populate the participation and awards
-    awards = [         
-        {'name':'Best girl',
-         'description':'Best girl description',
-         'certificate': None},
-        {'name':'Best boy',
-         'description':'Best boy description',
-         'certificate': None},    
-    ]
+    # Participation list which is filled with participation information for each dog
+    participation_list = list()
+    i = 0
+    for dog in dog_list:
 
-    participations = [
-        {'name': 'p1',
-        'dog': dog_list[0],
-        'competition': competitions[0],
-        'award': awards[0]},
-        {'name': 'p2',
-        'dog': dog_list[2],
-        'competition': competitions[1],
-        'award': awards[1]}
-    ]
-    
+        # Dictionary of participation informaition which is populated with a random competition and reward
+        participation_structure = {
+        'name': str(i),
+        'dog': dog,
+        'competition': competitions[rand.randint(0,len(competitions)-1)],
+        'award': awards[rand.randint(0,len(awards)-1)]}
 
-    for p_items in participations:
-        award = add_award(p_items['award']['name'],p_items['award']['description'],p_items['award']['certificate'])
+        participation_list.append(participation_structure)
+        i = i + 1
+
+    # Create entities of Awards and Participation
+    # Reset awards as repopulating and using create to generate them since want an Award per Participation 
+    # (using only two unique award structures so need to make duplicates)
+    Award.objects.all().delete()
+
+    for p_items in participation_list:
+        
+        # Add an award and participation
+        award = add_award(p_items['award']['name'], p_items['award']['description'],p_items['award']['certificate'])
         participation = add_participation(p_items['name'],p_items['dog'], p_items['competition'], award)
 
 
-
 # Add methods 
-
 def add_breed(name, descrip, follows=0):
     b = Breed.objects.get_or_create(name=name)[0]
     b.description = descrip
@@ -328,14 +332,14 @@ def add_participation(name, dog, competition, award):
 
 def add_award(name, description, certificate):
 
-    # Set entity
-    a = Award.objects.get_or_create(name=name)[0]
+    # Set entity (using create here as in a 1-1 relation and dont want to violate unique constraint)
+    a = Award.objects.create()
 
+    a.name = name
     a.description = description
     a.certificate = certificate
     a.save()
     return a
-
 
 
 # Start execution here!
