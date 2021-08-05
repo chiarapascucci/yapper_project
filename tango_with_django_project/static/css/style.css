@@ -63,7 +63,6 @@
         padding-top: 60px;
     }
 
-
     #bodybackground {
         background-image: url("{% static 'images/black-dog.jpg' %}"); 
         background-repeat: repeat;

@@ -13,6 +13,9 @@
         Yapper - {% block title_block %}{% endblock %}
     </title> 
     
+    <!-- Required as sometimes you dont want to apply setting to all bootstrap elements-->
+    {% block bootstrap_element_override_block %}
+    {% endblock %}
 
     <!-- Custom style for Yapper project -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type = "text/css">

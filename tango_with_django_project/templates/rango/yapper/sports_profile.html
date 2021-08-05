@@ -5,6 +5,14 @@
 {{sport.name}}
 {% endblock %}
 
+{% block bootstrap_element_override_block %}
+<style>
+    .col-md-4 {
+    background-color: lavender;
+    }
+</style>
+{% endblock %}
+
 {% block body_block %}
 
 <div class = "row">
