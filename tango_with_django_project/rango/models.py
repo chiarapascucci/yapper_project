@@ -205,7 +205,11 @@ class Award(models.Model):
 
 class Participation(models.Model):
     
+    # Enforce consistent name length accross all instance
+    NAME_MAX_LENGTH = 128
+
     # Model for entity relation breakdown between dogs and competition
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     competition = models.ForeignKey(Competition, on_delete=models.CASCADE)
     award = models.OneToOneField(Award, on_delete=models.CASCADE)

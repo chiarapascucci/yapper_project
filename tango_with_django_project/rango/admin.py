@@ -21,3 +21,6 @@ admin.site.register(Page, PageAdmin)
 admin.site.register(UserProfile)
 admin.site.register(Sport, SportAdmin)
 admin.site.register(Competition, CompetitionAdmin)
+
+admin.site.register(Participation)
+admin.site.register(Award)

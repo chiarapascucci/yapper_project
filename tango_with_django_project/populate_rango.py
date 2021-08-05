@@ -90,13 +90,6 @@ def populate():
                     'follows': 1}}
     
 
-    # Yapper popultation
-    for sport_name, sport_data in sports.items():
-        sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'], sport_data['follows'])
-        for c in sport_data['competitions']:
-            print(type(c['description']))
-            add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
-
     # Dog & Breed population
     # Messy version for testing purposes for now
 
@@ -114,19 +107,61 @@ def populate():
     # Dogs
     anaconda = {'name':'Anaconda',
             'breed':dachshund,}
+    gareth = {'name': 'Gareth',
+            'breed': irish_wolfhound}
     
     b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
     print(b)
     b = add_breed(chow_chow["name"],chow_chow["description"])
     print(b)
     b = add_breed(dachshund["name"],dachshund["description"],2)
-    d = add_dog(anaconda["name"],b,3)
+    d_anaconda = add_dog(anaconda["name"],b,3)
     print(b)
-    print(d)
+    print(d_anaconda)
     b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"],2)
+    d_gareth = add_dog(gareth['name'],b,10)
     print(b)
     b = add_breed(leonberger["name"],leonberger["description"],10)
     print(b)
+
+
+    # Yapper popultation
+
+    competitions = list()
+    for sport_name, sport_data in sports.items():
+        sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'], sport_data['follows'])
+        for c in sport_data['competitions']:
+            competitions.append(add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted']))
+
+
+    # Populate the participation and awards
+    awards = [         
+        {'name':'Best girl',
+         'description':'Best girl description',
+         'certificate': None},
+        {'name':'Best boy',
+         'description':'Best boy description',
+         'certificate': None},    
+    ]
+
+    print (competitions)
+    participations = [
+        {'name': 'p1',
+        'dog': d_anaconda,
+        'competition': competitions[0],
+        'award': awards[0]},
+        {'name': 'p2',
+        'dog': d_gareth,
+        'competition': competitions[1],
+        'award': awards[1]}
+    ]
+    
+    print (participations
+    )
+    for p_items in participations:
+        award = add_award(p_items['award']['name'],p_items['award']['description'],p_items['award']['certificate'])
+        participation = add_participation(p_items['name'],p_items['dog'], p_items['competition'], award)
+
 
 
 # Add methods 
@@ -167,7 +202,22 @@ def add_competition(sport, name, description, address, location, date, eventpage
     co.date = date
     co.eventpage = eventpage
     co.isCompleted = isCompleted
+    return co
 
+def add_participation(name, dog, competition, award):
+
+    # Set entity and relations 
+    p = Participation.objects.get_or_create(name=name,dog=dog,competition=competition,award=award)[0]
+    return p
+
+def add_award(name, description, certificate):
+
+    # Set entity
+    a = Award.objects.get_or_create(name=name)[0]
+
+    a.description = description
+    a.certificate = certificate
+    return a
 
 
 
