@@ -33,6 +33,13 @@
     <h1>
         Competing dogs
     </h1>
+    <ul>
+        {% for dog in dogs %}
+            <li>
+                <a href="{% url 'rango:dog_profile' dog.breed.slug dog.slug %}">{{ dog.name }}</a>
+            </li>
+        {%endfor%}
+    </ul>
     </div>
     <div class="col-md-4">
         <h1>

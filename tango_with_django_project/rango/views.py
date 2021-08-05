@@ -234,7 +234,26 @@ def competition_profile(request, competition_name_slug):
     # Get the sport instance associated with the sport_name_slug
     try:
         competition = Competition.objects.get(slug=competition_name_slug)
+        participation_list = Participation.objects.filter(competition=competition)
+        
+        print(participation_list)
+        dog_list = list()
+        for participation_item in participation_list:
+            print(participation_item)
+            print(participation_item.dog)
+            dog_list.append(participation_item.dog)
+
+        print(dog_list)
+
+        breed_list = list()
+        for dog_item in dog_list:
+            print(dog_item.breed)
+            breed_list.append(dog_item.breed)
+
+        print(breed_list)
         context_dict['competition'] = competition
+        context_dict['dogs'] = dog_list
+
     except Competition.DoesNotExist:
         context_dict['competition'] = None
 
