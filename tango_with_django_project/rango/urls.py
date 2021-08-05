@@ -1,3 +1,4 @@
+
 from django.urls import path
 from rango import views
 
@@ -19,10 +20,11 @@ urlpatterns = [
     path("breeds/<slug:breed_name_slug>/<slug:dog_slug>/", views.dog_profile ,name='dog_profile'), 
     path('competitions/', views.competition_homepage, name='competitions'), 
     path('competitions/<slug:competition_name_slug>/', views.competition_profile ,name='competition_name'),    
-    path('help/', views.faq ,name='help'),  # Should this not be url faq/ ?
-    path('user/', views.user_profile, name='user'),                                                 # Requires dynamic slug field
-    path('user/add_dog/', views.add_dog, name='add_dog'),
-    path('user/edit/', views.user_profile_edit ,name='edit'),
-    path('user/register_competition/', views.add_competition, name='register_competition'),
+    path('help/', views.faq ,name='help'),
+    path('register_profile/', views.register_profile, name='register_profile'),  # Should this not be url faq/ ?
+    path('user/<slug:user_name_slug>/', views.user_profile, name='user'),                                                 # Requires dynamic slug field
+    path('user/<slug:user_name_slug>/add_dog/', views.add_dog, name='add_dog'),
+    path('user/<slug:user_name_slug>/edit/', views.user_profile_edit ,name='edit'),
+    path('user/<slug:user_name_slug>/register_competition/', views.add_competition, name='register_competition'),
     path('explore/', views.explore, name='explore'),
 ]

@@ -93,7 +93,28 @@ class Breed(models.Model):
     def __str__(self):
         return self.name
 
+class Sport(models.Model):
+    
+    # Enforce consistent name length accross all instances
+    NAME_MAX_LENGTH = 128
 
+    # Model attributes 
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    description = models.TextField()
+    breed_restricitons = models.TextField()
+    follows = models.IntegerField(default=0)
+
+    # Slug attributes
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Sport, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+        
 class Dog(models.Model):
 
     # Necessary
@@ -144,27 +165,27 @@ class Dog(models.Model):
                 print(a)
 
 
-
-class Sport(models.Model):
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    id = models.BigAutoField(primary_key = True)
+    followed_breeds = models.ManyToManyField(Breed, blank=True)
+    followed_sports = models.ManyToManyField(Sport, blank=True)
+    followed_dogs= models.ManyToManyField(Dog, blank=True)
+    bio = models.CharField(max_length=300, blank=True)
+    location = models.CharField(max_length=128, blank=True) 
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+    user_slug = models.SlugField(unique=True)
     
-    # Enforce consistent name length accross all instances
-    NAME_MAX_LENGTH = 128
-
-    # Model attributes 
-    name = models.CharField(max_length=NAME_MAX_LENGTH)
-    description = models.TextField()
-    breed_restricitons = models.TextField()
-    follows = models.IntegerField(default=0)
-
-    # Slug attributes
-    slug = models.SlugField(unique=True)
-
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Sport, self).save(*args, **kwargs)
+        self.user_slug = slugify(self.user.username)
+        print(str(self.user_slug))
+        super(UserProfile, self).save(*args, **kwargs)
+
+    def set_Follows(self, field):
+        self.follows = field
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 
 
@@ -178,11 +199,11 @@ class Competition(models.Model):
     # Model attributes 
     name = models.CharField(max_length=NAME_MAX_LENGTH)
     address = models.CharField(max_length=ADDRESS_MAX_LENGTH)   # Address of compititon
-    location = models.CharField(max_length=100)                 # Google API information in String form
-    date = models.DateField(null = True)                        # Date object
-    eventpage = models.URLField()                               # Url of event page if avaialble
+    location = models.CharField(max_length=100, null=True)                 # Google API information in String form
+    date = models.DateField(null=True)                          # Date object
+    eventpage = models.URLField(null=True)                               # Url of event page if avaialble
     isCompleted = models.BooleanField(default=False)            # Boolean field for is completed or not 
-    description = models.TextField()                            # Description about competition
+    description = models.TextField(null=True)                            # Description about competition
 
     # Relationship attribute 
     sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
@@ -199,12 +220,39 @@ class Competition(models.Model):
         return self.name
 
 
-
-class Participation(models.Model):
-    pass
+# User should not need to interact with these models as they are used to hold information
+# on the relation between dog and competitions (N:M -> 1:N and 1:M)
 
 class Award(models.Model):
-    pass
+
+    # Enforce consistent name length accross all instance
+    NAME_MAX_LENGTH = 128
+
+    # Model attributes 
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    description = models.TextField()                            # Description about award
+    certificate = models.FileField()
+    
+    # Verbose print
+    def __str__(self):
+        return self.name
+
+
+class Participation(models.Model):
+    
+    # Enforce consistent name length accross all instance
+    NAME_MAX_LENGTH = 128
+
+    # Model for entity relation breakdown between dogs and competition
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    competition = models.ForeignKey(Competition, on_delete=models.CASCADE)
+    award = models.OneToOneField(Award, on_delete=models.CASCADE)
+    
+    # Verbose print
+    def __str__(self):
+        return self.name
+
 
 
 

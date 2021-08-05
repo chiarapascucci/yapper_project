@@ -1,4 +1,4 @@
-from rango.models import UserProfile
+from rango.models import UserProfile,User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
@@ -9,20 +9,36 @@ from rango.forms import AddDogForm, CategoryForm, CompetitionForm, PageForm, Use
 from django.template.defaultfilters import slugify
 from datetime import datetime
 
-def index(request):
 
+def index(request):
     context_dict = {}
+
+    try:
+        username = request.user.get_username()
+        print(username)
+        user=User.objects.get(username=username)
+
+        try:
+            
+            user_profile = UserProfile.objects.get(user=user)
+            print(user_profile , "hello", user_profile.user_slug)
+            context_dict['user']= user_profile
+        except UserProfile.DoesNotExist:
+            print('no user here')
+            return render(request, 'rango/index.html', {})
+
+    except User.DoesNotExist:
+        print('user does not exist')
+        return render(request, 'rango/index.html', {})
 
     breed_list = Breed.objects.order_by('-follows')[:10]
     sport_list = Sport.objects.order_by('-follows')[:3]
 
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     context_dict['topbreeds'] = breed_list
     context_dict['sports'] = sport_list
-    context_dict['extra'] = 'From the model solution on GitHub'
 
     visitor_cookie_handler(request)
-
+    
     return render(request, 'rango/index.html', context=context_dict)
 
 def about(request):
@@ -219,7 +235,7 @@ def sports_homepage(request):
     # Context dictionary to input any external variables into the HTML template
     context_dict = {}
    
-    sports_list = Sport.objects.order_by('-name')
+    sports_list = Sport.objects.order_by('name')
     context_dict['sports'] = sports_list
 
     return render(request, 'rango/yapper/sports_homepage.html', context_dict)
@@ -249,7 +265,7 @@ def competition_homepage(request):
     # Context dictionary to input any external variables into the HTML template
     context_dict = {}
    
-    competition_list = Competition.objects.order_by('-name')
+    competition_list = Competition.objects.order_by('date')
     context_dict['competitions'] = competition_list
 
     return render(request, 'rango/yapper/competition_homepage.html', context_dict)
@@ -263,7 +279,26 @@ def competition_profile(request, competition_name_slug):
     # Get the sport instance associated with the sport_name_slug
     try:
         competition = Competition.objects.get(slug=competition_name_slug)
+        participation_list = Participation.objects.filter(competition=competition)
+        
+        print(participation_list)
+        dog_list = list()
+        for participation_item in participation_list:
+            print(participation_item)
+            print(participation_item.dog)
+            dog_list.append(participation_item.dog)
+
+        print(dog_list)
+
+        breed_list = list()
+        for dog_item in dog_list:
+            print(dog_item.breed)
+            breed_list.append(dog_item.breed)
+
+        print(breed_list)
         context_dict['competition'] = competition
+        context_dict['dogs'] = dog_list
+
     except Competition.DoesNotExist:
         context_dict['competition'] = None
 
@@ -302,12 +337,32 @@ def add_competition(request):
 def user_profile(request, user_name_slug):
     context_dict = {}
     try:
-        user = UserProfile.objects.get(slug=user_name_slug)
+        user = UserProfile.objects.get(user_slug=user_name_slug)
+        print(user, "in user profile view")
         context_dict['user'] = user
+        context_dict['followed_breeds']= user.followed_breeds.all()
+        context_dict['followed_sports']= user.followed_sports.all()
+        context_dict['followed_dogs']=user.followed_dogs.all()
     except UserProfile.DoesNotExist:
-        context_dict ['user'] = None
+        (request, 'rango/yapper/user_profile.html',{})
 
     return render(request, 'rango/yapper/user_profile.html', context=context_dict)
+
+@login_required
+def register_profile(request):
+    form = UserProfileForm()
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect(reverse('rango:index'))
+    else:
+        print(form.errors)
+
+    context_dict = {'form': form}
+    return render(request, 'rango/profile_registration.html', context_dict)
 
 def user_profile_edit(request):
     return render(request, 'rango/yapper/user_profile_edit.html', {})

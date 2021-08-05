@@ -5,4 +5,32 @@
 {% endblock %}
 
 {% block body_block %}
+
+    you are in the profile page of: {{user.user.username}}
+
+    <div class="container">
+        <div id="followed_dog">
+            <ul>
+                {% for dog in followed_dogs %}
+                    <li><a href = "">{{ dog.name }}</a></li>
+                {% endfor %} 
+            </ul>
+        </div>
+        <br>
+        <div id="followed_sports">
+            <ul>
+                {% for sport in user.followed_sports.all %}
+                    <li><a href = "{% url 'rango:sports_name' sport.slug %}">{{ sport.name }}</a></li>
+                {% endfor %} 
+            </ul>
+        </div>
+        <br>
+        <div id="followed_breeds">
+            <ul>
+                {% for breed in followed_breeds %}
+                    <li><a href = "{% url 'rango:breed_profile' b.slug %}">{{ breed.name }}</a></li> 
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock %}
