@@ -28,8 +28,13 @@
     padding-left: 60px;
     }
 
-    #categorytitle {
+    h1 #categorytitle {
         font: garamond !important;
         font-size: 10px; 
         color: red;
+    }
+
+    #bodybackground {
+        background-image: url("{% static 'images/black-dog.jpg' %}"); 
+        background-repeat: repeat;
     }
