@@ -15,13 +15,12 @@ class SportAdmin(admin.ModelAdmin):
 class CompetitionAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
-class UserProfileAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'user_slug': ('id',)}
+
 
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Page, PageAdmin)
-admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(UserProfile)
 admin.site.register(Sport, SportAdmin)
 admin.site.register(Competition, CompetitionAdmin)
 admin.site.register(Dog)

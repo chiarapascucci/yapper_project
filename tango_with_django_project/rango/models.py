@@ -128,7 +128,7 @@ class Dog(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    id = models.UUIDField(primary_key=True, editable=False)
+    id = models.BigAutoField(primary_key = True)
     followed_breeds = models.ManyToManyField(Breed, blank=True)
     followed_sports = models.ManyToManyField(Sport, blank=True)
     followed_dogs= models.ManyToManyField(Dog, blank=True)
@@ -138,7 +138,7 @@ class UserProfile(models.Model):
     user_slug = models.SlugField(unique=True)
     
     def save(self, *args, **kwargs):
-        self.user_slug = slugify(self.id)
+        self.user_slug = slugify(self.user.username)
         print(str(self.user_slug))
         super(UserProfile, self).save(*args, **kwargs)
 
