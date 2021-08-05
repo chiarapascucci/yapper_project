@@ -14,7 +14,7 @@
     </title> 
     
     <!-- Custom style for Yapper project -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type = "text/css">
  
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" >
@@ -22,7 +22,6 @@
     <!-- Custom styles for template used for this page -->
     <link href="{% static 'css/examples/dashboard/dashboard.css' %}" rel="stylesheet">
 
-   
 
     </head>
     
@@ -47,7 +46,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'rango:competitions' %}">Competitions</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'rango:explore' %}">Explore</a></li>
                         {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'rango:user' user.user_slug %}">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="">Profile</a></li>
                         {% else %}
                         <li class="nav-item "><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
                         {% endif %}
@@ -74,7 +73,7 @@
                 </div>
 
                 <!-- MAIN CONTENT-->
-                <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">		
+                <main role="main" class="container">		
                     {% block body_block %}
                     {% endblock %}
                     

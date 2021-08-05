@@ -190,7 +190,7 @@ def sports_homepage(request):
     # Context dictionary to input any external variables into the HTML template
     context_dict = {}
    
-    sports_list = Sport.objects.order_by('-name')
+    sports_list = Sport.objects.order_by('name')
     context_dict['sports'] = sports_list
 
     return render(request, 'rango/yapper/sports_homepage.html', context_dict)

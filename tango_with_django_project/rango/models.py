@@ -181,12 +181,39 @@ class Competition(models.Model):
         return self.name
 
 
-
-class Participation(models.Model):
-    pass
+# User should not need to interact with these models as they are used to hold information
+# on the relation between dog and competitions (N:M -> 1:N and 1:M)
 
 class Award(models.Model):
-    pass
+
+    # Enforce consistent name length accross all instance
+    NAME_MAX_LENGTH = 128
+
+    # Model attributes 
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    description = models.TextField()                            # Description about award
+    certificate = models.FileField()
+    
+    # Verbose print
+    def __str__(self):
+        return self.name
+
+
+class Participation(models.Model):
+    
+    # Enforce consistent name length accross all instance
+    NAME_MAX_LENGTH = 128
+
+    # Model for entity relation breakdown between dogs and competition
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    competition = models.ForeignKey(Competition, on_delete=models.CASCADE)
+    award = models.OneToOneField(Award, on_delete=models.CASCADE)
+    
+    # Verbose print
+    def __str__(self):
+        return self.name
+
 
 
 
