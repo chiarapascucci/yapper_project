@@ -8,11 +8,8 @@ from rango.models import Category, Page, Sport, Dog, Competition, Breed, Award, 
 # For an explanation of what is going on here, please refer to the TwD book.
 
 def populate():
-<<<<<<< HEAD
   
-=======
     
->>>>>>> main
     # Yapper population
     jumping_competitions = [ 
         {'name':'Comp A',
@@ -92,9 +89,7 @@ def populate():
                     'description':'Pooing sport description',
                     'breed_restrictions': 'No cats allowed!!',
                     'follows': 1}}
-    
 
-<<<<<<< HEAD
     # Yapper popultation
     for sport_name, sport_data in sports.items():
         sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'], sport_data['follows'])
@@ -102,8 +97,7 @@ def populate():
             print(type(c['description']))
             add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
 
-=======
->>>>>>> main
+
     # Dog & Breed population
     # Messy version for testing purposes for now
 
