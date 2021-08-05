@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.forms.fields import CharField
 from django.forms.widgets import HiddenInput
 from rango.models import Page, Category, UserProfile, Dog, Competition, Sport
+import datetime as dt
 
 # We could add these forms to views.py, but it makes sense to split them off into their own file.
 
@@ -77,7 +78,7 @@ class CompetitionForm(forms.ModelForm):
                                 help_text="Please enter the address:")
     location = forms.CharField(max_length=100,
                                 help_text="Please enter the coordinates...:")
-    date = forms.DateTimeField(help_text="Please enter the date it will commence:")
+    date = forms.DateField(help_text="Please enter the date it will commence:")
     eventpage = forms.URLField(help_text="Please enter the url of the competition/event page:")
     isCompleted = forms.BooleanField(help_text="Is the competition already complete and this is just for storing?")
     description = forms.Textarea()

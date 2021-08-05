@@ -240,7 +240,7 @@ def competition_homepage(request):
     # Context dictionary to input any external variables into the HTML template
     context_dict = {}
    
-    competition_list = Competition.objects.order_by('-name')
+    competition_list = Competition.objects.order_by('name')
     context_dict['competitions'] = competition_list
 
     return render(request, 'rango/yapper/competition_homepage.html', context_dict)
@@ -254,7 +254,26 @@ def competition_profile(request, competition_name_slug):
     # Get the sport instance associated with the sport_name_slug
     try:
         competition = Competition.objects.get(slug=competition_name_slug)
+        participation_list = Participation.objects.filter(competition=competition)
+        
+        print(participation_list)
+        dog_list = list()
+        for participation_item in participation_list:
+            print(participation_item)
+            print(participation_item.dog)
+            dog_list.append(participation_item.dog)
+
+        print(dog_list)
+
+        breed_list = list()
+        for dog_item in dog_list:
+            print(dog_item.breed)
+            breed_list.append(dog_item.breed)
+
+        print(breed_list)
         context_dict['competition'] = competition
+        context_dict['dogs'] = dog_list
+
     except Competition.DoesNotExist:
         context_dict['competition'] = None
 

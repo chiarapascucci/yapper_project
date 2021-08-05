@@ -160,11 +160,11 @@ class Competition(models.Model):
     # Model attributes 
     name = models.CharField(max_length=NAME_MAX_LENGTH)
     address = models.CharField(max_length=ADDRESS_MAX_LENGTH)   # Address of compititon
-    location = models.CharField(max_length=100)                 # Google API information in String form
-    date = models.DateField(null = True)                        # Date object
-    eventpage = models.URLField()                               # Url of event page if avaialble
+    location = models.CharField(max_length=100, null=True)                 # Google API information in String form
+    date = models.DateField(null=True)                          # Date object
+    eventpage = models.URLField(null=True)                               # Url of event page if avaialble
     isCompleted = models.BooleanField(default=False)            # Boolean field for is completed or not 
-    description = models.TextField()                            # Description about competition
+    description = models.TextField(null=True)                            # Description about competition
 
     # Relationship attribute 
     sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
