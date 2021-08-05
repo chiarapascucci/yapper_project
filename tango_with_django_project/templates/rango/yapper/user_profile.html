@@ -36,7 +36,7 @@
         <h2>Followed Dog</h2>
         <p>feck</p>
         <ul>
-            {% for dog in user_profile.followed_dogs.all %}
+            {% for dog in followed_dogs %}
                 print(dog)
                 <li><a href = "">{{ dog.name }}</a></li>
             {% endfor %} 
@@ -46,7 +46,7 @@
         <h2>Followed Breeds</h2>
         <p>this empty?</p>
         <ul>
-            {% for breed in user_profile.followed_breeds.all %}
+            {% for breed in user_profile.followed_breeds %}
                 print(breed)
                 <li><a href = "{% url 'rango:breed_profile' b.slug %}">{{ breed.name }}</a></li> 
             {% endfor %}
@@ -56,7 +56,7 @@
         <h2>Followed Sports</h2>
         <p>why</p>
         <ul>
-            {% for sport in user_profile.followed_sports.all %}
+            {% for sport in user_profile.followed_sports %}
             print(sport)
                 <li><a href = "{% url 'rango:sports_name' sport.slug %}">{{ sport.name }}</a></li>
             {% endfor %} 

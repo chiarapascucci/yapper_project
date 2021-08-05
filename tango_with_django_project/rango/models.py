@@ -129,17 +129,18 @@ class Dog(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key = True)
-    followed_breeds = models.ManyToManyField(Breed, blank=True)
-    followed_sports = models.ManyToManyField(Sport, blank=True)
-    followed_dogs= models.ManyToManyField(Dog, blank=True)
+   # followed_breeds = models.ManyToManyField(Breed, blank=True)
+    #followed_sports = models.ManyToManyField(Sport, blank=True)
+    #followed_dogs= models.ManyToManyField(Dog, blank=True)
     bio = models.CharField(max_length=300, blank=True)
     location = models.CharField(max_length=128, blank=True) 
     picture = models.ImageField(upload_to='profile_images', blank=True)
     user_slug = models.SlugField(unique=True)
-    owned_dogs = models.ManyToManyField(Dog, blank=True, related_name='dogs')
+    #owned_dogs = models.ManyToManyField(Dog, blank=True, related_name='dogs')
     is_owner = models.BooleanField(default=False)
     is_comp_org = models.BooleanField(default=False)
     
+
     def save(self, *args, **kwargs):
         self.user_slug = slugify(self.user.username)
         print(str(self.user_slug))

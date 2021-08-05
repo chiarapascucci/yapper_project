@@ -66,6 +66,7 @@ class EditUserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('bio', 'picture', 'location','is_owner', 'is_comp_org',)
+
 """
     Yapper forms
 """

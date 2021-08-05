@@ -321,6 +321,7 @@ def add_competition(request):
     context_dict = {'form': form}
     return render(request, 'rango/yapper/add_competition.html', context=context_dict)
 
+@login_required
 def user_profile(request, user_name_slug):
     context_dict = {}
     try:
