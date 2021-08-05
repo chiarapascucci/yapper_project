@@ -228,8 +228,8 @@ def add_dog(request):
             #dog.owner = UserProfile.objects.get(slug=user_slug)
             dog = form.save()
             # manually update slug + resave as auto increment dog_id occurs end of/post-save
-            dog.slug = slugify("{d.dog_id}-{d.name}".format(d=dog))
-            dog.save()
+            #dog.slug = slugify("{d.dog_id}-{d.name}".format(d=dog))
+            #dog.save()
 
             breed = Breed.objects.get(name=dog.breed)
             print(breed.name)

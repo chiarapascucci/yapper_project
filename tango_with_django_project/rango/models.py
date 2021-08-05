@@ -35,30 +35,6 @@ class Page(models.Model):
 
     def __str__(self):
         return self.title
-        
-
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    
-    id = models.UUIDField(primary_key=True, editable=False)
-    follows = models.ManyToManyField('self', symmetrical=False, blank=True)
-    bio = models.CharField(max_length=300, blank=True)
-    lat = models.FloatField(blank=True)      # latitude
-    lng = models.FloatField(blank=True)      # longitude
-    picture = models.ImageField(upload_to='profile_images', blank=True)
-    website = models.URLField()
-    user_slug = models.SlugField(unique=True)
-
-    def save(self, *args, **kwargs):
-        self.user_slug = slugify(self.user.username)    
-        super(UserProfile, self).save(*args, **kwargs)
-
-    def set_Follows(self, field):
-        self.follows = field
-
-    def __str__(self):
-        return self.user.username
 
 
 
@@ -143,8 +119,9 @@ class Dog(models.Model):
  
     def save(self, *args, **kwargs):
         # setup slug to reflect none id before save (when dog-id autofield fills)
-        if self.dog_id is None:
-            self.slug = slugify("{self.name}".format(self=self))
+        #if self.dog_id is None:
+        #self.slug = slugify("{self.name}".format(self=self))
+        self.slug = slugify("{self.dog_id}-{self.name}".format(self=self))
         super(Dog, self).save(*args, **kwargs)
 
         # Set media path dynamically if still set to default --- probably wrong now, just do this when a form is sent

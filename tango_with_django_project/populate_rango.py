@@ -163,7 +163,7 @@ def populate():
         {'name': 'Cassandra'},
         {'name': 'Dog'},
     ]
-    dachshun_dogs = [
+    dachshund_dogs = [
         {'name': 'Darshan'},
         {'name': 'Dana'},
         {'name': 'Zander'},
@@ -227,7 +227,7 @@ def populate():
         'dogs': chowchow_dogs},
         {'name':'Dachshund',
         'description':"The dachshund (German: badger dog), also known as the wiener dog, badger dog, sausage dog, is a short-legged, long-bodied, hound-type dog breed. They may be smooth, wire, or long-haired. The standard-sized dachshund was developed to scent, chase, and flush out badgers and other burrow-dwelling animals, while the miniature dachshund was bred to hunt small animals such as rabbits and other smaller animal",
-        'dogs': dachshun_dogs},
+        'dogs': dachshund_dogs},
         {'name':'Irish Wolfhound',
         'description':"The Irish Wolfhound is a historic sighthound dog breed from Ireland that has, by its presence and substantial size, inspired literature, poetry and mythology.Like all sighthounds, it was used to pursue game by speed; it was also famed as a guardian dog, specializing in protection against and for the hunting of wolves. The original dog-type was presumed extinct by most knowledgeable authors but recreated specifically for the canine fancy mainly by Captain George A. Graham in the late 19th century.The modern breed, classified by recent genetic research into the Sighthound United Kingdom Rural Clade has been used by coursing hunters who have prized it for its ability to dispatch game caught by other, swifter sighthounds",
         'dogs': irish_wolf_dogs},
