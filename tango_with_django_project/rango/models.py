@@ -60,7 +60,7 @@ class Sport(models.Model):
     # Model attributes 
     name = models.CharField(max_length=NAME_MAX_LENGTH)
     description = models.TextField()
-    breed_restricitons = models.TextField()
+    breed_restrictions = models.TextField()
     follows = models.IntegerField(default=0)
 
     # Slug attributes
