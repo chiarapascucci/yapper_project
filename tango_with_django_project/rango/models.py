@@ -149,14 +149,14 @@ class UserProfile(models.Model):
     #followed_sports = models.ManyToManyField(Sport, blank=True)
     #followed_dogs= models.ManyToManyField(Dog, blank=True)
     bio = models.CharField(max_length=300, blank=True)
-    latitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True)
-    longitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True)
+    latitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
+    longitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
     picture = models.ImageField(upload_to='profile_images', blank=True)
     user_slug = models.SlugField(unique=True)
     #owned_dogs = models.ManyToManyField(Dog, blank=True, related_name='dogs')
     is_owner = models.BooleanField(default=False)
     is_comp_org = models.BooleanField(default=False)
-    
+
 
     def save(self, *args, **kwargs):
         self.user_slug = slugify(self.user.username)
