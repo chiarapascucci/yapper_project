@@ -82,8 +82,9 @@ def add_category(request):
             print(form.errors)
     
     return render(request, 'rango/add_category.html', {'form': form})
+
 @login_required
-def edit_profile(request):
+def edit_profile(request, user_name_slug):
     form = EditUserProfileForm()
 
 
@@ -91,7 +92,7 @@ def edit_profile(request):
         form = EditUserProfileForm(request.POST)
         if form.is_valid():
            form.save(commit=True)
-           return redirect(reverse('rango:user'))
+           return redirect(reverse('rango:user', kwargs= {'user_name_slug': user_name_slug}))
         else:
             print(form.errors)
     
