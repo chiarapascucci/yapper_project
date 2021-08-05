@@ -1,7 +1,7 @@
    
    #top_page {
     width:100%;
-    height: 683px;
+    height: 600px;
     overflow: hidden;
     background-size: cover;
     background-position: center;
@@ -9,17 +9,17 @@
     background-color: grey; 
     margin-top: 30px;
     margin-bottom: 50px;
-    font-size: 2222px;
+    font-size: 50px;
     }
     #site_banner{
-    margin-top: 100px;
-    font-size: 2222px;
+    margin-top: 80px;
+    font-size: 80px;
     font-weight: bold;
-    margin-left: 30px;    
+    margin-left: 50px;    
     }
-    p #sub_title{
-    font-size: 1000px;
-    text-indent: 200px;  
+    div #sub_title{
+    font-size: 45px;
+    text-indent: 100px;  
     }
 
     #meme{
@@ -30,8 +30,37 @@
     }
 
     #categorytitle {
-        font-size: 10px; 
-        color: red;
+
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 70px; 
+        font-weight: 500;
+        color: black;
+
+        padding: 70px 0;
+        text-align: center;
+    }
+
+    #smallcategorytitle {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 40px; 
+        font-weight: 500;
+        color: black;
+
+        padding: 70px 0;
+        text-align: center;
+    }
+
+    #cardtitle {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 50px; 
+        font-weight: 500;
+        color: gray;
+        padding-top: 50px;
+        text-align: center;
+    }
+
+    #competitioncardbutton {
+        padding-top: 60px;
     }
 
     #bodybackground {

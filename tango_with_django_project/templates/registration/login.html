@@ -8,6 +8,11 @@ Login
 {% endblock %}
 {% block body_block %}
 <h1>Login</h1>
+{% if user.is_authenticated %}
+
+<p>you are already logged in</p>
+
+{% else %}
 <form method="post" action=".">
 {% csrf_token %}
 {{ form.as_p }}
@@ -27,4 +32,5 @@ Login
 Not registered?
 <a href="{% url 'registration_register' %}">Register here!</a>
 </p>
+{% endif %}
 {% endblock %}

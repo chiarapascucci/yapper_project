@@ -6,22 +6,16 @@ Competition homepage
 {% endblock %}
 
 {% block body_block %}
-<h2 id="categorytitle">Upcoming dog competitions</h2>
+<h2 id = "categorytitle">Upcoming dog competitions</h2>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<div class = "album py-5 bg light">
+<div class = "album py-5 bg-light">
     {% if competitions %}          
         <div class="row mb-2">
         {% for competition in competitions %}
                     <div class="col-md-6">
                         <div class="card flex-md-row mb-4 box-shadow h-md-250">
                             <div class="card-body d-flex flex-column align-items-start">
-                                <strong class="d-inline-block mb-2 text-primary">{{competition.sport.name}} competition</strong>
+                                <strong class="d-inline-block mb-2 text-success">{{competition.sport.name}} competition</strong>
                                 <h3 class="mb-0">
                                     <a class="text-dark" href="{% url 'rango:competition_name' competition.slug %}">{{ competition.name }}</a>
                                 </h3>
