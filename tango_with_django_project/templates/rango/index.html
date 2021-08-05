@@ -40,7 +40,7 @@
 
       </div>
       <div class="col-md-4">
-        {% if user.user.is_authenticated %}
+        {% if user.user.is_authenticated or user.is_authenticated %}
             <h2>Profile</h2>
             <p><a class="nav-link" href="{% url 'rango:user' user.user_slug %}">Profile</a></p>
         {% else %}

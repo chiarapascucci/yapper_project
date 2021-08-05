@@ -136,6 +136,9 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=128, blank=True) 
     picture = models.ImageField(upload_to='profile_images', blank=True)
     user_slug = models.SlugField(unique=True)
+    owned_dogs = models.ManyToManyField(Dog, blank=True, related_name='dogs')
+    is_owner = models.BooleanField(default=False)
+    is_comp_org = models.BooleanField(default=False)
     
     def save(self, *args, **kwargs):
         self.user_slug = slugify(self.user.username)

@@ -50,11 +50,22 @@ class UserProfileForm(forms.ModelForm):
     bio = forms.CharField(max_length=300)
     location = forms.CharField(max_length=128)
     picture = forms.ImageField()
+    is_owner= forms.BooleanField()
+    is_comp_org = forms.BooleanField()
     class Meta:
         model = UserProfile
-        fields = ('bio', 'picture', 'location',)
+        fields = ('bio', 'picture', 'location', 'is_owner', 'is_comp_org',)
 
-
+class EditUserProfileForm(forms.ModelForm):
+    id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    bio = forms.CharField(max_length=300)
+    location = forms.CharField(max_length=128)
+    picture = forms.ImageField()
+    is_owner= forms.BooleanField()
+    is_comp_org = forms.BooleanField()
+    class Meta:
+        model = UserProfile
+        fields = ('bio', 'picture', 'location','is_owner', 'is_comp_org',)
 """
     Yapper forms
 """
