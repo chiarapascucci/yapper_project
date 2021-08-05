@@ -6,7 +6,7 @@
 
 {% block body_block %}
 
-    you are in the profile page
+    you are in the profile page of: {{user.user.username}}
 
     <div class="container">
         <div id="followed_dog">
@@ -19,7 +19,7 @@
         <br>
         <div id="followed_sports">
             <ul>
-                {% for sport in followed_sports %}
+                {% for sport in user.followed_sports.all %}
                     <li><a href = "{% url 'rango:sports_name' sport.slug %}">{{ sport.name }}</a></li>
                 {% endfor %} 
             </ul>

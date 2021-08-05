@@ -8,31 +8,27 @@ from rango.models import Category, Page, Sport, Competition, Participation, Awar
 from rango.forms import CategoryForm, CompetitionForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
 
+
 def index(request):
     context_dict = {}
-    
-    if request.user.is_authenticated:
-        
+
+    try:
+        username = request.user.get_username()
+        print(username)
+        user=User.objects.get(username=username)
+
         try:
-            username = request.user.username
-            user=User.objects.get(username=username)
-
-            try:
             
-                user_profile = UserProfile.objects.get(user=user)
-                print(user_profile , "hello", user_profile.user_slug)
-                context_dict['user']= user_profile
-            except UserProfile.DoesNotExist:
-                print('no user here')
-                context_dict['user']=None
+            user_profile = UserProfile.objects.get(user=user)
+            print(user_profile , "hello", user_profile.user_slug)
+            context_dict['user']= user_profile
+        except UserProfile.DoesNotExist:
+            print('no user here')
+            return render(request, 'rango/index.html', {})
 
-        except User.DoesNotExist:
-            context_dict['user']=None
-        
-        
-    else:
-        print('no user')
-        
+    except User.DoesNotExist:
+        print('user does not exist')
+        return render(request, 'rango/index.html', {})
 
     breed_list = Breed.objects.order_by('-follows')[:10]
     sport_list = Sport.objects.order_by('-follows')[:3]
@@ -42,7 +38,7 @@ def index(request):
 
     
     visitor_cookie_handler(request)
-    print("passing dict", user_profile)
+    
     return render(request, 'rango/index.html', context=context_dict)
 
 def about(request):
@@ -313,12 +309,13 @@ def user_profile(request, user_name_slug):
     context_dict = {}
     try:
         user = UserProfile.objects.get(user_slug=user_name_slug)
+        print(user, "in user profile view")
         context_dict['user'] = user
         context_dict['followed_breeds']= user.followed_breeds.all()
         context_dict['followed_sports']= user.followed_sports.all()
         context_dict['followed_dogs']=user.followed_dogs.all()
     except UserProfile.DoesNotExist:
-        context_dict ['user'] = None
+        (request, 'rango/yapper/user_profile.html',{})
 
     return render(request, 'rango/yapper/user_profile.html', context=context_dict)
 
