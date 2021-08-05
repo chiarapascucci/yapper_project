@@ -86,6 +86,7 @@ def add_category(request):
 def edit_profile(request):
     form = EditUserProfileForm()
 
+
     if request.method == 'POST':
         form = EditUserProfileForm(request.POST)
         if form.is_valid():
@@ -340,6 +341,9 @@ def user_profile(request, user_name_slug):
     except UserProfile.DoesNotExist:
         (request, 'rango/yapper/user_profile.html',{})
 
+    #dog_list = Dog.objects.filter(owner = user)
+    dog_list=['dog1','dog3','dog2']
+    context_dict['dog_list']=dog_list
     return render(request, 'rango/yapper/user_profile.html', context=context_dict)
 
 @login_required
@@ -358,8 +362,7 @@ def register_profile(request):
     context_dict = {'form': form}
     return render(request, 'rango/profile_registration.html', context_dict)
 
-def user_profile_edit(request):
-    return render(request, 'rango/yapper/user_profile_edit.html', {})
+
 
 def faq(request):
     return render(request, 'rango/yapper/faq.html', {})
