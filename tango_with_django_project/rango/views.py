@@ -295,6 +295,7 @@ def competition_profile(request, competition_name_slug):
 
     return render(request, 'rango/yapper/competition_profile.html', context_dict)
 
+@login_required
 def add_competition(request):
 
     form = CompetitionForm()
@@ -324,6 +325,40 @@ def add_competition(request):
     
     context_dict = {'form': form}
     return render(request, 'rango/yapper/add_competition.html', context=context_dict)
+
+@login_required
+def edit_competition(request, user_name_slug, old_competition):
+    
+    form = CompetitionForm()
+
+    if request.method == 'POST':
+        
+        # Get the form from the user POST 
+        form = CompetitionForm(request.POST)
+
+        # Check if the form is valid
+        if form.is_valid():
+
+            cleaned_data = form.cleaned_data
+
+            # Get the sport from the form and then check if it exists 
+            sport = cleaned_data["sport"]
+
+            print(sport)
+            if sport:
+                competition = form.save(commit=False)
+                competition.sport = sport
+                competition.save()
+
+                # Delete old
+                Competition.objects.filter(id=old_competition.id).delete()
+                
+                return redirect(reverse('rango:competitions', kwargs ={}))
+        else:
+            print(form.errors)  # This could be better done; for the purposes of TwD, this is fine. DM.
+    
+    context_dict = {'form': form}
+    return render(request, 'rango/yapper/edit_competition.html', context=context_dict)
 
 @login_required
 def user_profile(request, user_name_slug):
