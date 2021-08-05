@@ -1,4 +1,4 @@
-from rango.models import UserProfile
+from rango.models import UserProfile,User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
@@ -9,20 +9,40 @@ from rango.forms import CategoryForm, CompetitionForm, PageForm, UserForm, UserP
 from datetime import datetime
 
 def index(request):
-
     context_dict = {}
+    
+    if request.user.is_authenticated:
+        
+        try:
+            username = request.user.username
+            user=User.objects.get(username=username)
+
+            try:
+            
+                user_profile = UserProfile.objects.get(user=user)
+                print(user_profile , "hello", user_profile.user_slug)
+                context_dict['user']= user_profile
+            except UserProfile.DoesNotExist:
+                print('no user here')
+                context_dict['user']=None
+
+        except User.DoesNotExist:
+            context_dict['user']=None
+        
+        
+    else:
+        print('no user')
+        
 
     breed_list = Breed.objects.order_by('-follows')[:10]
     sport_list = Sport.objects.order_by('-follows')[:3]
 
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     context_dict['topbreeds'] = breed_list
     context_dict['sports'] = sport_list
-    context_dict['extra'] = 'From the model solution on GitHub'
 
     
     visitor_cookie_handler(request)
-
+    print("passing dict", user_profile)
     return render(request, 'rango/index.html', context=context_dict)
 
 def about(request):
@@ -273,12 +293,31 @@ def add_competition(request):
 def user_profile(request, user_name_slug):
     context_dict = {}
     try:
-        user = UserProfile.objects.get(slug=user_name_slug)
+        user = UserProfile.objects.get(user_slug=user_name_slug)
         context_dict['user'] = user
+        context_dict['followed_breeds']= user.followed_breeds.all()
+        context_dict['followed_sports']= user.followed_sports.all()
+        context_dict['followed_dogs']=user.followed_dogs.all()
     except UserProfile.DoesNotExist:
         context_dict ['user'] = None
 
     return render(request, 'rango/yapper/user_profile.html', context=context_dict)
+
+@login_required
+def register_profile(request):
+    form = UserProfileForm()
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect(reverse('rango:index'))
+    else:
+        print(form.errors)
+
+    context_dict = {'form': form}
+    return render(request, 'rango/profile_registration.html', context_dict)
 
 def user_profile_edit(request):
     return render(request, 'rango/yapper/user_profile_edit.html', {})

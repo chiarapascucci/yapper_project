@@ -14,19 +14,25 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, reverse
 from django.urls import include as core_include
 from django.conf.urls import url,include
 from rango import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from registration.backends.simple.views import RegistrationView
+
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self, user):
+        return reverse('rango:register_profile')
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('rango/', core_include('rango.urls')),
     # 3 - The above maps any URLs starting with rango/ to be handled by rango.
     path('admin/', admin.site.urls),
+    path('accounts/register/', MyRegistrationView.as_view(), name='registration_register'),
     path('accounts/', core_include('registration.backends.simple.urls')),
     path('auth-social/', include('social_django.urls', namespace='social')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

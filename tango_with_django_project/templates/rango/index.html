@@ -38,14 +38,11 @@
           <p>No sports to display at the moment</p>
         {% endif %}
 
-     
-        
-        
       </div>
       <div class="col-md-4">
         {% if user.is_authenticated %}
-            <h2>Your Dogs</h2>
-            <p>List of user's dogs</p>
+            <h2>Profile</h2>
+            <p><a class="nav-link" href="{% url 'rango:user' user.user_slug %}">Profile</a></p>
         {% else %}
             <h2><a href = "{% url 'registration_register' %}">Register</a></h2>
             <p>register today to access all features</p>

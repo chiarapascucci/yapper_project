@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.forms.fields import CharField
+from django.forms.widgets import HiddenInput
 from rango.models import Page, Category, UserProfile, Dog, Competition, Sport
 
 # We could add these forms to views.py, but it makes sense to split them off into their own file.
@@ -35,12 +37,18 @@ class PageForm(forms.ModelForm):
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password',)
+        fields = ('username', 'email', 'password', )
 
 class UserProfileForm(forms.ModelForm):
+    id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    bio = forms.CharField(max_length=300)
+    location = forms.CharField(max_length=128)
+    picture = forms.ImageField()
     class Meta:
         model = UserProfile
         fields = ('bio', 'picture', 'location',)
