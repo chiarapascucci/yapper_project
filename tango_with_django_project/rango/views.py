@@ -1,3 +1,5 @@
+
+from django.template.defaultfilters import slugify
 from rango.models import UserProfile,User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -5,8 +7,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page, Sport, Competition, Participation, Award, Breed, Dog, GMap
-from rango.forms import AddDogForm, CategoryForm, CompetitionForm, PageForm, UserForm, UserProfileForm
-from django.template.defaultfilters import slugify
+from rango.forms import AddDogForm, CategoryForm, CompetitionForm, PageForm, UserForm, UserProfileForm, EditUserProfileForm
 from datetime import datetime
 
 
@@ -20,8 +21,8 @@ def index(request):
 
         try:
             
-            user_profile = UserProfile.objects.get(user=user)
-            print(user_profile , "hello", user_profile.user_slug)
+            user_profile = UserProfile.objects.get_or_create(user=user, user_slug=slugify(user.username))
+            
             context_dict['user']= user_profile
         except UserProfile.DoesNotExist:
             print('no user here')
@@ -78,6 +79,20 @@ def add_category(request):
             print(form.errors)
     
     return render(request, 'rango/add_category.html', {'form': form})
+@login_required
+def edit_profile(request):
+    form = EditUserProfileForm()
+
+    if request.method == 'POST':
+        form = EditUserProfileForm(request.POST)
+        if form.is_valid():
+           form.save(commit=True)
+           return redirect(reverse('rango:user'))
+        else:
+            print(form.errors)
+    
+    return render(request, 'rango/yapper/user_profile_edit.html', {'form': form})
+
 
 @login_required
 def add_page(request, category_name_slug):
@@ -334,15 +349,19 @@ def add_competition(request):
     context_dict = {'form': form}
     return render(request, 'rango/yapper/add_competition.html', context=context_dict)
 
+@login_required
 def user_profile(request, user_name_slug):
     context_dict = {}
     try:
         user = UserProfile.objects.get(user_slug=user_name_slug)
         print(user, "in user profile view")
-        context_dict['user'] = user
+        context_dict['user_profile'] = user
         context_dict['followed_breeds']= user.followed_breeds.all()
         context_dict['followed_sports']= user.followed_sports.all()
         context_dict['followed_dogs']=user.followed_dogs.all()
+        print(user.followed_breeds.all())
+        print(user.followed_sports.all())
+        print(user.followed_dogs.all())
     except UserProfile.DoesNotExist:
         (request, 'rango/yapper/user_profile.html',{})
 
