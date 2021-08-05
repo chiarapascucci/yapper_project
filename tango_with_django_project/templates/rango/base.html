@@ -13,6 +13,9 @@
         Yapper - {% block title_block %}{% endblock %}
     </title> 
     
+    <!-- Required as sometimes you dont want to apply setting to all bootstrap elements-->
+    {% block bootstrap_element_override_block %}
+    {% endblock %}
 
     <!-- Custom style for Yapper project -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type = "text/css">
@@ -48,9 +51,9 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'rango:competitions' %}">Competitions</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'rango:explore' %}">Explore</a></li>
                         {% if user.is_authenticated %}
-                        <p> user is logged in</p>
+                        <li class="nav-item " style ="float:right"><a class="nav-link" href="{% url 'auth_login' %}">Profile</a></li>
                         {% else %}
-                        <li class="nav-item "><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
+                        <li class="nav-item " style ="float:right"><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
                         {% endif %}
                     </ul>
                     <form class="d-flex">
@@ -67,11 +70,11 @@
            
             <div class="row">
                
-                <div id="top_page">
-                    <div id="backimg">
-                      <h1 id="site_banner">{% block greet_block %} {% endblock %}</h1>
-                      <p id="sub_title">woff woff</p>
-                    </div>
+                <div id="top_page"> 
+                    
+                   <h1 id="site_banner"> {% block greet_block %}{% endblock %} </h1>
+
+                    <p id="sub_title">woff woff</p>
                 </div>
 
                 <!-- MAIN CONTENT-->

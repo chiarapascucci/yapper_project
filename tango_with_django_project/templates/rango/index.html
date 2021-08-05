@@ -40,12 +40,12 @@
 
       </div>
       <div class="col-md-4">
-        {% if user.user.is_authenticated %}
+        {% if user.is_authenticated %}
             <h2>Profile</h2>
-            <p><a class="nav-link" href="{% url 'rango:user' user.user_slug %}">Profile</a></p>
+            <p><a class="nav-link" href="{% url 'rango:user' user_profile.user_slug %}">Profile</a></p>
         {% else %}
             <h2><a href = "{% url 'registration_register' %}">Register</a></h2>
-            <p>register today to access all features</p>
+            <p>{{ user.user.is_authenticated }}</p>
         {% endif %}
       </div>
     </div>
