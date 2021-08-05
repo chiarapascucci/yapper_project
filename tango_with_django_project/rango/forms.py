@@ -49,14 +49,15 @@ class UserForm(forms.ModelForm):
 
 class UserProfileForm(forms.ModelForm):
     id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
-    bio = forms.CharField(max_length=300)
-    location = forms.CharField(max_length=128)
-    picture = forms.ImageField()
-    is_owner= forms.BooleanField()
-    is_comp_org = forms.BooleanField()
+    bio = forms.CharField(max_length=300, help_text="Bio")
+    latitude = forms.DecimalField(decimal_places=6, max_digits=9, required=False, help_text="Latitude")
+    longitude = forms.DecimalField(decimal_places=6, max_digits=9, required=False, help_text="Longitude")
+    picture = forms.ImageField(help_text="Profile pic")
+    is_owner= forms.BooleanField(help_text="Are you a dog owner?")
+    is_comp_org = forms.BooleanField(help_text="Are you a show organiser?")
     class Meta:
         model = UserProfile
-        fields = ('bio', 'picture', 'location', 'is_owner', 'is_comp_org',)
+        fields = ('bio', 'picture', 'is_owner', 'is_comp_org','latitude', 'longitude')
 
 class EditUserProfileForm(forms.ModelForm):
     id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
