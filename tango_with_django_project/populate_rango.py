@@ -55,6 +55,13 @@ def populate():
     ]
 
     flyball_competitions = [
+        {'name':'Finneston Flyball competition',
+         'description':'Comp F description',
+         'address': '16 Richmond St, Glasgow G1 1XQ, UK',
+         'location': None,
+         'date': datetime.date(2021,5,29),
+         'eventpage': None,
+         'isCompleted': True},  
         {'name':'Is it a bird? Is it a plane? No its a ball',
          'description':'Comp F description',
          'address': '16 Richmond St, Glasgow G1 1XQ, UK',
@@ -65,6 +72,13 @@ def populate():
     ]
 
     herding_competitions = [
+        {'name':'Herding the herd competition',
+         'description':'Comp G description',
+         'address': 'Old College, South Bridge, Edinburgh EH8 9YL, UK',
+         'location': None,
+         'date': datetime.date(2021,3,2),
+         'eventpage': None,
+         'isCompleted': True}, 
         {'name':'I Herd you like Herding dogs',
          'description':'Comp G description',
          'address': 'Old College, South Bridge, Edinburgh EH8 9YL, UK',
@@ -82,11 +96,18 @@ def populate():
     ]
 
     dockdiving_competitions = [
-        {'name':'Dabbing diving dogs at the Docks',
+        {'name':'Dundee Dog Diving Docks competition',
          'description':'Comp G description',
          'address': "King's College, Aberdeen AB24 3FX, UK",
          'location': None,
          'date': datetime.date(2021,3,2),
+         'eventpage': None,
+         'isCompleted': True}, 
+         {'name':'Dabbing diving dogs at the Docks',
+         'description':'Comp G description',
+         'address': "King's College, Aberdeen AB24 3FX, UK",
+         'location': None,
+         'date': datetime.date(2021,10,20),
          'eventpage': None,
          'isCompleted': False}, 
     ]
@@ -263,11 +284,24 @@ def populate():
     for dog in dog_list:
 
         # Dictionary of participation informaition which is populated with a random competition and reward
-        participation_structure = {
-        'name': str(i),
-        'dog': dog,
-        'competition': competitions[rand.randint(0,len(competitions)-1)],
-        'award': awards[rand.randint(0,len(awards)-1)]}
+        participation_structure = {} 
+
+        # Get a random competition to set the dog in
+        randCompetition = competitions[rand.randint(0,len(competitions)-1)]
+
+        # Check if its complete, if so then give a random award for now..
+        if randCompetition.isCompleted:
+            participation_structure = {
+            'name': str(i),
+            'dog': dog,
+            'competition': randCompetition,
+            'award': awards[rand.randint(0,len(awards)-1)]}
+        else:
+            participation_structure = {
+            'name': str(i),
+            'dog': dog,
+            'competition': randCompetition,
+            'award': None}
 
         participation_list.append(participation_structure)
         i = i + 1
@@ -279,9 +313,13 @@ def populate():
 
     for p_items in participation_list:
         
-        # Add an award and participation
-        award = add_award(p_items['award']['name'], p_items['award']['description'],p_items['award']['certificate'])
-        participation = add_participation(p_items['name'],p_items['dog'], p_items['competition'], award)
+        # Add an award (None if none) and participation
+        if p_items['award'] != None:
+            award = add_award(p_items['award']['name'], p_items['award']['description'],p_items['award']['certificate'])
+            participation = add_participation(p_items['name'],p_items['dog'], p_items['competition'], award)
+        else:
+            participation = add_participation(p_items['name'],p_items['dog'], p_items['competition'], None)
+
 
 
 # Add methods 
