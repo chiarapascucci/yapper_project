@@ -5,19 +5,20 @@
     overflow: hidden;
     background-size: cover;
     background-position: center;
-    background-image: url("{% static 'images/black-dog.jpg' %}");
+    background-image: url('../images/black-dog.jpg');
     background-color: grey; 
     margin-top: 30px;
     margin-bottom: 50px;
+    font-size: 2222px;
     }
     #site_banner{
     margin-top: 100px;
-    font-size: 10px;
+    font-size: 2222px;
     font-weight: bold;
-    margin-left: 125px;    
+    margin-left: 30px;    
     }
-    #sub_title{
-    font-size: 20px;
+    p #sub_title{
+    font-size: 1000px;
     text-indent: 200px;  
     }
 
