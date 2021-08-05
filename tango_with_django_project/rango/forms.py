@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from rango.models import Page, Category, UserProfile, Dog, Competition, Sport
+from rango.models import Page, Category, UserProfile, Breed, Dog, Competition, Sport, GMap
+
+from django_google_maps.widgets import GoogleMapsAddressWidget
 
 # We could add these forms to views.py, but it makes sense to split them off into their own file.
 
@@ -51,15 +53,28 @@ class UserProfileForm(forms.ModelForm):
 """
 
 # Add owner here
-#class AddDogForm(forms.ModelForm):
-#    name = forms.CharField(max_length=128)
-#    breed = forms.CharField()
-#
-#    class Meta:
-#        model = Dog
-#        fields = ('name', 'breed', 'main_about')
+class AddDogForm(forms.ModelForm):
+    name = forms.CharField(max_length=128, required=True, help_text="Enter dog name")
+    breed = forms.ModelChoiceField(queryset=Breed.objects.all(), empty_label="Select", help_text="Select a breed", required=True)
+    #owner = forms.HiddenInput()
+    main_about = forms.CharField(max_length=1000, help_text="Tell us about your canine!")
+    follows = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+#    sex = forms.ChoiceField()
+
+    class Meta:
+        model = Dog
+        # Add owner to args
+        fields = ('name', 'breed', 'main_about',)
 
 
+class EditDogForm(forms.ModelForm):
+    """
+    Stuff to allow to edit:
+    main_about, display_pic, file_upload, achievements
+    """
 
 
 class CompetitionForm(forms.ModelForm):

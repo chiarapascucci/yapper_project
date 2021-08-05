@@ -55,6 +55,7 @@
     
     <body>
 
+
         <!-- HEADER = NAV BAR -->
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-0">
@@ -70,7 +71,7 @@
 
                         <li class="nav-item "><a class="nav-link" href="{% url 'rango:about' %}">About</a></li>
                         <li class="nav-item "><a class="nav-link" href="{% url 'rango:sports' %}">Sports</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'rango:breeds' %}"> Breeds</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'rango:breeds' %}">Breeds</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'rango:competitions' %}">Competitions</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'rango:explore' %}">Explore</a></li>
                         {% if user.is_authenticated %}

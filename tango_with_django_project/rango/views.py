@@ -4,8 +4,9 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from rango.models import Category, Page, Sport, Competition, Participation, Award, Breed, Dog
-from rango.forms import CategoryForm, CompetitionForm, PageForm, UserForm, UserProfileForm
+from rango.models import Category, Page, Sport, Competition, Participation, Award, Breed, Dog, GMap
+from rango.forms import AddDogForm, CategoryForm, CompetitionForm, PageForm, UserForm, UserProfileForm
+from django.template.defaultfilters import slugify
 from datetime import datetime
 
 def index(request):
@@ -20,7 +21,6 @@ def index(request):
     context_dict['sports'] = sport_list
     context_dict['extra'] = 'From the model solution on GitHub'
 
-    
     visitor_cookie_handler(request)
 
     return render(request, 'rango/index.html', context=context_dict)
@@ -180,9 +180,38 @@ def dog_profile(request, breed_name_slug, dog_slug):
 
     return render(request, 'rango/yapper/dog_profile.html', dprofile_context)
 
-    
+# Add user_slug to args when /user/ is implemented
 def add_dog(request):
-    return render(request, 'rango/yapper/add_dog.html', {})
+
+    context_dict = {}
+
+    form = AddDogForm()
+
+    if request.method == 'POST':
+        form = AddDogForm(request.POST)
+
+        """Owner will be set in object once form is updated
+        follows needs to be set in form as well sigh"""
+        if form.is_valid():
+            #dog = form.save(commit=False)
+            #dog.owner = UserProfile.objects.get(slug=user_slug)
+            dog = form.save()
+            # manually update slug + resave as auto increment dog_id occurs end of/post-save
+            dog.slug = slugify("{d.dog_id}-{d.name}".format(d=dog))
+            dog.save()
+
+            breed = Breed.objects.get(name=dog.breed)
+            print(breed.name)
+            print(dog.name)
+            print(dog.dog_id)
+            print(dog.slug)
+
+            return redirect(reverse('rango:dog_profile', kwargs={'breed_name_slug': breed.slug, 'dog_slug': dog.slug}))
+        else:
+            print(form.errors)  # This could be better done; for the purposes of TwD, this is fine. DM.
+    
+    context_dict = {'form': form}
+    return render(request, 'rango/yapper/add_dog.html', context=context_dict)
 
 
 def sports_homepage(request):

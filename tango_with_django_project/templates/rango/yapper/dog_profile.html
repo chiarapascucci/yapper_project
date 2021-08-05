@@ -12,9 +12,17 @@
 {% block body_block %}
 
     {% if dog %}
-
         {% for d in dog %}
+
             <h1>{{ d.name }}</h1><br>
+
+                {% if d.display_pic %}
+                    <img src="{{ d.display_pic.url }}" alt="{{ breed.name }}" />
+                {% else %}
+                    <img src="{% static 'images/dog_profile_display.jpg' %}" alt="{{ breed.name }}"/>
+                {% endif %}
+                <br>
+
 
                 <table>
                     <tr>
@@ -30,6 +38,13 @@
                         <td>{{ d.follows }}</td>
                     </tr>
                 </table>
+
+                <div>
+                    <p>
+                        <a href="">Follow now!</a>
+                        <a href="">Contact Owner</a>
+                    </p>
+                </div>
 
         {% endfor %}
 

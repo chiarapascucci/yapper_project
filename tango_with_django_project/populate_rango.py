@@ -3,7 +3,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.setti
 
 import django
 django.setup()
-from rango.models import Category, Page, Sport, Dog, Competition, Breed, Award, Participation
+from rango.models import Category, Page, Sport, Dog, Competition, Breed, Award, Participation, User, UserProfile
 
 # For an explanation of what is going on here, please refer to the TwD book.
 
@@ -140,6 +140,7 @@ def populate():
     # Dog & Breed population
     # Messy version for testing purposes for now
 
+    # Breeds
     bernese_mountain_dog = {'name':'Bernese Mountain Dog',
                             'description':'Descrip A',}
     chow_chow = {'name':'Chow Chow',
@@ -160,6 +161,7 @@ def populate():
     b = add_breed(chow_chow["name"],chow_chow["description"])
     print(b)
     b = add_breed(dachshund["name"],dachshund["description"],2)
+    # Add owner to args
     d = add_dog(anaconda["name"],b,3)
     print(b)
     print(d)
@@ -194,10 +196,11 @@ def add_breed(name, descrip, follows=0):
     b.save()
     return b
 
-# Add owner to this later
+# Add owner to args when implemented
 def add_dog(name, breed, follows=0):
     d = Dog.objects.get_or_create(name=name, breed=breed)[0]
     d.follows = follows
+    #d.owner = owner
     d.save()
     return d
 
