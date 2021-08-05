@@ -29,8 +29,7 @@
     padding-left: 60px;
     }
 
-    h1 #categorytitle {
-        font: garamond !important;
+    #categorytitle {
         font-size: 10px; 
         color: red;
     }

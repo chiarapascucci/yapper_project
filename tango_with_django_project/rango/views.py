@@ -252,7 +252,7 @@ def competition_homepage(request):
     # Context dictionary to input any external variables into the HTML template
     context_dict = {}
    
-    competition_list = Competition.objects.order_by('name')
+    competition_list = Competition.objects.order_by('date')
     context_dict['competitions'] = competition_list
 
     return render(request, 'rango/yapper/competition_homepage.html', context_dict)
