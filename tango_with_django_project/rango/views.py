@@ -310,10 +310,13 @@ def user_profile(request, user_name_slug):
     try:
         user = UserProfile.objects.get(user_slug=user_name_slug)
         print(user, "in user profile view")
-        context_dict['user'] = user
+        context_dict['user_profile'] = user
         context_dict['followed_breeds']= user.followed_breeds.all()
         context_dict['followed_sports']= user.followed_sports.all()
         context_dict['followed_dogs']=user.followed_dogs.all()
+        print(user.followed_breeds.all())
+        print(user.followed_sports.all())
+        print(user.followed_dogs.all())
     except UserProfile.DoesNotExist:
         (request, 'rango/yapper/user_profile.html',{})
 

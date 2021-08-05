@@ -155,3 +155,4 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
+MEDIA_PROFILE ='/media/profile_images'
