@@ -1,46 +1,61 @@
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 
-
-
 <link href="../../../static/css/examples/grid/grid.css" rel="stylesheet">
+
 {% block title_block %}
+    {{user_profile.user.username}}
 {% endblock %}
+
+{% block greet_block %}
+    Hello {{user_profile.user.username }}
+ {% endblock %}
 
 {% block body_block %}
 
-<h2>{{ user_profile.user.username }}</h2>
+
 
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <img src="{{ MEDIA_URL}}{{ user_profile.picture }}" width="200" height="200" alt="user's pic"/>
+            <img src="{{ MEDIA_URL}}{{ user_profile.picture }}" width="200" height="200" alt="user's pic" class="rounded-circle"/>
         </div>
         <div class="col-md-4">
-            <h3>Location</h3><br>
-            <p>{{user_profile.location}}</p>
+            <h2>Your Dogs</h2>
+            <ul>
+            {% for dog in dog_list %}
+                <li><a href = "">{{ dog }}</a></li>
+            {% endfor %} 
+            </ul>
+         
+
+
+            
         </div>
         <div class="col-md-4">
-            <h3>Bio</h3><br>
-            <p>{{user_profile.bio}}</p>
+            <h2>Followed Dog</h2>
+            <p>feck</p>
+            <ul>
+            {% for dog in followed_dogs.all %}
+                print(dog)
+                <li><a href = "">{{ dog.name }}</a></li>
+            {% endfor %} 
+            </ul>
+            
         </div>
     </div>
 </div>
 
-<br><br><br>
+<br>
+<br>
+<br>
 
 <div class="container">
     <!-- Example row of columns -->
     <div class="row">
       <div class="col-md-4">
-        <h2>Followed Dog</h2>
-        <p>feck</p>
-        <ul>
-            {% for dog in followed_dogs.all %}
-                print(dog)
-                <li><a href = "">{{ dog.name }}</a></li>
-            {% endfor %} 
-        </ul>
+        <h3>Location</h3><br>
+            <p>{{user_profile.location}}</p>
       </div>
       <div class="col-md-4">
         <h2>Followed Breeds</h2>
@@ -68,4 +83,37 @@
 
 </div> <!-- /container -->
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Bio</h3><br>
+            <p>{{user_profile.bio}}</p>
+        </div>
+        <div class="col-md-4">
+           
+        </div>
+        <div class="col-md-4">
+           
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Availabel Actions</h3><br>
+            <div class="btn-group-vertical" role="group" aria-label="First group">
+                <button type="button" class="btn btn-secondary">Edit profile</button>
+                <button type="button" class="btn btn-secondary">Add dog</button>
+                <button type="button" class="btn btn-secondary">Home</button>
+                <button type="button" class="btn btn-secondary">Logout</button>
+              </div>
+        </div>
+        <div class="col-md-4">
+           
+        </div>
+        <div class="col-md-4">
+           
+        </div>
+    </div>
+</div>
 {% endblock %}
