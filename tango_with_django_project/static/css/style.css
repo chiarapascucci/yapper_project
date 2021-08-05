@@ -30,9 +30,39 @@
     }
 
     #categorytitle {
-        font-size: 10px; 
-        color: red;
+
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 70px; 
+        font-weight: 500;
+        color: black;
+
+        padding: 70px 0;
+        text-align: center;
     }
+
+    #smallcategorytitle {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 40px; 
+        font-weight: 500;
+        color: black;
+
+        padding: 70px 0;
+        text-align: center;
+    }
+
+    #cardtitle {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 50px; 
+        font-weight: 500;
+        color: gray;
+        padding-top: 50px;
+        text-align: center;
+    }
+
+    #competitioncardbutton {
+        padding-top: 60px;
+    }
+
 
     #bodybackground {
         background-image: url("{% static 'images/black-dog.jpg' %}"); 
