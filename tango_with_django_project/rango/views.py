@@ -16,14 +16,14 @@ def index(request):
 
     try:
         username = request.user.get_username()
-        print(username)
+        print('printing username: ',username)
         user=User.objects.get(username=username)
 
         try:
             
-            user_profile = UserProfile.objects.get_or_create(user=user, user_slug=slugify(user.username))
-            
-            context_dict['user']= user_profile
+            user_profile = UserProfile.objects.get_or_create(user=user)[0]
+            print(user_profile.user_slug)
+            context_dict['user_profile']= user_profile
         except UserProfile.DoesNotExist:
             print('no user here')
             return render(request, 'rango/index.html', {})
@@ -38,6 +38,8 @@ def index(request):
     context_dict['topbreeds'] = breed_list
     context_dict['sports'] = sport_list
 
+    print(context_dict['user_profile'])
+    print(user.is_authenticated)
     
     visitor_cookie_handler(request)
     
@@ -328,9 +330,10 @@ def user_profile(request, user_name_slug):
         user = UserProfile.objects.get(user_slug=user_name_slug)
         print(user, "in user profile view")
         context_dict['user_profile'] = user
-        context_dict['followed_breeds']= user.followed_breeds.all()
-        context_dict['followed_sports']= user.followed_sports.all()
-        context_dict['followed_dogs']=user.followed_dogs.all()
+        context_dict['followed_breeds']= user.followed_breeds
+        context_dict['followed_sports']= user.followed_sports
+        context_dict['followed_dogs']=user.followed_dogs
+        
         print(user.followed_breeds.all())
         print(user.followed_sports.all())
         print(user.followed_dogs.all())

@@ -129,9 +129,9 @@ class Dog(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     id = models.BigAutoField(primary_key = True)
-   # followed_breeds = models.ManyToManyField(Breed, blank=True)
-    #followed_sports = models.ManyToManyField(Sport, blank=True)
-    #followed_dogs= models.ManyToManyField(Dog, blank=True)
+    followed_breeds = models.ManyToManyField(Breed, blank=True)
+    followed_sports = models.ManyToManyField(Sport, blank=True)
+    followed_dogs= models.ManyToManyField(Dog, blank=True)
     bio = models.CharField(max_length=300, blank=True)
     location = models.CharField(max_length=128, blank=True) 
     picture = models.ImageField(upload_to='profile_images', blank=True)
