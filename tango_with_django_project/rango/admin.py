@@ -39,13 +39,8 @@ admin.site.register(Page, PageAdmin)
 admin.site.register(UserProfile)
 admin.site.register(Sport, SportAdmin)
 admin.site.register(Competition, CompetitionAdmin)
-<<<<<<< HEAD
 admin.site.register(Dog, DogAdmin)
 admin.site.register(Breed, BreedAdmin)
-=======
-admin.site.register(Dog)
-admin.site.register(Breed)
 
 admin.site.register(Participation)
 admin.site.register(Award)
->>>>>>> main
