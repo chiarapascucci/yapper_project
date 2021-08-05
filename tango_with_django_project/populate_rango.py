@@ -5,6 +5,7 @@ import django
 django.setup()
 from rango.models import Category, Page, Sport, Dog, Competition, Breed, Award, Participation
 import datetime
+import random as rand
 
 # For an explanation of what is going on here, please refer to the TwD book.
 
@@ -14,22 +15,22 @@ def populate():
     # Yapper population
     agility_competitions = [ 
         {'name':'Glasgow Agility competition',
-         'description':"Comp A description",
-         'address': "Address A",
+         'description':"Competition where dogs test their mettle vs other dogs in Glasgow",
+         'address': "University of Glasgow, Glasgow G12 8QQ, UK",
          'location': None,
          'date': datetime.date(2021,9,2),
          'eventpage': None,
          'isCompleted': False},
         {'name':'Edinburgh Agility competition',
          'description':'Comp B description',
-         'address': 'Address B',
+         'address': 'Old College, South Bridge, Edinburgh EH8 9YL, UK',
          'location': None,
          'date': datetime.date(2021,10,9),
          'eventpage': None,
          'isCompleted': False},
         {'name':'Aberdeen Agility competition',
          'description':'Comp C description',
-         'address': 'Address C',
+         'address': "King's College, Aberdeen AB24 3FX, UK",
          'location': None,
          'date': datetime.date(2021,8,22),
          'eventpage': None,
@@ -37,16 +38,16 @@ def populate():
     ]
 
     earthdogtrials_competitions = [
-        {'name':'Earth doggo compo competition',
+        {'name':'Earthdigging Dogs competition',
          'description':'Comp D description',
-         'address': 'Address D',
+         'address': "King's College, Aberdeen AB24 3FX, UK",
          'location': None,
          'date': datetime.date(2021,10,22),
          'eventpage': None,
          'isCompleted': False},
         {'name':'Edinburgh Earthdog trials (not by combat)',
          'description':'Comp E description',
-         'address': 'Address E',
+         'address': 'Old College, South Bridge, Edinburgh EH8 9YL, UK',
          'location': None,
          'date': datetime.date(2021,12,2),
          'eventpage': None,
@@ -56,9 +57,9 @@ def populate():
     flyball_competitions = [
         {'name':'Is it a bird? Is it a plane? No its a ball',
          'description':'Comp F description',
-         'address': 'Address F',
+         'address': '16 Richmond St, Glasgow G1 1XQ, UK',
          'location': None,
-         'date': datetime.date(2021,3,2),
+         'date': datetime.date(2021,12,29),
          'eventpage': None,
          'isCompleted': False},       
     ]
@@ -66,16 +67,16 @@ def populate():
     herding_competitions = [
         {'name':'I Herd you like Herding dogs',
          'description':'Comp G description',
-         'address': 'Address G',
+         'address': 'Old College, South Bridge, Edinburgh EH8 9YL, UK',
          'location': None,
-         'date': datetime.date(2021,3,2),
+         'date': datetime.date(2021,11,20),
          'eventpage': None,
          'isCompleted': False}, 
         {'name':'Hamilton Herding competition',
          'description':'Comp G description',
-         'address': 'Address G',
+         'address': '16 Richmond St, Glasgow G1 1XQ, UK',
          'location': None,
-         'date': datetime.date(2021,3,2),
+         'date': datetime.date(2021,10,30),
          'eventpage': None,
          'isCompleted': False}, 
     ]
@@ -83,7 +84,7 @@ def populate():
     dockdiving_competitions = [
         {'name':'Dabbing diving dogs at the Docks',
          'description':'Comp G description',
-         'address': 'Address G',
+         'address': "King's College, Aberdeen AB24 3FX, UK",
          'location': None,
          'date': datetime.date(2021,3,2),
          'eventpage': None,
@@ -106,11 +107,11 @@ def populate():
         'Herding': {'competitions': herding_competitions,
                     'description':"Herding competitions are often called herding trials. In these trials, dogs have to move sheep around a field, often through gates, fences, and into and out of enclosures as directed by their handlers. Some trials contain a pair of dogs being used, called a “brace,” while others involve only one dog. Trials like these have been around for hundreds of years.",
                     'breed_restrictions': "Herding breed dogs.",
-                    'follows': 1},
+                    'follows': 400},
         'Dock diving':  {'competitions': dockdiving_competitions,
                     'description':"Dock Diving is a relatively new sport that has dogs jumping and splashing! It first appeared as an organized canine sport in 2007 and has since exploded. This is an amazing sport for dogs that love to fetch, swim, or both and titles are offered to any breed or mixed breed. The UKC began giving Dock Diving titles in 2009; the AKC in 2014. It takes place on a stationary 35’ to 40’ (11-12m) dock that is placed over a pool that is about 8’ (2.5m) long and at least 4’ (1.2m) deep.",
                     'breed_restrictions': 'No restrictions.',
-                    'follows': 1}}
+                    'follows': 250}}
 
     # Yapper popultation
     for sport_name, sport_data in sports.items():
@@ -121,47 +122,133 @@ def populate():
 
 
     # Dog & Breed population
-    # Messy version for testing purposes for now
 
-    bernese_mountain_dog = {'name':'Bernese Mountain Dog',
-                            'description':'Descrip A',}
-    chow_chow = {'name':'Chow Chow',
-            'description':'Descrip B',}
-    dachshund = {'name':'Dachshund',
-            'description':'Descrip C',}
-    irish_wolfhound = {'name':'Irish Wolfhound',
-            'description':'Descrip D',}
-    leonberger = {'name':'Leonberger',
-                'description':'Descrip E',}
+    bernese_dogs = [
+        {'name': 'Anaconda'},
+        {'name': 'Berni'},
+        {'name': 'Bongo'},
+    ]
+    chowchow_dogs = [
+        {'name': 'Congo'},
+        {'name': 'Cassandra'},
+        {'name': 'Dog'},
+    ]
+    dachshun_dogs = [
+        {'name': 'Darshan'},
+        {'name': 'Dana'},
+        {'name': 'Zander'},
+    ]
+    irish_wolf_dogs = [ 
+        {'name': 'Welma'},
+        {'name': 'Chan'},
+        {'name': 'Barnie'},
+    ]
+    leonberger_dogs = [ 
+        {'name': 'Morag'},
+        {'name': 'Molly'},
+        {'name': 'Fetch'},
+        {'name': 'Brodie'},
+    ]
+    greyhound_dogs = [
+        {'name': 'Polly'},
+        {'name': 'Ban'},
+        {'name': 'Plop'},
+    ]
+    scottish_dearhound_dogs = [
+        {'name': 'Billy'},
+        {'name': 'Fido'},
+        {'name': 'Dash'},
+        {'name': 'Gareth'},
+    ]
+    cocker_spaniel_dogs= [
+        {'name': 'Jilly'},
+        {'name': 'Luke Skywalker'},
+        {'name': 'Sauron'},
+    ]
+    german_shepherd_dogs = [
+        {'name': 'Loki'},
+        {'name': 'Thor'},
+        {'name': 'Siegfried'},
+        {'name': 'Olaf'},
+    ]
+    shetland_sheepdogs = [
+        {'name': 'Seamus'},
+        {'name': 'Yona'},
+        {'name': 'Shona'},
+        {'name': 'Harry Potter'},
+    ]
+    siberian_husky_dogs = [
+        {'name': 'Vladamir'},
+        {'name': 'Sputnik'},
+        {'name': 'Paul'},
+    ]
+    malmute_dogs = [
+        {'name': 'Malmo'},
+        {'name': 'Malmi'},
+        {'name': 'Malma'},
+    ]
 
-    # Dogs
-    anaconda = {'name':'Anaconda',
-            'breed':dachshund,}
-    gareth = {'name': 'Gareth',
-            'breed': irish_wolfhound}
-    
-    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
-    print(b)
-    b = add_breed(chow_chow["name"],chow_chow["description"])
-    print(b)
-    b = add_breed(dachshund["name"],dachshund["description"],2)
-    d_anaconda = add_dog(anaconda["name"],b,3)
-    print(b)
-    print(d_anaconda)
-    b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"],2)
-    d_gareth = add_dog(gareth['name'],b,10)
-    print(b)
-    b = add_breed(leonberger["name"],leonberger["description"],10)
-    print(b)
+    breeds = [
+        {'name':'Bernese Mountain Dog',
+        'description':"The Bernese Mountain Dog (German: Berner Sennenhund) is a large dog breed, one of the four breeds of Sennenhund-type dogs from the Swiss Alps. These dogs have roots in the Roman mastiffs. The name Sennenhund is derived from the German Senne (alpine pasture) and Hund (hound/dog), as they accompanied the alpine herders and dairymen called Senn. Berner (or Bernese in English) refers to the area of the breed's origin, in the canton of Bern. This breed was originally kept as a general farm dog. Large Sennenhunde in the past were also used as draft animals, pulling carts. The breed was officially established in 1912.",
+        'dogs': bernese_dogs},
+        {'name':'Chow Chow',
+        'description':"The Chow Chow is a dog breed originally from northern China. The Chow Chow is a sturdily built dog, square in profile, with a broad skull and small, triangular, erect ears with rounded tips. The breed is known for a very dense double coat that is either smooth or rough. The fur is particularly thick in the neck area, giving it a distinctive ruff or mane appearance. The coat may be shaded/self-red, black, blue, cinnamon/fawn, or cream.",
+        'dogs': chowchow_dogs},
+        {'name':'Dachshund',
+        'description':"The dachshund (German: badger dog), also known as the wiener dog, badger dog, sausage dog, is a short-legged, long-bodied, hound-type dog breed. They may be smooth, wire, or long-haired. The standard-sized dachshund was developed to scent, chase, and flush out badgers and other burrow-dwelling animals, while the miniature dachshund was bred to hunt small animals such as rabbits and other smaller animal",
+        'dogs': dachshun_dogs},
+        {'name':'Irish Wolfhound',
+        'description':"The Irish Wolfhound is a historic sighthound dog breed from Ireland that has, by its presence and substantial size, inspired literature, poetry and mythology.Like all sighthounds, it was used to pursue game by speed; it was also famed as a guardian dog, specializing in protection against and for the hunting of wolves. The original dog-type was presumed extinct by most knowledgeable authors but recreated specifically for the canine fancy mainly by Captain George A. Graham in the late 19th century.The modern breed, classified by recent genetic research into the Sighthound United Kingdom Rural Clade has been used by coursing hunters who have prized it for its ability to dispatch game caught by other, swifter sighthounds",
+        'dogs': irish_wolf_dogs},
+        {'name':'Leonberger',
+        'description':"The Leonberger is a dog breed, whose name derives from the city of Leonberg in Baden-Württemberg, Germany.This breed occurs with a generous double coat; the Leonberger is a large, muscular, and elegant dog with balanced body type, medium temperament, and dramatic presence. The head is adorned with a striking black mask and projects the breed's distinct expression of intelligence, pride, and kindliness. Remaining true to their early roots as a capable family and working dog and search-and-rescue dog (particularly water), the surprisingly agile Leonberger is sound and coordinated, with both strength in bearing and elegance in movement. A sexually dimorphic breed, the Leonberger possesses either a strongly masculine or elegantly feminine form, making gender immediately discernible.",
+        'dogs': leonberger_dogs},
+        {'name': 'Scottish Deerhound',
+        'description': "The Scottish Deerhound, or simply the Deerhound, is a large breed of hound (a sighthound), once bred to hunt the red deer by coursing. In outward appearance, the Scottish Deerhound is similar to the Greyhound, but larger and more heavily boned with a rough-coat. The Deerhound is closely related to the Irish Wolfhound and was a contributor to that breed when it was re-created at the end of the 19th century.",
+        'dogs': scottish_dearhound_dogs},
+        {'name': 'Cocker spaniel',
+        'description': "Cocker Spaniels are dogs belonging to two breeds of the spaniel dog type: the American Cocker Spaniel and the English Cocker Spaniel, both of which are commonly called simply Cocker Spaniel in their countries of origin. In the early 20th century, Cocker Spaniels also included small hunting spaniels. Cocker Spaniels were originally bred as hunting dogs in the United Kingdom, with the term 'cocker' deriving from their use to hunt the Eurasian woodcock. When the breed was brought to the United States, it was bred to a different standard, which enabled it to specialize in hunting the American woodcock. Further physical changes were bred into the cocker in the United States during the early part of the 20th century.",
+        'dogs': cocker_spaniel_dogs},
+        {'name': 'German Shepherd',
+        'description': "The German Shepherd is a breed of medium to large-sized working dog that originated in Germany. According to the FCI, the breed's English language name is German Shepherd Dog. The breed was officially known as the Alsatian Wolf Dog in the UK from after the First World War until 1977 when its name was changed back to German Shepherd. Despite its wolf-like appearance, the German Shepherd is a relatively modern breed of dog, with its origin dating to 1899. As a herding dog, German Shepherds are working dogs developed originally for herding sheep. Since that time, however, because of their strength, intelligence, trainability, and obedience, German Shepherds around the world are often the preferred breed for many types of work, including disability assistance, search-and-rescue, police and military roles and acting. The German Shepherd is the second-most registered breed by the American Kennel Club and seventh-most registered breed by The Kennel Club in the United Kingdom",
+        'dogs': german_shepherd_dogs},
+        {'name': 'Greyhound',
+        'description': "he Greyhound is a breed of dog, a sighthound which has been bred for coursing game and greyhound racing. It is also referred to as an English Greyhound. Since the rise in large-scale adoption of retired racing Greyhounds, the breed has seen a resurgence in popularity as a family pet. According to Merriam-Webster, a Greyhound is any of a breed of tall slender graceful smooth-coated dogs characterized by swiftness and keen sight, as well as any of several related dogs, such as the Italian Greyhound. The Greyhound is a gentle and intelligent breed whose combination of long, powerful legs, deep chest, flexible spine, and slim build allows it to reach average race speeds exceeding 64 kilometres per hour (40 mph). The Greyhound can reach a full speed of 70 kilometres per hour (43 mph) within 30 metres (98 ft), or six strides from the boxes, traveling at almost 20 metres per second (66 ft/s) for the first 250 metres (820 ft) of a race.",
+        'dogs': greyhound_dogs},
+        {'name': 'Shetland Sheepdog',
+        'description': "The Shetland Sheepdog, often known as the Sheltie, is a breed of herding dog that originated in the Shetland Islands of Scotland. The original name was Shetland Collie, but this caused controversy amongst Rough Collie breeders of the time, so the breed's name was formally changed. This diligent small dog is clever, vocal, excitable and willing to please. They are incredibly trustworthy to their owners to the point where they are often referred to as shadows due to their attachment to family. This breed was formally recognized by The Kennel Club (UK) in 1909. Like the Shetland pony, Shetland cattle and the Shetland sheep, the Shetland Sheepdog is a hardy but diminutive breed developed to thrive amidst the harsh and meagre conditions of its native islands. While the Sheltie still excels at herding, today it is often raised as a working dog and/or family pet.",
+        'dogs': shetland_sheepdogs},
+        {'name': 'Siberian Husky',
+        'description': "The Siberian Husky is a medium-sized working sled dog breed. The breed belongs to the Spitz genetic family. It is recognizable by its thickly furred double coat, erect triangular ears, and distinctive markings, and is smaller than the similar-looking Alaskan Malamute. Siberian Huskies originated in Northeast Asia where they are bred by the Chukchi people of Siberia for sled pulling, and companionship.It is an active, energetic, resilient breed, whose ancestors lived in the extremely cold and harsh environment of the Siberian Arctic. William Goosak, a Russian fur trader, introduced them to Nome, Alaska, during the Nome Gold Rush, initially as sled dogs to work the mining fields and for expeditions through otherwise impassable terrain. Today, the Siberian Husky is typically kept as a house pet, though they are still frequently used as sled dogs by competitive and recreational mushers",
+        'dogs': siberian_husky_dogs},
+        {'name': 'Alaskan Malamute',
+        'description': "The Alaskan Malamute is a large breed of dog that was originally bred for their strength and endurance to haul heavy freight as a sled dog and hound.They are similar to other arctic, husky, and spitz breeds such as the Greenland Dog, Canadian Eskimo Dog, the Siberian Husky, and the Samoyed.",
+        'dogs': malmute_dogs},
+    ]
 
 
-    # Yapper popultation
 
+    # === Yapper popultation ===
+
+    # competition list for easy future refernce in setting Participation entities 
     competitions = list()
+
+    # Populate sports and competitions with population data
     for sport_name, sport_data in sports.items():
         sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'], sport_data['follows'])
         for c in sport_data['competitions']:
             competitions.append(add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted']))
+
+    # Populate Breeds and dogs
+    dog_list = list()
+    for breed_data in breeds:
+        breed = add_breed(breed_data['name'],breed_data['description'], rand.randint(0,10000))
+        for dog_data in breed_data['dogs']:
+            dog = add_dog(dog_data['name'], breed,rand.randint(0,1000))
+            dog_list.append(dog)
+
+    
 
 
     # Populate the participation and awards
@@ -176,11 +263,11 @@ def populate():
 
     participations = [
         {'name': 'p1',
-        'dog': d_anaconda,
+        'dog': dog_list[0],
         'competition': competitions[0],
         'award': awards[0]},
         {'name': 'p2',
-        'dog': d_gareth,
+        'dog': dog_list[2],
         'competition': competitions[1],
         'award': awards[1]}
     ]
@@ -198,7 +285,6 @@ def add_breed(name, descrip, follows=0):
     b = Breed.objects.get_or_create(name=name)[0]
     b.description = descrip
     b.follows = follows
-    print(b.follows)
     b.save()
     return b
 
@@ -223,13 +309,11 @@ def add_competition(sport, name, description, address, location, date, eventpage
     # Set entity relation 
     co = Competition.objects.get_or_create(sport=sport, name=name)[0]
 
-    print(type(date))
     # Set attributes
     co.description = description
     co.address = address
     co.location = location
     co.date = date
-    print(co.date)
     co.eventpage = eventpage
     co.isCompleted = isCompleted
     co.save()
