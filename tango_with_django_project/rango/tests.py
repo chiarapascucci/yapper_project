@@ -9,7 +9,7 @@ import inspect
 
 class ModelUnitTests(TestCase):
 
-    def test_setup(self):
+    def setup(self):
         
         print("Setting up Unit test for Models...\n")
 
@@ -47,13 +47,12 @@ class ModelUnitTests(TestCase):
 
 
 
-    def test_ModelRelationAndValueTests(self):
+    def test_ModelAttributeRetrieval(self):
 
         print("Testing model relations and values:\n\n")
         
         # Fetch entities
         print("T1: Testing object retrieval from SQLite DB: ")
-
         sport = Sport.objects.filter(name="football")
         competition = Competition.objects.filter(name="competition")
         breed = Breed.objects.filter(name="malamute")
@@ -68,7 +67,7 @@ class ModelUnitTests(TestCase):
         self.assertIsNotNone(award,         'Award does not exist.')
         self.assertIsNotNone(participation, 'Participation does not exist.')
 
-            
+    def test_
 
 
 

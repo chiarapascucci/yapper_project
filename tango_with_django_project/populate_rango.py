@@ -394,23 +394,6 @@ def populate():
             participation = add_participation(p_items['name'],p_items['dog'], p_items['competition'], None)
 
    
-    
-    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
-    print(b)
-    b = add_breed(chow_chow["name"],chow_chow["description"])
-    print(b)
-    b = add_breed(dachshund["name"],dachshund["description"],2)
-    # Add owner to args
-    d = add_dog(anaconda["name"],b,9001)
-    print(b)
-    print(d)
-    d = add_dog(fluffy["name"],b,8999)
-    print(b)
-    print(d)
-    b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"],2)
-    print(b)
-    b = add_breed(leonberger["name"],leonberger["description"],10)
-    print(b)
 
     ##USER PROFILES###
     
