@@ -9,17 +9,12 @@ import inspect
 
 class ModelUnitTests(TestCase):
 
-    def setup(self):
+    def setUp(self):
         
-        print("Setting up Unit test for Models...\n")
 
         # Instantiate differnt entites and populate  
-
         # Sport entity 
         sport = Sport.objects.create(name="football")
-        sport.description = 'description'
-        sport.breed_restrictions = 'none'
-        sport.follows = 10
 
         # Competition entity
         competition = Competition.objects.create(name="competition",sport=sport)
@@ -52,13 +47,13 @@ class ModelUnitTests(TestCase):
         print("Testing model relations and values:\n\n")
         
         # Fetch entities
-        print("T1: Testing object retrieval from SQLite DB: ")
-        sport = Sport.objects.filter(name="football")
-        competition = Competition.objects.filter(name="competition")
-        breed = Breed.objects.filter(name="malamute")
-        dog = Dog.objects.filter(name="doggo")
-        award = Award.objects.filter(name="thebest")
-        participation = Participation.objects.filter(name="participation")
+        print("T1: Testing object retrieval from SQLite DB - ")
+        sport = Sport.objects.get(name="football")
+        competition = Competition.objects.get(name="competition")
+        breed = Breed.objects.get(name="malamute")
+        dog = Dog.objects.get(name="doggo")
+        award = Award.objects.get(name="thebest")
+        participation = Participation.objects.get(name="participation")
 
         self.assertIsNotNone(sport,         'Sport does not exist.')
         self.assertIsNotNone(competition,   'Competition does not exist.')
@@ -67,7 +62,32 @@ class ModelUnitTests(TestCase):
         self.assertIsNotNone(award,         'Award does not exist.')
         self.assertIsNotNone(participation, 'Participation does not exist.')
 
-    def test_
+
+    def test_ModelRelations(self):
+
+        print("T2: Testing model relationships - ")
+        # Retrieve objects again (fine from first test)
+        sport = Sport.objects.get(name="football")
+        competition = Competition.objects.get(name="competition")
+        breed = Breed.objects.get(name="malamute")
+        dog = Dog.objects.get(name="doggo")
+        award = Award.objects.get(name="thebest")
+        participation = Participation.objects.get(name="participation")
+
+        print("Testing Sport and Competition...")
+        self.assertEqual(competition.sport, sport, "Sport and Competition relation dont match.")
+        print("Testing Breed and Dog...")
+        self.assertEqual(dog.breed, breed, "Dog and Breed relation dont match.")
+        print("Testing Competition and Participation...")
+        self.assertEqual(participation.competition, competition, "Participation and Competition relation dont match.")
+        print("Testing Dog and Participation...")
+        self.assertEqual(participation.dog, dog, "Participation and Dog relation dont match.")
+        print("Testing Competition and Dog...")
+        self.assertEqual(Participation.objects.get(dog=dog), Participation.objects.get(competition=competition), "Competition and Dog relation dont match.")
+        print("Testing Participation and Award...")
+        self.assertEqual(award, participation.award, "Award and Participation relation dont match.")
+
+
 
 
 
