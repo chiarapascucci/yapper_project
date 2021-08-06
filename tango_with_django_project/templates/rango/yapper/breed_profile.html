@@ -28,13 +28,13 @@
 
             <div>
               <b><i>Followers:</i></b>
-              <p id="follow_count"> {{ breed.follows }} </p></div>
+              <p id="follow_countb"> {{ breed.follows }} </p></div>
               <div class = "float-right">
               {% if user.is_authenticated %}
 
                 {% if following %}
                 {% else %}
-                  <button id="fllw_btn" data-breedid="{{ breed.id }}" class="btn btn-primary btn-sm" type="button">
+                  <button id="fllw_btnb" data-breedid="{{ breed.id }}" class="btn btn-primary btn-sm" type="button">
                     Follow
                   </button>
                 {% endif %}

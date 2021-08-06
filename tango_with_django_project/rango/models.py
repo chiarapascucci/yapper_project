@@ -99,7 +99,7 @@ class Sport(models.Model):
 class Dog(models.Model):
 
     # Necessary
-    dog_id = models.BigAutoField(primary_key = True)
+    #dog_id = models.BigAutoField(primary_key = True)
     name = models.CharField(max_length=128)
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE)
     #owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True)        # Temp blank until Users properly implemented
@@ -124,21 +124,21 @@ class Dog(models.Model):
  
     def save(self, *args, **kwargs):
         # setup slug to reflect none id before save (when dog-id autofield fills)
-        #if self.dog_id is None:
+        #if self.id is None:
         #self.slug = slugify("{self.name}".format(self=self))
-        self.slug = slugify("{self.dog_id}-{self.name}".format(self=self))
+        self.slug = slugify("{self.id}-{self.name}".format(self=self))
         super(Dog, self).save(*args, **kwargs)
 
         # Set media path dynamically if still set to default --- probably wrong now, just do this when a form is sent
 #        if self.display_pic.storage.location == "dog_profiles/temp":
-#            self.display_pic.storage.location = "dog_profiles/{}-{}".format(self.dog_id,self.slug)
+#            self.display_pic.storage.location = "dog_profiles/{}-{}".format(self.id,self.slug)
 #            print(self.display_pic.storage.location)
 
     class Meta:
         verbose_name_plural = "Dogs"
 
     def __str__(self):
-        return str(self.dog_id) + " " + self.name + ", " + self.breed.name
+        return str(self.id) + " " + self.name + ", " + self.breed.name
 
 
 
