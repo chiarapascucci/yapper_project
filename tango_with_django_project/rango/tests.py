@@ -1,11 +1,13 @@
 from django.test import TestCase
 from django.test import Client
-from rango.models import Sport, Dog, Competition, Breed, Award, Participation
+from rango.models import Sport, Dog, Competition, Breed, Award, Participation, User, UserProfile
 from django.urls import reverse, resolve
 import random as rand
 import datetime
 import os
 import inspect
+from django.contrib.auth.hashers import PBKDF2PasswordHasher, make_password
+
 
 # Create your tests here.
 
@@ -51,6 +53,11 @@ class ModelUnitTests(TestCase):
         # Participation entity
         participation = Participation.objects.create(name = "participation", dog=dog, competition=competition, award=award)
 
+        # User entity
+        user = User.objects.get_or_create(username="bob")[0]
+        user.email = 'g4@mail.com'
+        user.password = make_password("workplease123", salt=None, hasher='default')
+        user.save()
 
 
     def test_ModelAttributeRetrieval(self):
@@ -58,7 +65,7 @@ class ModelUnitTests(TestCase):
         print("Testing model relations and values:\n\n")
         
         # Fetch entities
-        print("T1: Testing object retrieval from SQLite DB - ")
+        print("\nT1: Testing object retrieval from SQLite DB - ")
         sport = Sport.objects.get(name="football")
         competition = Competition.objects.get(name="competition")
         breed = Breed.objects.get(name="malamute")
@@ -72,11 +79,12 @@ class ModelUnitTests(TestCase):
         self.assertIsNotNone(dog,           'Dog does not exist.')
         self.assertIsNotNone(award,         'Award does not exist.')
         self.assertIsNotNone(participation, 'Participation does not exist.')
+        print("All passed.")
 
 
     def test_ModelRelations(self):
 
-        print("T2: Testing model relationships - ")
+        print("\nT2: Testing model relationships - ")
         # Retrieve objects again (fine from first test)
         sport = Sport.objects.get(name="football")
         competition = Competition.objects.get(name="competition")
@@ -97,11 +105,12 @@ class ModelUnitTests(TestCase):
         self.assertEqual(Participation.objects.get(dog=dog), Participation.objects.get(competition=competition), "Competition and Dog relation dont match.")
         print("Testing Participation and Award...")
         self.assertEqual(award, participation.award, "Award and Participation relation dont match.")
+        print("All passed.")
 
 
     def test_ViewResponse(self): 
 
-        print("T3: Testing view function responses - testing on 0,1,2 text slug input views - ")
+        print("\nT3: Testing view function responses - testing on 0,1,2 text slug input views - ")
         
         # Retrieve objects again (fine from first test)
         sport = Sport.objects.get(name="football")
@@ -130,12 +139,21 @@ class ModelUnitTests(TestCase):
         self.assertEqual(context['breed'], breed,"Context of Breed from dog profile does not match." )
         self.assertEqual(context['participations'].first(), participation,"Context of Participation from dog profile does not match." )
        
+        print("All passed.")
+
+
+    def test_UserLogin(self):
+        
+        print ("\nT4: Testing user login -")
+        c = Client()
+        response = c.post('/accounts/login/', {'username': 'bob', 'password': 'workplease123'})
+        context = response.context
+        self.assertEquals(response.status_code, 302,"Error in login attempt.")
+        print("All passed.")
 
 
 
 
-
-    
 
 
 
