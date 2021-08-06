@@ -45,6 +45,9 @@ SOCIAL_AUTH_TWITTER_SECRET = 'HRpioUYWjvQ67itqxZH8uehCasXPCm5KD235PsCOv7BQE1S6Ul
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '51946566920-b7t6u67pmsgmv2u6jrsqhgj480qflu8u.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'sMyKpOhzqkfLNW0cLZXpKl0w'
+
+GOOGLE_MAPS_API_KEY = 'AIzaSyBfqLPgTGUnSEeJY6zmYLBXYgGbbX3tQ5A'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,6 +60,7 @@ INSTALLED_APPS = [
     'rango',
     'registration',
     'social_django',
+    'django_google_maps',
 ]
 
 MIDDLEWARE = [

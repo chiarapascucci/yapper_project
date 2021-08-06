@@ -2,7 +2,129 @@
 {% load staticfiles %}
 
 {% block title_block %}
+    Register Dog
 {% endblock %}
 
 {% block body_block %}
+
+ 
+    <div>
+        <h1> Register dog</h1>
+        <hr>
+
+        <form id="add_dog_form" method="post" action="{% url 'rango:add_dog' %}">
+
+            {% csrf_token %}
+            {% csrf_token %}
+            
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+    
+            {% for field in form.visible_fields %}
+                <p>            
+                    {{ field.errors }}
+                    {{ field.help_text }}<br>
+                    {{ field }}
+                </p>
+            {% endfor %}
+    
+            <input type="submit" name="submit" value="Submit"/>
+
+    
+        </form>
+    </div>
+
+
+    <br>
+    <hr>
+
+    <!---Testing Location stuff here-->
+
+    <!---Just normal image output, reference url format with string center location, lat,lng for coords-->
+    <p id="mapimage">
+        <img src="https://maps.googleapis.com/maps/api/staticmap?center=lol&size=600x300&key=AIzaSyBfqLPgTGUnSEeJY6zmYLBXYgGbbX3tQ5A">
+    </p>
+
+    <!---Designated autocomplete element-->
+    <input id=autocomplete placeholder="Start typing a location" type="text" style="height:50px; width: 200px;"/>
+
+    <!---Set up some test fields to indicate when stuff happens-->
+    <div>
+        <p id=details ></p>
+        <p id=details2 ></p>
+        <label for="lat">Latitude: </label>
+        <p id=lat></p>
+        <label for="lng">Longitude: </label>
+        <p id=lng></p>
+        <p id=maptry >
+            <!--Coordinates inserted format-->
+            <img src = "https://maps.googleapis.com/maps/api/staticmap?center=41.3169448,-74.1250465&zoom=10&size=400x400&key=AIzaSyBfqLPgTGUnSEeJY6zmYLBXYgGbbX3tQ5A">
+        </p>
+    </div>
+
+
+    <!--Call script containing Maps API stuff here before doing callback function-->
+    <!--Access api, ask for geometry and places libraries, callback starts initial autocomplete function-->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqLPgTGUnSEeJY6zmYLBXYgGbbX3tQ5A&libraries=geometry,places&callback=initAutoComplete" async defer></script>
+
+
+
+
+<!----------------------------Maps Api JS & PlaceLoad for AutoComplete---------------------------->
+    <!---Need to API key dynamic ideally, reference from settings.py--->
+    <script>
+
+        let autocomplete;
+        
+        function initAutoComplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'),
+                {
+                    types: ['establishment'],
+                    fields: ['geometry', 'name']
+                }
+            );
+            document.getElementById('details').innerHTML = "hello";
+            document.getElementById('details2').innerHTML = "huh";
+            autocomplete.addListener('place_changed', onPlaceChanged);
+        }
+
+
+        function onPlaceChanged() {
+            var place = autocomplete.getPlace();
+
+            if(!place.geometry) {
+                // Bad text
+                document.getElementById('details').innerHTML = "That wasn't a location!";
+                document.getElementById('details2').innerHTML = ""
+                document.getElementById('autocomplete').placeholder = 'Please search and select a location.';
+            } else {
+                // Get the latlng from the placeresult object
+                var lat = document.getElementById('lat').innerHTML = place.geometry.location.lat();
+                var lng = document.getElementById('lng').innerHTML = place.geometry.location.lng();
+
+                // Build url with coords
+                var start = "https://maps.googleapis.com/maps/api/staticmap?"
+                var key = "&key=AIzaSyBfqLPgTGUnSEeJY6zmYLBXYgGbbX3tQ5A";
+                var center = "center=" + lat + "," + lng;
+                var size = "&size=400x400";
+                var zoom = "&zoom=10";
+
+                var image = start + center + zoom + size + key;
+
+                document.getElementById('maptry').innerHTML = image;
+
+            }
+
+        }
+
+
+    </script>
+
+
+
+
+
+
 {% endblock %}

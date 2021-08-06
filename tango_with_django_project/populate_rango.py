@@ -142,6 +142,37 @@ def populate():
 
 
     # Dog & Breed population
+    # Messy version for testing purposes for now
+
+    # Breeds
+    bernese_mountain_dog = {'name':'Bernese Mountain Dog',
+                            'description':'Descrip A',}
+    chow_chow = {'name':'Chow Chow',
+            'description':'Descrip B',}
+    dachshund = {'name':'Dachshund',
+            'description':'Descrip C',}
+    irish_wolfhound = {'name':'Irish Wolfhound',
+            'description':'Descrip D',}
+    leonberger = {'name':'Leonberger',
+                'description':'Descrip E',}
+
+    # Dogs
+    anaconda = {'name':'Anaconda',
+            'breed':dachshund,}
+    
+    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
+    print(b)
+    b = add_breed(chow_chow["name"],chow_chow["description"])
+    print(b)
+    b = add_breed(dachshund["name"],dachshund["description"],2)
+    # Add owner to args
+    d = add_dog(anaconda["name"],b,3)
+    print(b)
+    print(d)
+    b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"],2)
+    print(b)
+    b = add_breed(leonberger["name"],leonberger["description"],10)
+    print(b)
 
     bernese_dogs = [
         {'name': 'Anaconda'},
@@ -153,7 +184,7 @@ def populate():
         {'name': 'Cassandra'},
         {'name': 'Dog'},
     ]
-    dachshun_dogs = [
+    dachshund_dogs = [
         {'name': 'Darshan'},
         {'name': 'Dana'},
         {'name': 'Zander'},
@@ -217,7 +248,7 @@ def populate():
         'dogs': chowchow_dogs},
         {'name':'Dachshund',
         'description':"The dachshund (German: badger dog), also known as the wiener dog, badger dog, sausage dog, is a short-legged, long-bodied, hound-type dog breed. They may be smooth, wire, or long-haired. The standard-sized dachshund was developed to scent, chase, and flush out badgers and other burrow-dwelling animals, while the miniature dachshund was bred to hunt small animals such as rabbits and other smaller animal",
-        'dogs': dachshun_dogs},
+        'dogs': dachshund_dogs},
         {'name':'Irish Wolfhound',
         'description':"The Irish Wolfhound is a historic sighthound dog breed from Ireland that has, by its presence and substantial size, inspired literature, poetry and mythology.Like all sighthounds, it was used to pursue game by speed; it was also famed as a guardian dog, specializing in protection against and for the hunting of wolves. The original dog-type was presumed extinct by most knowledgeable authors but recreated specifically for the canine fancy mainly by Captain George A. Graham in the late 19th century.The modern breed, classified by recent genetic research into the Sighthound United Kingdom Rural Clade has been used by coursing hunters who have prized it for its ability to dispatch game caught by other, swifter sighthounds",
         'dogs': irish_wolf_dogs},
@@ -234,7 +265,7 @@ def populate():
         'description': "The German Shepherd is a breed of medium to large-sized working dog that originated in Germany. According to the FCI, the breed's English language name is German Shepherd Dog. The breed was officially known as the Alsatian Wolf Dog in the UK from after the First World War until 1977 when its name was changed back to German Shepherd. Despite its wolf-like appearance, the German Shepherd is a relatively modern breed of dog, with its origin dating to 1899. As a herding dog, German Shepherds are working dogs developed originally for herding sheep. Since that time, however, because of their strength, intelligence, trainability, and obedience, German Shepherds around the world are often the preferred breed for many types of work, including disability assistance, search-and-rescue, police and military roles and acting. The German Shepherd is the second-most registered breed by the American Kennel Club and seventh-most registered breed by The Kennel Club in the United Kingdom",
         'dogs': german_shepherd_dogs},
         {'name': 'Greyhound',
-        'description': "he Greyhound is a breed of dog, a sighthound which has been bred for coursing game and greyhound racing. It is also referred to as an English Greyhound. Since the rise in large-scale adoption of retired racing Greyhounds, the breed has seen a resurgence in popularity as a family pet. According to Merriam-Webster, a Greyhound is any of a breed of tall slender graceful smooth-coated dogs characterized by swiftness and keen sight, as well as any of several related dogs, such as the Italian Greyhound. The Greyhound is a gentle and intelligent breed whose combination of long, powerful legs, deep chest, flexible spine, and slim build allows it to reach average race speeds exceeding 64 kilometres per hour (40 mph). The Greyhound can reach a full speed of 70 kilometres per hour (43 mph) within 30 metres (98 ft), or six strides from the boxes, traveling at almost 20 metres per second (66 ft/s) for the first 250 metres (820 ft) of a race.",
+        'description': "The Greyhound is a breed of dog, a sighthound which has been bred for coursing game and greyhound racing. It is also referred to as an English Greyhound. Since the rise in large-scale adoption of retired racing Greyhounds, the breed has seen a resurgence in popularity as a family pet. According to Merriam-Webster, a Greyhound is any of a breed of tall slender graceful smooth-coated dogs characterized by swiftness and keen sight, as well as any of several related dogs, such as the Italian Greyhound. The Greyhound is a gentle and intelligent breed whose combination of long, powerful legs, deep chest, flexible spine, and slim build allows it to reach average race speeds exceeding 64 kilometres per hour (40 mph). The Greyhound can reach a full speed of 70 kilometres per hour (43 mph) within 30 metres (98 ft), or six strides from the boxes, traveling at almost 20 metres per second (66 ft/s) for the first 250 metres (820 ft) of a race.",
         'dogs': greyhound_dogs},
         {'name': 'Shetland Sheepdog',
         'description': "The Shetland Sheepdog, often known as the Sheltie, is a breed of herding dog that originated in the Shetland Islands of Scotland. The original name was Shetland Collie, but this caused controversy amongst Rough Collie breeders of the time, so the breed's name was formally changed. This diligent small dog is clever, vocal, excitable and willing to please. They are incredibly trustworthy to their owners to the point where they are often referred to as shadows due to their attachment to family. This breed was formally recognized by The Kennel Club (UK) in 1909. Like the Shetland pony, Shetland cattle and the Shetland sheep, the Shetland Sheepdog is a hardy but diminutive breed developed to thrive amidst the harsh and meagre conditions of its native islands. While the Sheltie still excels at herding, today it is often raised as a working dog and/or family pet.",
@@ -330,10 +361,11 @@ def add_breed(name, descrip, follows=0):
     b.save()
     return b
 
-# Add owner to this later
+# Add owner to args when implemented
 def add_dog(name, breed, follows=0):
     d = Dog.objects.get_or_create(name=name, breed=breed)[0]
     d.follows = follows
+    #d.owner = owner
     d.save()
     return d
 

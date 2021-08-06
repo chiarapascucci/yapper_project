@@ -14,11 +14,93 @@
 
 <div class="container">
     <div class="row">
-        <form method="post" actions ="{% url 'rango:register_profile' %}" enctype = "multipart/form-data">
+        <form id=registerform method="post" actions ="{% url 'rango:register_profile' %}" enctype = "multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p}}
+
+            {% for hidden in form.hidden_fields %}
+                {{ hidden.errors }}
+                {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+                <p>            
+                    {{ field.errors }}
+                    {{ field.help_text }}
+                    {{ field }}
+                </p>
+            {% endfor %}
+
+            <!---Display a location input field--->
+            <p><input id=autocomplete placeholder="Start typing a location" type="text" style="height:50px; width: 200px;"/></p>
             <input type="submit" value="Create Profile" />
         </form>
     </div>
 </div> 
+
+
+
+
+
+
+    <!--Call script containing Maps API stuff here before doing callback function-->
+    <!--Access api, ask for geometry and places libraries, callback starts initial autocomplete function-->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqLPgTGUnSEeJY6zmYLBXYgGbbX3tQ5A&libraries=geometry,places&callback=initAutoComplete" async defer></script>
+
+
+    <!----------------------------Maps Api JS & PlaceLoad for AutoComplete---------------------------->
+    <!---Need to API key dynamic ideally, reference from settings.py--->
+    <div><script>
+
+        let autocomplete;
+        
+        // Initialise Autocomplete search field
+        function initAutoComplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'),
+                {
+                    types: ['establishment'],
+                    fields: ['geometry', 'name']
+                }
+            );
+
+            autocomplete.addListener('place_changed', onPlaceChanged);
+        }
+
+        // Handle search box input event
+        function onPlaceChanged() {
+            var place = autocomplete.getPlace();
+
+            // No geometry attribute, not a valid place given
+            if(!place.geometry) {
+                // Bad text
+                document.getElementById('autocomplete').placeholder = 'Please search and select a location.';
+                document.getElementById('registerform').elements['latitude'].value = 0;
+                document.getElementById('registerform').elements['longitude'].value = 0;
+                document.getElementById('registerform').elements['loc_image'].value = "";
+            } else {
+
+                // Get the latlng from the placeresult object, convert to 6 d.p. val, store individual lat/lang
+                var latlng = place.geometry.location.toUrlValue();
+                var splitcoords = latlng.split(",");
+
+                var lat = document.getElementById('registerform').elements['latitude'].value = splitcoords[0];
+                var lng = document.getElementById('registerform').elements['longitude'].value = splitcoords[1];
+
+                // Build image url with coords, to store for reference
+                var start = "https://maps.googleapis.com/maps/api/staticmap?";
+                var key = "&key=AIzaSyBfqLPgTGUnSEeJY6zmYLBXYgGbbX3tQ5A";
+                var center = "center=" + lat + "," + lng;
+                var size = "&size=300x300";
+                var zoom = "&zoom=10";
+
+                var url = start + center + zoom + size + key;
+                document.getElementById('registerform').elements['loc_image'].value = url;
+
+            }
+
+        }
+
+
+    </script></div>
+
 {% endblock %}
