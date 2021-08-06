@@ -52,12 +52,13 @@ class UserProfileForm(forms.ModelForm):
     bio = forms.CharField(max_length=300, help_text="Bio")
     latitude = forms.DecimalField(decimal_places=6, max_digits=9, required=False, help_text="Latitude", initial=0)
     longitude = forms.DecimalField(decimal_places=6, max_digits=9, required=False, help_text="Longitude", initial=0)
+    loc_image = forms.URLField(help_text="Map")
     picture = forms.ImageField(help_text="Profile pic")
     is_owner= forms.BooleanField(help_text="Are you a dog owner?")
     is_comp_org = forms.BooleanField(help_text="Are you a show organiser?")
     class Meta:
         model = UserProfile
-        fields = ('bio', 'picture', 'is_owner', 'is_comp_org','latitude', 'longitude')
+        fields = ('bio', 'picture', 'is_owner', 'is_comp_org','latitude', 'longitude','loc_image')
 
 class EditUserProfileForm(forms.ModelForm):
     id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
