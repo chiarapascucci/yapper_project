@@ -51,7 +51,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'rango:competitions' %}">Competitions</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'rango:explore' %}">Explore</a></li>
                         {% if user.is_authenticated %}
-                        <li class="nav-item " style ="float:right"><a class="nav-link" href="{% url 'auth_login' %}">Profile</a></li>
+                        
                         {% else %}
                         <li class="nav-item " style ="float:right"><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
                         {% endif %}

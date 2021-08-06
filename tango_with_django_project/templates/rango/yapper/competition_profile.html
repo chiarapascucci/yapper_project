@@ -12,7 +12,7 @@
     }
 
     #smallcategorytitle {  
-        background-color: honeydew;
+        background-color: aliceblue;
     }
 </style>
 {% endblock %}
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]"
-                        style="width: 200px; height: 250px;" src="{% static 'sport_content/sport_images/'|add:competition.sport.slug|add:'-thin.jpg' %}"
+                        style="width: 350px; height: 250px;" src="{% static 'breed_content/breed_media/images/'|add:dog.breed.slug|add:'.jpg' %}" alt="{{ dog.breed.name }}"
                         data-holder-rendered="true">
                 </div>
             {% endfor %}
@@ -72,5 +72,8 @@
     </div>
 </div>
 
+<script type="text/javascript" src="{% static 'js/nCardColourGradient.js'%}"></script>
 {% endblock %}
+
+
 
