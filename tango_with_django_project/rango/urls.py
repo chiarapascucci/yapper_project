@@ -27,4 +27,5 @@ urlpatterns = [
     path('user/<slug:user_name_slug>/edit/', views.edit_profile, name='edit'),
     path('user/<slug:user_name_slug>/register_competition/', views.add_competition, name='register_competition'),
     path('explore/', views.explore, name='explore'),
+    path('user/<slug:user_name_slug>/edit_competition/', views.edit_competition, name='edit_competition')
 ]
