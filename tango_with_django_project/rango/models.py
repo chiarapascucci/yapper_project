@@ -136,11 +136,6 @@ class Dog(models.Model):
     def __str__(self):
         return str(self.dog_id) + " " + self.name + ", " + self.breed.name
 
-    # Full debug method, prints all attributes of dog instance
-    def printDog(self):
-        for a in dir(self):
-            if not a.startswith("__") and not callable(getattr(self,a)):
-                print(a)
 
 
 class UserProfile(models.Model):
@@ -150,10 +145,12 @@ class UserProfile(models.Model):
     followed_sports = models.ManyToManyField(Sport, blank=True)
     followed_dogs= models.ManyToManyField(Dog, blank=True)
     bio = models.CharField(max_length=300, blank=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+
     latitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
     longitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
     loc_image = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+
     user_slug = models.SlugField(unique=True)
     owned_dogs = models.ManyToManyField(Dog, blank=True, related_name='dogs')
     is_owner = models.BooleanField(default=False)
