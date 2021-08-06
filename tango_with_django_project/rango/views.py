@@ -161,11 +161,11 @@ def breed_profile(request, breed_name_slug):
 
         except UserProfile.DoesNotExist:
             print('no user here')
-            return render(request, 'rango/index.html', {})
+            
 
     except User.DoesNotExist:
         print('user does not exist')
-        return render(request, 'rango/index.html', {})
+       
 
 
     return render(request, 'rango/yapper/breed_profile.html', bprofile_context)
@@ -208,11 +208,11 @@ def dog_profile(request, breed_name_slug, dog_slug):
 
         except UserProfile.DoesNotExist:
             print('no user here')
-            return render(request, 'rango/index.html', {})
+            
 
     except User.DoesNotExist:
         print('user does not exist')
-        return render(request, 'rango/index.html', {})
+        
 
     return render(request, 'rango/yapper/dog_profile.html', dprofile_context)
 
@@ -296,11 +296,11 @@ def sports_profile(request, sports_name_slug):
 
         except UserProfile.DoesNotExist:
             print('no user here')
-            return render(request, 'rango/index.html', {})
+            
 
     except User.DoesNotExist:
         print('user does not exist')
-        return render(request, 'rango/index.html', {})
+        
 
     return render(request, 'rango/yapper/sports_profile.html', context_dict)
 
