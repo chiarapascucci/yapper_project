@@ -32,11 +32,11 @@ class UserProfileForm(forms.ModelForm):
 
 class EditUserProfileForm(forms.ModelForm):
     id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
-    bio = forms.CharField(max_length=300)
-    location = forms.CharField(max_length=128)
-    picture = forms.ImageField()
-    is_owner= forms.BooleanField()
-    is_comp_org = forms.BooleanField()
+    bio = forms.CharField(max_length=300, required=False)
+    location = forms.CharField(max_length=128, required=False)
+    picture = forms.ImageField(required=False)
+    is_owner= forms.BooleanField(help_text="**Are you a dog owner?", required=False)
+    is_comp_org = forms.BooleanField(help_text="**Are you a show organiser?", required=False)
     class Meta:
         model = UserProfile
         fields = ('bio', 'picture', 'location','is_owner', 'is_comp_org',)

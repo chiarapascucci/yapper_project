@@ -14,6 +14,19 @@ from datetime import datetime
 def index(request):
     context_dict = {}
 
+    breed_list = Breed.objects.order_by('-follows')[:10]
+    sport_list = Sport.objects.order_by('-follows')[:10]
+
+    for breed in breed_list:
+        print(breed)
+    
+    for sport in sport_list:
+        print(sport)
+
+    context_dict['topbreeds'] = breed_list
+    context_dict['sports'] = sport_list
+    visitor_cookie_handler(request)
+
     try:
         username = request.user.get_username()
         print('printing username: ',username)
@@ -26,22 +39,18 @@ def index(request):
             context_dict['user_profile']= user_profile
         except UserProfile.DoesNotExist:
             print('no user here')
-            return render(request, 'rango/index.html', {})
+            return render(request, 'rango/index.html', context=context_dict)
 
     except User.DoesNotExist:
         print('user does not exist')
-        return render(request, 'rango/index.html', {})
+        return render(request, 'rango/index.html', context=context_dict)
 
-    breed_list = Breed.objects.order_by('-follows')[:10]
-    sport_list = Sport.objects.order_by('-follows')[:3]
-
-    context_dict['topbreeds'] = breed_list
-    context_dict['sports'] = sport_list
+    
 
     print(context_dict['user_profile'])
     print(user.is_authenticated)
     
-    visitor_cookie_handler(request)
+    
     
     return render(request, 'rango/index.html', context=context_dict)
 
@@ -58,16 +67,19 @@ def about(request):
 def edit_profile(request, user_name_slug):
     form = EditUserProfileForm()
 
-
     if request.method == 'POST':
-        form = EditUserProfileForm(request.POST)
+        form = EditUserProfileForm(request.POST,request.FILES, instance=UserProfile.objects.get(user_slug=user_name_slug))
         if form.is_valid():
            form.save(commit=True)
            return redirect(reverse('rango:user', kwargs= {'user_name_slug': user_name_slug}))
         else:
             print(form.errors)
-    
-    return render(request, 'rango/yapper/user_profile_edit.html', {'form': form})
+        return redirect(reverse('rango:user', kwargs= {'user_name_slug': user_name_slug})) 
+    else:
+        form = EditUserProfileForm(instance=UserProfile.objects.get(user_slug=user_name_slug))
+        context_dict = {}
+        context_dict['form'] = form
+        return render(request, ('rango/yapper/user_profile_edit.html'), context=context_dict)
 
 
 
@@ -346,6 +358,9 @@ def user_profile(request, user_name_slug):
         context_dict['followed_breeds']= user.followed_breeds
         context_dict['followed_sports']= user.followed_sports
         context_dict['followed_dogs']=user.followed_dogs
+        context_dict['owned_dogs'] = user.owned_dogs
+        context_dict['is_owner'] = user.is_owner
+        context_dict['is_comp_org']= user.is_comp_org
         
         print(user.followed_breeds.all())
         print(user.followed_sports.all())
@@ -354,8 +369,7 @@ def user_profile(request, user_name_slug):
         (request, 'rango/yapper/user_profile.html',{})
 
     #dog_list = Dog.objects.filter(owner = user)
-    dog_list=['dog1','dog3','dog2']
-    context_dict['dog_list']=dog_list
+    
     return render(request, 'rango/yapper/user_profile.html', context=context_dict)
 
 @login_required
