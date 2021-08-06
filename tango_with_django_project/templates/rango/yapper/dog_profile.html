@@ -59,7 +59,7 @@
             <div class="col-6">     
             <div class="p-3 mb-3 rounded">
                 <div class = "float-right">
-                    {% if user.is_authenticated %}
+                {% if user.is_authenticated %}
 
                     {% if following %}
                     {% else %}
@@ -68,7 +68,7 @@
                       </button>
                     {% endif %}
     
-                  {% endif %}
+                {% endif %}
                 </div>
                 <h4 class="font-italic">Bio</h4>
                 <p class="mb-0">
@@ -100,7 +100,7 @@
                                     <td>{{ dog.breed.name }}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Follows:</b></td>
+                                    <td><b>Followers:</b></td>
                                     <td id="follow_countd">{{ dog.follows }}</td>
                                 </tr>
                             </table>
