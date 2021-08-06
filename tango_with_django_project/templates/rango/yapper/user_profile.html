@@ -104,17 +104,10 @@
         <div class="col-md-4">
             <h3>Availabel Actions</h3><br>
             <div class="btn-group-vertical" role="group" aria-label="First group">
-<<<<<<< HEAD
-                <button type="button" class="btn btn-secondary">Edit profile</button>
-                <a href="{% url 'rango:add_dog' user_profile.slug %}"><button type="button" class="btn btn-secondary">Add dog</button></a>
-                <button type="button" class="btn btn-secondary">Home</button>
-                <button type="button" class="btn btn-secondary">Logout</button>
-=======
                 <button type="button" class="btn btn-secondary" ><a href="{% url 'rango:edit' user_profile.user_slug %}">Edit profile</a></button>
                 <button type="button" class="btn btn-secondary"><a href="{% url 'rango:add_dog' %}">Add dog</a></button>
                     <button type="button" class="btn btn-secondary"><a href="{% url 'rango:register_competition'%}" %}>Add competition</a></button>
                 <button type="button" class="btn btn-secondary"><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></button>
->>>>>>> e22ee68989abe69e382dfc492b71c15fc0d7dd74
               </div>
         </div>
         <div class="col-md-4">
