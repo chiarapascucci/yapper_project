@@ -188,8 +188,11 @@ def add_dog(request):
         """Owner will be set in object once form is updated
         follows needs to be set in form as well sigh"""
         if form.is_valid():
+            #username = request.user.get_username()
+            #user = User.objects.get(username=username)
+            #user_profile = UserProfile.objects.get(user=user)
             #dog = form.save(commit=False)
-            #dog.owner = UserProfile.objects.get(slug=user_slug)
+            #dog.owner = user_profile
             dog = form.save()
             # manually update slug + resave as auto increment dog_id occurs end of/post-save
             #dog.slug = slugify("{d.dog_id}-{d.name}".format(d=dog))
@@ -309,7 +312,7 @@ def add_competition(request):
 
                 return redirect(reverse('rango:competitions', kwargs ={}))
         else:
-            print(form.errors)  # This could be better done; for the purposes of TwD, this is fine. DM.
+            print(form.errors)  
     
     context_dict = {'form': form}
     return render(request, 'rango/yapper/add_competition.html', context=context_dict)
