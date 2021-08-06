@@ -7,6 +7,9 @@ from rango.models import Sport, Dog, Competition, Breed, Award, Participation, U
 import datetime
 import random as rand
 from django.contrib.auth.hashers import PBKDF2PasswordHasher, make_password
+from django.core.files import File
+import tango_with_django_project.settings as Psettings
+
 
 # For an explanation of what is going on here, please refer to the TwD book.
 
@@ -273,10 +276,10 @@ def populate():
     awards = [         
         {'name':'Best girl',
          'description':'Best girl description',
-         'certificate': None},
+         'certificate': "/dogcertificates/BestGirlAward.pdf"},
         {'name':'Best boy',
          'description':'Best boy description',
-         'certificate': None},    
+         'certificate': "/dogcertificates/BestBoyAward.pdf"},    
     ]
 
     ###USERS AND USER PROFILES###
@@ -336,31 +339,45 @@ def populate():
     # Populate the participation and awards
     # Participation list which is filled with participation information for each dog
     participation_list = list()
-    i = 0
+    ID = 0
     for dog in dog_list:
 
         # Dictionary of participation informaition which is populated with a random competition and reward
         participation_structure = {} 
 
+        # Setting dog to 2 competitions
+        comp_ind = rand.randint(0,len(competitions)-1)
+        comp_ind2 = rand.randint(0,len(competitions)-1)
+
+        # Ensure the dog isnt added to the same competition
+        while (comp_ind == comp_ind2):
+            comp_ind2 = rand.randint(0,len(competitions)-1)
+
+
         # Get a random competition to set the dog in
-        randCompetition = competitions[rand.randint(0,len(competitions)-1)]
+        randCompetitions = [competitions[comp_ind],competitions[comp_ind2] ] 
 
         # Check if its complete, if so then give a random award for now..
-        if randCompetition.isCompleted:
-            participation_structure = {
-            'name': str(i),
-            'dog': dog,
-            'competition': randCompetition,
-            'award': awards[rand.randint(0,len(awards)-1)]}
-        else:
-            participation_structure = {
-            'name': str(i),
-            'dog': dog,
-            'competition': randCompetition,
-            'award': None}
+        for randCompetition in randCompetitions:
 
-        participation_list.append(participation_structure)
-        i = i + 1
+            if randCompetition.isCompleted:
+                participation_structure = {
+                'name': str(ID),
+                'dog': dog,
+                'competition': randCompetition,
+                'award': awards[rand.randint(0,len(awards)-1)]}
+            else:
+                participation_structure = {
+                'name': str(ID),
+                'dog': dog,
+                'competition': randCompetition,
+                'award': None}
+
+            # Add participation to list
+            participation_list.append(participation_structure)
+
+            # Increment the ID
+            ID = ID  + 1
 
     # Create entities of Awards and Participation
     # Reset awards as repopulating and using create to generate them since want an Award per Participation 
@@ -528,7 +545,8 @@ def add_award(name, description, certificate):
 
     a.name = name
     a.description = description
-    a.certificate = certificate
+    a.certificate_path = certificate
+    a.certificate = None
     a.save()
     return a
 

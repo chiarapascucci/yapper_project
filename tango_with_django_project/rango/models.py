@@ -3,7 +3,11 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 from django_google_maps import fields as map_fields
+import tango_with_django_project.settings as settings
+from django.core.files.storage import FileSystemStorage
 
+# Storage systsem for certificates
+#certificate_storage = FileSystemStorage(location='/media/dogcertificates/')
 
 
 class Category(models.Model):
@@ -183,11 +187,16 @@ class Competition(models.Model):
     # Model attributes 
     name = models.CharField(max_length=NAME_MAX_LENGTH)
     address = models.CharField(max_length=ADDRESS_MAX_LENGTH)   # Address of compititon
-    location = models.CharField(max_length=100, null=True)                 # Google API information in String form
+    location = models.CharField(max_length=100, null=True)      # Google API information in String form
+    
+    latitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
+    longitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
+    loc_image = models.URLField(blank=True)
+
     date = models.DateField(null=True)                          # Date object
-    eventpage = models.URLField(null=True)                               # Url of event page if avaialble
+    eventpage = models.URLField(null=True)                      # Url of event page if avaialble
     isCompleted = models.BooleanField(default=False)            # Boolean field for is completed or not 
-    description = models.TextField(null=True)                            # Description about competition
+    description = models.TextField(null=True)                   # Description about competition
     image = models.ImageField(blank=True)
 
     # Relationship attribute 
@@ -216,8 +225,9 @@ class Award(models.Model):
     # Model attributes 
     name = models.CharField(max_length=NAME_MAX_LENGTH)
     description = models.TextField()                            # Description about award
-    certificate = models.FileField()
-    
+    certificate = models.FileField(upload_to= 'media/dogcertificates/')                            #storage=certificate_storage
+    certificate_path = models.CharField(max_length=500)
+
     # Verbose print
     def __str__(self):
         return self.name
