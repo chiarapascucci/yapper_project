@@ -91,6 +91,7 @@
         <div class="col-md-4">
             <h3>Bio</h3><br>
             <p>{{user_profile.bio}}</p>
+            {{user_profile.slug}}
         </div>
         <div class="col-md-4">
            
@@ -106,7 +107,7 @@
             <h3>Availabel Actions</h3><br>
             <div class="btn-group-vertical" role="group" aria-label="First group">
                 <button type="button" class="btn btn-secondary">Edit profile</button>
-                <button type="button" class="btn btn-secondary">Add dog</button>
+                <a href="{% url 'rango:add_dog' user_profile.slug %}"><button type="button" class="btn btn-secondary">Add dog</button></a>
                 <button type="button" class="btn btn-secondary">Home</button>
                 <button type="button" class="btn btn-secondary">Logout</button>
               </div>
