@@ -159,6 +159,8 @@ def populate():
     # Dogs
     anaconda = {'name':'Anaconda',
             'breed':dachshund,}
+    fluffy = {'name':'Mr Fluffykins VI',
+            'breed':dachshund,}
     
     b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
     print(b)
@@ -166,7 +168,10 @@ def populate():
     print(b)
     b = add_breed(dachshund["name"],dachshund["description"],2)
     # Add owner to args
-    d = add_dog(anaconda["name"],b,3)
+    d = add_dog(anaconda["name"],b,9001)
+    print(b)
+    print(d)
+    d = add_dog(fluffy["name"],b,8999)
     print(b)
     print(d)
     b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"],2)
@@ -175,7 +180,7 @@ def populate():
     print(b)
 
     bernese_dogs = [
-        {'name': 'Anaconda'},
+        {'name': 'anaconda'},
         {'name': 'Berni'},
         {'name': 'Bongo'},
     ]
@@ -205,7 +210,7 @@ def populate():
         {'name': 'Ban'},
         {'name': 'Plop'},
     ]
-    scottish_dearhound_dogs = [
+    scottish_deerhound_dogs = [
         {'name': 'Billy'},
         {'name': 'Fido'},
         {'name': 'Dash'},
@@ -257,8 +262,8 @@ def populate():
         'dogs': leonberger_dogs},
         {'name': 'Scottish Deerhound',
         'description': "The Scottish Deerhound, or simply the Deerhound, is a large breed of hound (a sighthound), once bred to hunt the red deer by coursing. In outward appearance, the Scottish Deerhound is similar to the Greyhound, but larger and more heavily boned with a rough-coat. The Deerhound is closely related to the Irish Wolfhound and was a contributor to that breed when it was re-created at the end of the 19th century.",
-        'dogs': scottish_dearhound_dogs},
-        {'name': 'Cocker spaniel',
+        'dogs': scottish_deerhound_dogs},
+        {'name': 'Cocker Spaniel',
         'description': "Cocker Spaniels are dogs belonging to two breeds of the spaniel dog type: the American Cocker Spaniel and the English Cocker Spaniel, both of which are commonly called simply Cocker Spaniel in their countries of origin. In the early 20th century, Cocker Spaniels also included small hunting spaniels. Cocker Spaniels were originally bred as hunting dogs in the United Kingdom, with the term 'cocker' deriving from their use to hunt the Eurasian woodcock. When the breed was brought to the United States, it was bred to a different standard, which enabled it to specialize in hunting the American woodcock. Further physical changes were bred into the cocker in the United States during the early part of the 20th century.",
         'dogs': cocker_spaniel_dogs},
         {'name': 'German Shepherd',
