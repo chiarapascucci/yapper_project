@@ -79,6 +79,7 @@ class Sport(models.Model):
     description = models.TextField()
     breed_restrictions = models.TextField()
     follows = models.IntegerField(default=0)
+    image = models.ImageField(blank=True)
 
     # Slug attributes
     slug = models.SlugField(unique=True)
@@ -185,6 +186,7 @@ class Competition(models.Model):
     eventpage = models.URLField(null=True)                               # Url of event page if avaialble
     isCompleted = models.BooleanField(default=False)            # Boolean field for is completed or not 
     description = models.TextField(null=True)                            # Description about competition
+    image = models.ImageField(blank=True)
 
     # Relationship attribute 
     sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
@@ -228,7 +230,9 @@ class Participation(models.Model):
     name = models.CharField(max_length=NAME_MAX_LENGTH)
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     competition = models.ForeignKey(Competition, on_delete=models.CASCADE)
-    award = models.OneToOneField(Award, on_delete=models.CASCADE)
+
+    # Allow null to be true as award only awarded if competition complete
+    award = models.OneToOneField(Award, null=True, on_delete=models.CASCADE)
     
     # Verbose print
     def __str__(self):
