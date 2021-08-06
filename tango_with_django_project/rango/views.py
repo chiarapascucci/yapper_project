@@ -1,4 +1,5 @@
 
+import re
 from django.template.defaultfilters import slugify
 from rango.models import UserProfile,User
 from django.shortcuts import render, redirect
@@ -6,6 +7,8 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views import View
 from rango.models import Category, Page, Sport, Competition, Participation, Award, Breed, Dog, GMap
 from rango.forms import AddDogForm, CompetitionForm, UserForm, UserProfileForm, EditUserProfileForm
 from datetime import datetime
@@ -127,6 +130,7 @@ def breed_profile(request, breed_name_slug):
 
     bprofile_context = {}
 
+    # Get breed's context
     try:
         breed = Breed.objects.get(slug=breed_name_slug)
         dogs = Dog.objects.filter(breed=breed)
@@ -137,6 +141,32 @@ def breed_profile(request, breed_name_slug):
     except Breed.DoesNotExist:
         bprofile_context['dogs'] = None
         bprofile_context['breed'] = None
+
+
+    # Check for user following breed, if so pass a flag
+    try:
+        username = request.user.get_username()
+        print('printing username: ',username)
+        user=User.objects.get(username=username)
+        try:            
+            user_profile = UserProfile.objects.get(user=user)
+            breeds = user_profile.followed_breeds
+            
+            if user_profile.followed_breeds.filter(slug=breed_name_slug).exists():
+                print('Already following')
+                bprofile_context['following'] = breed
+            else:
+                print('Not following')
+
+
+        except UserProfile.DoesNotExist:
+            print('no user here')
+            return render(request, 'rango/index.html', {})
+
+    except User.DoesNotExist:
+        print('user does not exist')
+        return render(request, 'rango/index.html', {})
+
 
     return render(request, 'rango/yapper/breed_profile.html', bprofile_context)
 
@@ -354,9 +384,11 @@ def user_profile(request, user_name_slug):
         (request, 'rango/yapper/user_profile.html',{})
 
     #dog_list = Dog.objects.filter(owner = user)
-    dog_list=['dog1','dog3','dog2']
+    #dog_list=['dog1','dog3','dog2']
+    dog_list =[]
     context_dict['dog_list']=dog_list
     return render(request, 'rango/yapper/user_profile.html', context=context_dict)
+
 
 @login_required
 def register_profile(request):
@@ -384,3 +416,44 @@ def explore(request):
     return render(request, 'rango/yapper/explore.html', {})
 
 
+
+
+
+class FollowBreedView(View):
+    @method_decorator(login_required)
+
+    def get(self, request):
+        breed_id = request.GET['breed_id']
+
+        try:
+            breed = Breed.objects.get(id=int(breed_id))
+        except Breed.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        breed.follows = breed.follows + 1
+        breed.save()
+
+        # Need to update the user
+        # Get user
+        try:
+            username = request.user.get_username()
+            print('printing username: ',username)
+            user=User.objects.get(username=username)
+
+            try:
+                
+                user_profile = UserProfile.objects.get(user=user)
+                user_profile.followed_breeds.add(breed)
+                user_profile.save()
+
+            except UserProfile.DoesNotExist:
+                print('no user here')
+                return render(request, 'rango/index.html', {})
+
+        except User.DoesNotExist:
+            print('user does not exist')
+            return render(request, 'rango/index.html', {})
+
+        return HttpResponse(breed.follows)

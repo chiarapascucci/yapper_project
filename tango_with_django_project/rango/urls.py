@@ -14,6 +14,7 @@ urlpatterns = [
     path('sports/<slug:sports_name_slug>/', views.sports_profile, name='sports_name'),        
     path('breeds/', views.breed_homepage ,name='breeds'),
     path('breeds/<slug:breed_name_slug>/', views.breed_profile ,name='breed_profile'),             
+    path('follow_breed/', views.FollowBreedView.as_view(), name='follow_breed'),
     path("breeds/<slug:breed_name_slug>/<slug:dog_slug>/", views.dog_profile ,name='dog_profile'), 
     path('competitions/', views.competition_homepage, name='competitions'), 
     path('competitions/<slug:competition_name_slug>/', views.competition_profile ,name='competition_name'),    

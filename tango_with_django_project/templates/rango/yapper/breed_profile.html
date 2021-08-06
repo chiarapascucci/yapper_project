@@ -14,8 +14,6 @@
 
 {% block body_block %}
 
-    <main>
-
     {% if breed %}
 
     <div class="container py-4">
@@ -24,14 +22,27 @@
         <div class="container-fluid py-2"></div>
           <h1 class="display-5 fw-bold">{{ breed.name }}</h1>
           <p class="col-md-8 fs-4">{{ breed.description }}</p>
+
+
           <div class="container-fluid py-2">
-            <div class = "float-left">
-              <b><i>Followers:</i></b> {{ breed.follows }} 
+
+            <div>
+              <b><i>Followers:</i></b>
+              <p id="follow_count"> {{ breed.follows }} </p></div>
+              <div class = "float-right">
+              {% if user.is_authenticated %}
+
+                {% if following %}
+                {% else %}
+                  <button id="fllw_btn" data-breedid="{{ breed.id }}" class="btn btn-primary btn-sm" type="button">
+                    Follow
+                  </button>
+                {% endif %}
+
+              {% endif %}
+              </div>
             </div>
-            
-            <div class = "float-right">
-              <button class="btn btn-primary btn-md" type="button" onclick=follow()>Follow</button>
-            </div>
+          </div>
             
           </div>
        </div>
@@ -56,7 +67,7 @@
           <div class="h-100 p-5 bg-light border rounded-3">
             <h2>Registered Dogs</h2>
             <p>
-              {% if dogs %}
+            {% if dogs %}
                 <ul>
                     {% for dog in dogs %}
                         <li><a href="{% url 'rango:dog_profile' breed.slug dog.slug %}">{{ dog.name }}</a></li>
@@ -73,20 +84,14 @@
 
     </div>
 
-    {% else %}
-    No breed found.
-    {% endif %}
-    </main>
-
+  {% else %}
+  No breed found.
+  {% endif %}
 
 
 {% endblock %}
 
-<script>
 
-  follow()
-
-</script>
 
       <!---Button ref from template + others
         
