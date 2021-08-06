@@ -356,7 +356,7 @@ def add_competition(request):
     return render(request, 'rango/yapper/add_competition.html', context=context_dict)
 
 @login_required
-def edit_competition(request, user_name_slug, old_competition):
+def edit_competition(request, user_name_slug):
     
     form = CompetitionForm()
 
@@ -380,7 +380,7 @@ def edit_competition(request, user_name_slug, old_competition):
                 competition.save()
 
                 # Delete old
-                Competition.objects.filter(id=old_competition.id).delete()
+                #Competition.objects.filter(id=old_competition.id).delete()
                 
                 return redirect(reverse('rango:competitions', kwargs ={}))
         else:

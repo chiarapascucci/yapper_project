@@ -16,9 +16,16 @@
 <h2 id = "categorytitle">
     Dog sports list
 </h2>
+{% block bootstrap_element_override_block %}
+<style>
+    .container {
+        background-color: ghostwhite;
+    }
+</style>
+{% endblock %}
 
-<div class = "album py-5 bg-light">
-    {% if sports %}
+
+     {% if sports %}
     <div class="row mb-2">
         {% for sport in sports %}
                 <div class="col-md-6">
@@ -36,13 +43,10 @@
                             style="width: 200px; height: 250px;" src="{% static 'sport_content/sport_images/'|add:sport.slug|add:'-thin.jpg' %}"
                             data-holder-rendered="true">
                     </div>  
-                </div>
-         
+    
         {% endfor %}
     </div>
     {% else %}
     <strong>There are no Sports present.</strong>
-    {% endif %}
-</div>
-{% endblock %}
+    {% endif %} {% endblock %}
 
