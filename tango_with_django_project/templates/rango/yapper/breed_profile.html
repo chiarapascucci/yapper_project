@@ -1,6 +1,7 @@
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 
+
 {% block title_block %}
 
     {% if breed %}
@@ -9,7 +10,50 @@
 
 {% endblock %}
 
+
+
 {% block body_block %}
+
+    <main>
+
+    {% if breed %}
+
+    <div class="container py-4">
+  
+      <div class="p-5 mb-4 bg-light rounded-5">
+        <div class="container-fluid py-2"></div>
+          <h1 class="display-5 fw-bold">{{ breed.name }}</h1>
+          <p class="col-md-8 fs-4">{{ breed.description }}</p>
+          <button class="btn btn-primary btn-lg" type="button">Example button</button>
+        </div>
+      </div>
+  
+      <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+          <div class="h-100 p-5 text-white bg-dark rounded-3" background-image = url('https://www.thesprucepets.com/thmb/zJCp1vAvWG4y4NbdoEjcTHDMbLA=/1000x1000/smart/filters:no_upscale()/breed_profile_bernese_4427890_hero_02_2216-5bdff65a6a71401da81c472a6ef03fb8.jpg')>
+            <h2>Change the background</h2>
+            <p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
+            <button class="btn btn-outline-light" type="button">Example button</button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="h-100 p-5 bg-light border rounded-3">
+            <h2>Add borders</h2>
+            <p>Or, keep it light and add a border for some added definition to the boundaries of your content. Be sure to look under the hood at the source HTML here as we've adjusted the alignment and sizing of both column's content for equal-height.</p>
+            <button class="btn btn-outline-secondary" type="button">Example button</button>
+          </div>
+        </div>
+      </div>
+  
+      <footer class="pt-3 mt-4 text-muted border-top">
+        &copy; 2021
+      </footer>
+    </div>
+
+    {% else %}
+    No breed found.
+    {% endif %}
+    </main>
 
     {% if breed %}
         <h1>{{ breed.name }}</h1><br>
@@ -37,10 +81,7 @@
             {% endif %}
             
         </p>
-
-
-    {% else %}
-        No breed found.
     {% endif %}
+
 
 {% endblock %}
