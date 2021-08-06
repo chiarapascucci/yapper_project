@@ -8,7 +8,7 @@
     background-image: url('../images/black-dog.jpg');
     background-color: grey; 
     margin-top: 30px;
-    margin-bottom: 0px;
+    margin-bottom: 50px;
     font-size: 50px;
     }
     #site_banner{
@@ -60,6 +60,16 @@
         text-align: center;
     }
 
+    #dogprofilecardtitle {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px; 
+        font-weight: 600;
+        color: black;
+        padding-top: 20px;
+        padding-bottom: 0px;
+        text-align: center;
+    }
+
     #competitioncardbutton {
         padding-top: 60px;
     }
@@ -73,6 +83,7 @@
         padding-top: 50px;
         text-align: center;
     }
+
     #aboutpagetitletext {
         font-family: 'Times New Roman', Times, serif;
         text-align: center;

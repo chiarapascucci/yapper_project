@@ -1,75 +1,148 @@
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 
-{% block title_block %}
+
+
+{% block bootstrap_element_override_block %}
+<style>
+    #categorytitle {
+        font-size: 10px;
+        padding: 100px;
+    }
+    .row {
+        padding-bottom: 30px;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    .card {
+        height: 100%; 
+        width: 100%; 
+        object-fit: contain;
+    }
     
+    .p-3 {
+        height: 100%; 
+        width: 100%; 
+        object-fit: contain;
+        background-color:aliceblue;
+    }
+
+    .container {
+        background-color: snow;
+    }
+    
+</style>
+{% endblock %}
+
+
+{% block title_block %}
     {% if dog %}
         {{ dog.name }}
     {% endif %}
-
 {% endblock %}
 
 {% block body_block %}
-
     {% if dog %}
-        {% for d in dog %}
 
-            <h1>{{ d.name }}</h1><br>
-
-                <div>
-                    {% if d.display_pic %}
-                        <img src="{{ d.display_pic.url }}" alt="{{ breed.name }}" />
-                    {% else %}
-                        <img src="{% static 'images/dog_profile_display.jpg' %}" alt="{{ breed.name }}"/>
-                    {% endif %}
-                    <br>
-                </div>
-
-                <div>
-                    {% if d.main_about %}
-                        {{ d.main_about }}
+        <h2 id="categorytitle">
+            {{d.name}}
+        </h2>
+        
+        <div class="row">
+            <div class="col-6">     
+                <div class="card bg-dark text-white">
+                <img id="main" class="card-img" src="{% static 'breed_content/breed_media/images/'|add:dog.breed.slug|add:'.jpg' %}" alt="{{ dog.breed.name }}">
+                </div> 
+            </div>
+            <div class="col-6">     
+            <div class="p-3 mb-3 rounded">
+                <h4 class="font-italic">Bio</h4>
+                <p class="mb-0">
+                    {% if dog.main_about %}
+                        {{ dog.main_about }}
                     {% else %}
                         This yapper hasn't got a biography yet.
                     {% endif %}
+                </p>
+            </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <h3 id="dogprofilecardtitle">
+                        Information
+                    </h3>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <table>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td>{{ dog.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Breed:</td>
+                                    <td>{{ dog.breed.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Follows:</td>
+                                    <td>{{ dog.follows }}</td>
+                                </tr>
+                            </table>
+                        </p>
+                    </div>
                 </div>
-
-
-                <div id='stats'>
-                    <table>
-                        <tr>
-                            <td>Name </td>
-                            <td>{{ d.name }}</td>
-                        </tr>
-                        <tr>
-                            <td>Breed </td>
-                            <td>{{ d.breed.name }}</td>
-                        </tr>
-                        <tr>
-                            <td>Follows </td>
-                            <td>{{ d.follows }}</td>
-                        </tr>
-                    </table>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <h3 id="dogprofilecardtitle">
+                        Achievements
+                    </h3>
+                    <div class="card-body">
+                        <p class="card-text">
+                            {% if participations %}
+                            <table>
+                                {% for p in participations %}
+                                <tr>
+                                    <td>Award:</td>
+                                    <td><a href="{% url 'rango:competition_name' p.competition.slug %}" >{{ p.award }}</a></td>
+                                </tr>
+                                {%endfor%}
+                            </table>
+            
+                            {%endif%}
+                        </p>
+                    </div>
                 </div>
-
-                <div id='achievements'>
-
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <h3 id="dogprofilecardtitle">
+                        Certificates
+                    </h3>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <p class="card-text">
+                                {% if participations %}
+                                <table>
+                                    {% for p in participations %}
+                                    <tr>
+                                        <td>Cert. File:</td>
+                                        <td>{{ p.award.certificate }}</a></td>
+                                    </tr>
+                                    {%endfor%}
+                                </table>
+                                {%endif%}
+                            </p>
+                    </div>
                 </div>
-
-                <div id='files'>
-                    
-                </div>
-
-                <div id='external'>
-                    <p>
-                        <a href="">Follow now!</a>
-                        <a href="">Contact Owner</a>
-                    </p>
-                </div>
-
-        {% endfor %}
-
-    {% else %}
-        Dog not found.
-    {% endif %}
-
+            </div>
+        </div>
+    {%endif%}
 {% endblock %}
+
+
