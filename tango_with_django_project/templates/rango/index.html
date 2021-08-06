@@ -12,47 +12,86 @@
     Welcome to Yapper
 {% endblock %}
 
+{% block bootstrap_element_override_block %}]
+<style>
+    .card-text {
+      text-align: center;
+    }
+
+
+    #smallcategorytitle {  
+        font-weight: 700;
+        background-color: thistle;
+    }
+
+    .card {
+      height: 100%; 
+      width: 100%; 
+      object-fit: contain;
+
+    }
+</style>
+
+{% endblock %}
+
+
 {% block body_block%}
 
-<div class="container">
     <!-- Example row of columns -->
     <div class="row">
       <div class="col-md-4">
-        <h2>Top Breeds</h2>
-        <p>
-          {% for b in topbreeds %}
-            <li><a href = "{% url 'rango:breed_profile' b.slug %}">{{ b.name }}</a></li> 
-          {% endfor %}
-        </p>
-        
+        <div class="card mb-4 box-shadow">
+          <h2 id="smallcategorytitle"><a class="text-dark" href="{% url 'rango:breeds' %}">Breeds</a></h2>
+          <div class="card-body">
+            <p class="card-text">
+                <h4 class="font-italic"> Top Breeds <h4></h4>
+              <ol>
+                {%if topbreeds %}
+                {% for b in topbreeds %}
+                <li><a class="text-dark" href="{% url 'rango:breed_profile' b.slug %}">{{ b.name }}</a></li>
+                {% endfor %}
+                {% endif %}
+              </ol>
+            </p>
+          </div>
+        </div>
       </div>
       <div class="col-md-4">
-        <h2>Top Sports</h2>
-        {% if sports %}
-        <ol>
-          {% for sport in sports %}
-            <li><a href = "{% url 'rango:sports_name' sport.slug %}">{{ sport.name }}</a></li>
-          {% endfor %}
-        </ol>
-        {% else %}
-          <p>No sports to display at the moment</p>
-        {% endif %}
+          <div class="card mb-4 box-shadow">
+            <h2 id="smallcategorytitle"><a class="text-dark" href="{% url 'rango:sports' %}">Sports</a></h2>
+            
+            <div class="card-body">
+              <p class="card-text">
+              <h4 class="font-italic"> Top Sports <h4></h4>
 
-      </div>
+                <ol>
+                    {% if sports %}
+                    <ol>
+                      {% for sport in sports %}
+                        <li><a class="text-dark" href = "{% url 'rango:sports_name' sport.slug %}">{{ sport.name }}</a></li>
+                      {% endfor %}
+                    </ol>
+                    {% endif %}
+                </ol>
+              </p>
+            </div>
+          </div>
+        </div>
       <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
         {% if user.is_authenticated %}
-            <h2>Profile</h2>
+            <h2 id="registertitle">Profile</h2>
             <p><a class="nav-link" href="{% url 'rango:user' user_profile.user_slug %}">Profile</a></p>
         {% else %}
-            <h2><a href = "{% url 'registration_register' %}">Register</a></h2>
+            <h2 id="registertitle"><a class="text-dark" href = "{% url 'registration_register' %}">Register</a></h2>
             <p>{{ user.user.is_authenticated }}</p>
         {% endif %}
+        </div>
       </div>
     </div>
 
-    <hr>
+    
 
-  </div> <!-- /container -->
 
 
 {% endblock %}
