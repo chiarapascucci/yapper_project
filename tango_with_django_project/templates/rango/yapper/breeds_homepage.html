@@ -35,7 +35,7 @@
 
                 <div class="album py-7 bg-light">
                     <div class="col-md-6">
-                        <a href = "{% url 'rango:breed_profile' b.slug %}">
+                        <a href = "{% url 'rango:breed_profile' b.slug %}" hover=>
                             <div class="card bg-dark text-white">
                                 <img id = "main" class="card-img" src="{% static 'breed_content/breed_media/images/'|add:b.slug|add:'.jpg' %}" alt="{{ b.name }}">
                                 <div class="card-img-overlay">
