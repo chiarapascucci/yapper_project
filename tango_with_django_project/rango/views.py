@@ -442,9 +442,7 @@ def user_profile(request, user_name_slug):
         context_dict['is_owner'] = user.is_owner
         context_dict['is_comp_org']= user.is_comp_org
         
-        print(user.followed_breeds.all())
-        print(user.followed_sports.all())
-        print(user.followed_dogs.all())
+    
     except UserProfile.DoesNotExist:
         (request, 'rango/yapper/user_profile.html',{})
 

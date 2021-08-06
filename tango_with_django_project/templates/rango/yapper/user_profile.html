@@ -23,9 +23,9 @@
         <div class="col-md-4">
             <h2>Your Dogs</h2>
             <ul>
-            {% if dog_list %}
-            {% for dog in dog_list %}
-            <li><a href = "">{{ dog.name }}</a></li>
+            {% if owned_dogs.items %}
+            {% for dog in owned_dogs %}
+            <li><a href = "{% url 'rango:dog_profile' dog.breed.slug dog.slug %}">{{ dog.name }}</a></li>
             {% endfor %} 
             {% else %}
             <p>You do not have dogs</p>
@@ -37,7 +37,7 @@
             <ul>
             {% for dog in followed_dogs.all %}
                 
-                <li><a href = "">{{ dog.name }}</a></li>
+                <li><a href = "{% url 'rango:dog_profile' dog.breed.slug dog.slug %}">{{ dog.name }}</a></li>
             {% endfor %} 
             </ul>
             
@@ -55,7 +55,7 @@
       <div class="col-md-4">
         <h3>Location</h3><br>
             <p>
-                {% if user_profile.loc_image is None %}
+                {% if user_profile.latitude == 0 and user_profile.longitude == 0 %}
                     No location given.
                 {% else %}
                     <img src = "{{ user_profile.loc_image }}" style="height:300px; width:300px" >

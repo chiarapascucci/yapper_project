@@ -413,9 +413,7 @@ def populate():
         if i==5:
             break
 
-    print(len(dog_list))
-    d = dog_list[0]
-    print(d)
+   
     #user_profile_list[0].followed_dogs.add(d)
 
     for dog in dog_list:
@@ -439,11 +437,6 @@ def populate():
         user_profile_list[i].save()
         print(user_profile_list[i], " breed ", breed)
 
-
-
-
-
-   
 
 ###############HELPER METHODS##########################
 def create_user(username, email, password):
