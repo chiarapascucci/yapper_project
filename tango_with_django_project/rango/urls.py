@@ -20,9 +20,9 @@ urlpatterns = [
     path('help/', views.faq ,name='help'),
     path('register_profile/', views.register_profile, name='register_profile'),  
     path('user/<slug:user_name_slug>/', views.user_profile, name='user'),                                                 # Requires dynamic slug field
-    path('user/<slug:user_name_slug>/add_dog/', views.add_dog, name='add_dog'),
+    path('add_dog/', views.add_dog, name='add_dog'),
     path('user/<slug:user_name_slug>/edit/', views.edit_profile, name='edit'),
-    path('user/<slug:user_name_slug>/register_competition/', views.add_competition, name='register_competition'),
+    path('register_competition/', views.add_competition, name='register_competition'),
     path('explore/', views.explore, name='explore'),
     path('user/<slug:user_name_slug>/edit_competition/', views.edit_competition, name='edit_competition'),
 

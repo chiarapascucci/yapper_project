@@ -18,26 +18,26 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <img src = "{{ user_profile.pic }}" style="height:300px; width:300px" >
+            <img src = "{{MEDIA_URL}}{{user_profile.picture }}" style="height:300px; width:300px" alt="user profile picture" class="rounded-circle" >
         </div>
         <div class="col-md-4">
             <h2>Your Dogs</h2>
             <ul>
+            {% if dog_list %}
             {% for dog in dog_list %}
-                <li><a href = "">{{ dog }}</a></li>
+            <li><a href = "">{{ dog.name }}</a></li>
             {% endfor %} 
+            {% else %}
+            <p>You do not have dogs</p>
+            {% endif %}
             </ul>
-         
-
-
-            
         </div>
         <div class="col-md-4">
-            <h2>Followed Dogs</h2>
-            <p>feck</p>
+            <h2>Followed Dog</h2>
             <ul>
             {% for dog in followed_dogs.all %}
-                <li><a href = "{% url 'rango:dog_profile' dog.breed.slug dog.slug %}">{{ dog.name }}</a></li>
+                
+                <li><a href = "">{{ dog.name }}</a></li>
             {% endfor %} 
             </ul>
             
@@ -64,7 +64,6 @@
       </div>
       <div class="col-md-4">
         <h2>Followed Breeds</h2>
-        <p>this empty?</p>
         <ul>
             {% for breed in followed_breeds.all %}
                 <li><a href = "{% url 'rango:breed_profile' breed.slug %}">{{ breed.name }}</a></li> 
@@ -73,7 +72,6 @@
       </div>
       <div class="col-md-4">
         <h2>Followed Sports</h2>
-        <p>why</p>
         <ul>
             {% for sport in followed_sports.all %}
                 <li><a href = "{% url 'rango:sports_name' sport.slug %}">{{ sport.name }}</a></li>
@@ -105,10 +103,10 @@
         <div class="col-md-4">
             <h3>Availabel Actions</h3><br>
             <div class="btn-group-vertical" role="group" aria-label="First group">
-                <button type="button" class="btn btn-secondary">Edit profile</button>
-                <button type="button" class="btn btn-secondary">Add dog</button>
-                <button type="button" class="btn btn-secondary">Home</button>
-                <button type="button" class="btn btn-secondary">Logout</button>
+                <button type="button" class="btn btn-secondary" ><a href="{% url 'rango:edit' user_profile.user_slug %}">Edit profile</a></button>
+                <button type="button" class="btn btn-secondary"><a href="{% url 'rango:add_dog' %}">Add dog</a></button>
+                    <button type="button" class="btn btn-secondary"><a href="{% url 'rango:register_competition'%}" %}>Add competition</a></button>
+                <button type="button" class="btn btn-secondary"><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></button>
               </div>
         </div>
         <div class="col-md-4">
@@ -119,4 +117,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
