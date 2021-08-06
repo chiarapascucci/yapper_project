@@ -8,7 +8,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('index/', views.index, name = 'index'),
     path('about/', views.about, name='about'),
-    path('restricted/', views.restricted, name='restricted'),
+   
  
     path('sports/', views.sports_homepage, name='sports'),                          # =========== Start of yapper urls
     path('sports/<slug:sports_name_slug>/', views.sports_profile, name='sports_name'),        

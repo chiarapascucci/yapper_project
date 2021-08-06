@@ -20,41 +20,28 @@ def index(request):
     breed_list = Breed.objects.order_by('-follows')[:10]
     sport_list = Sport.objects.order_by('-follows')[:10]
 
-    for breed in breed_list:
-        print(breed)
-    
-    for sport in sport_list:
-        print(sport)
-
     context_dict['topbreeds'] = breed_list
     context_dict['sports'] = sport_list
     visitor_cookie_handler(request)
 
     try:
         username = request.user.get_username()
-        print('printing username: ',username)
+       
         user=User.objects.get(username=username)
 
         try:
             
             user_profile = UserProfile.objects.get_or_create(user=user)[0]
-            print(user_profile.user_slug)
+            
             context_dict['user_profile']= user_profile
         except UserProfile.DoesNotExist:
-            print('no user here')
+           
             return render(request, 'rango/index.html', context=context_dict)
 
     except User.DoesNotExist:
-        print('user does not exist')
+   
         return render(request, 'rango/index.html', context=context_dict)
-
-    
-
-    print(context_dict['user_profile'])
-    print(user.is_authenticated)
-    
-    
-    
+  
     return render(request, 'rango/index.html', context=context_dict)
 
 def about(request):
@@ -84,11 +71,6 @@ def edit_profile(request, user_name_slug):
         context_dict['form'] = form
         return render(request, ('rango/yapper/user_profile_edit.html'), context=context_dict)
 
-
-
-@login_required
-def restricted(request):
-    return render(request, 'rango/restricted.html')
 
 @login_required
 def user_logout(request):
