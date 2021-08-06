@@ -3,16 +3,20 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.setti
 
 import django
 django.setup()
-from rango.models import Category, Page, Sport, Dog, Competition, Breed, Award, Participation
+from rango.models import Sport, Dog, Competition, Breed, Award, Participation, User, UserProfile
 import datetime
 import random as rand
+from django.contrib.auth.hashers import PBKDF2PasswordHasher, make_password
 
 # For an explanation of what is going on here, please refer to the TwD book.
 
 def populate():
   
-    
+    ############### data dictionaries ############################
+
     # Yapper population
+
+    ###COMPETITIONS####
     agility_competitions = [ 
         {'name':'Glasgow Agility competition',
          'description':"Competition where dogs test their mettle vs other dogs in Glasgow",
@@ -112,6 +116,7 @@ def populate():
          'isCompleted': False}, 
     ]
 
+    ###SPORTS####
 
     sports = {'Agility': {'competitions': agility_competitions, 
                     'description':"Agility is a dog sport in which the handler directs the dog over a series of obstacles using only voice and body signals. It’s a race against the clock and the fastest dog (without any penalties) wins. The handler cannot use toys or food as incentives during a competition, only voice and body signals. Agility requires exceptional training of the dog",
@@ -134,17 +139,8 @@ def populate():
                     'breed_restrictions': 'No restrictions.',
                     'follows': 250}}
 
-    # Yapper popultation
-    for sport_name, sport_data in sports.items():
-        sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'], sport_data['follows'])
-        for c in sport_data['competitions']:
-            add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
+    ###BREEDS###
 
-
-    # Dog & Breed population
-    # Messy version for testing purposes for now
-
-    # Breeds
     bernese_mountain_dog = {'name':'Bernese Mountain Dog',
                             'description':'Descrip A',}
     chow_chow = {'name':'Chow Chow',
@@ -156,29 +152,18 @@ def populate():
     leonberger = {'name':'Leonberger',
                 'description':'Descrip E',}
 
-    # Dogs
+    ###DOGS###
+    
     anaconda = {'name':'Anaconda',
             'breed':dachshund,}
     fluffy = {'name':'Mr Fluffykins VI',
             'breed':dachshund,}
+    dog1 =   {'name':'dogge',
+            'breed':dachshund,},
+    dog2  = {'name':'doggy',
+            'breed':dachshund,}
     
-    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
-    print(b)
-    b = add_breed(chow_chow["name"],chow_chow["description"])
-    print(b)
-    b = add_breed(dachshund["name"],dachshund["description"],2)
-    # Add owner to args
-    d = add_dog(anaconda["name"],b,9001)
-    print(b)
-    print(d)
-    d = add_dog(fluffy["name"],b,8999)
-    print(b)
-    print(d)
-    b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"],2)
-    print(b)
-    b = add_breed(leonberger["name"],leonberger["description"],10)
-    print(b)
-
+    ###LIST OF DOGS PER BREED ###
     bernese_dogs = [
         {'name': 'anaconda'},
         {'name': 'Berni'},
@@ -283,6 +268,8 @@ def populate():
         'dogs': malmute_dogs},
     ]
 
+    ###AWARDS###
+
     awards = [         
         {'name':'Best girl',
          'description':'Best girl description',
@@ -292,23 +279,56 @@ def populate():
          'certificate': None},    
     ]
 
+    ###USERS AND USER PROFILES###
 
-    # === Yapper popultation ===
+    users = {
+       'chp': {'username' : 'chp', 'email':'g1@mail.com', 'password': 'helloyou123'},
+       'chpa': {'username' : 'chpa', 'email':'g2@mail.com', 'password': 'helloyou123'},
+       'chpas' : {'username' : 'chpas', 'email':'g3@mail.com', 'password': 'helloyou123'},
+        'chpi': {'username' : 'chpi', 'email':'g4@mail.com', 'password': 'helloyou123'},
+        'chpic' : {'username' : 'chpic', 'email':'g5@mail.com', 'password': 'helloyou123'},
+    }
+
+    user_profile = {
+        '111':{'id':'111', 'followed_dogs': [dog1, dog2], 'followed_breeds': [chow_chow, bernese_mountain_dog], 'followed_sports' : sports['Agility'], 
+        'bio':'I am awesome', 'user_slug' : 'chp', 'owned_dogs' : anaconda, 'is_owner' : True, 'is_comp_org': False },
+        '22':{'id':'22', 'followed_dogs': [dog1, fluffy, dog2], 'followed_breeds': [chow_chow, bernese_mountain_dog], 'followed_sports' : sports['Herding'], 
+        'bio':'I am awesome', 'user_slug' : 'chpa', 'is_owner' : False, 'is_comp_org': False },
+        '3232':{'id':'3232', 'followed_dogs': [anaconda, dog2], 'followed_breeds': [dachshund, chow_chow, leonberger], 'followed_sports' : sports['Flyball'], 
+        'bio':'I am awesome', 'user_slug' : 'chpas', 'is_owner' : False, 'is_comp_org': False },
+        '3434':{'id':'3434', 'followed_dogs': [fluffy, dog1], 'followed_breeds': [dachshund, chow_chow, leonberger], 'followed_sports' : sports['Agility'], 
+        'bio':'I am awesome', 'user_slug' : 'chpi', 'owned_dogs': fluffy, 'is_owner' : True, 'is_comp_org': False },
+        '254':{'id':'254', 'followed_dogs': [anaconda, dog1], 'followed_breeds': [dachshund, chow_chow, leonberger], 'followed_sports' : sports['Agility'], 
+        'bio':'I am awesome', 'user_slug' : 'chpic', 'owned_dogs': [dog1, dog2], 'is_owner' : True, 'is_comp_org': False },
+    }
+
+    ################ SCRIPT POPULATION LOGIC #########################
+    
+    ###SPORTS###
+
+    for sport_name, sport_data in sports.items():
+        sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'], sport_data['follows'])
+        for c in sport_data['competitions']:
+            add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
 
     # competition list for easy future refernce in setting Participation entities 
     competitions = list()
+    sport_list = []
 
     # Populate sports and competitions with population data
     for sport_name, sport_data in sports.items():
         sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'], sport_data['follows'])
+        sport_list.append(sport)
         for c in sport_data['competitions']:
             competitions.append(add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted']))
 
 
     # Populate Breeds and dogs
     dog_list = list()
+    breed_list =[]
     for breed_data in breeds:
         breed = add_breed(breed_data['name'],breed_data['description'], rand.randint(0,10000))
+        breed_list.append(breed)
         for dog_data in breed_data['dogs']:
             dog = add_dog(dog_data['name'], breed,rand.randint(0,1000))
             dog_list.append(dog)
@@ -356,15 +376,111 @@ def populate():
         else:
             participation = add_participation(p_items['name'],p_items['dog'], p_items['competition'], None)
 
+   
+    
+    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
+    print(b)
+    b = add_breed(chow_chow["name"],chow_chow["description"])
+    print(b)
+    b = add_breed(dachshund["name"],dachshund["description"],2)
+    # Add owner to args
+    d = add_dog(anaconda["name"],b,9001)
+    print(b)
+    print(d)
+    d = add_dog(fluffy["name"],b,8999)
+    print(b)
+    print(d)
+    b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"],2)
+    print(b)
+    b = add_breed(leonberger["name"],leonberger["description"],10)
+    print(b)
+
+    ##USER PROFILES###
+    
+    user_list = []
+    
+    for username, user_data in users.items():
+        user = create_user(username, user_data['email'], user_data['password'])
+        print("creating: ", user.username)
+        user_list.append(user)
+    
+    user_list.reverse()
+
+    i=0
+    print(i)
+
+    user_profile_list = []
+    for id, user_profile_data in user_profile.items():
+        user_profile = create_userprofile(user_list[i], user_profile_data['bio'], user_profile_data['user_slug'], user_profile_data['is_owner'], user_profile_data['is_comp_org'])
+        print("creating: ", user_profile.user_slug, ", i: ", i)
+        user_profile_list.append(user_profile)
+        i = i+1
+        if i==5:
+            break
+
+    print(len(dog_list))
+    d = dog_list[0]
+    print(d)
+    #user_profile_list[0].followed_dogs.add(d)
+
+    for dog in dog_list:
+        i=rand.randint(0,4)
+        print(i)
+        user_profile_list[i].followed_dogs.add(dog)
+        user_profile_list[i].save()
+        print(user_profile_list[i], " dog ", dog)
+
+    for sport in sport_list:
+        i=rand.randint(0,4)
+        print(i)
+        user_profile_list[i].followed_sports.add(sport)
+        user_profile_list[i].save()
+        print(user_profile_list[i], " sport ", sport)
+
+    for breed in breed_list:
+        i=rand.randint(0,4)
+        print(i)
+        user_profile_list[i].followed_breeds.add(breed)
+        user_profile_list[i].save()
+        print(user_profile_list[i], " breed ", breed)
 
 
-# Add methods 
+
+    #user_profile_list[1].followed_dogs.add(dog_list[10:20])
+    #user_profile_list[2].followed_dogs.add(dog_list[20:39])
+
+
+
+   
+
+###############HELPER METHODS##########################
+def create_user(username, email, password):
+    user = User.objects.get_or_create(username=username)[0]
+    user.email = email
+    user.password = make_password(password, salt=None, hasher='default')
+    user.save()
+    return user
+
+def create_userprofile(user, bio, user_slug, is_owner, is_comp_org):
+    print("call to method")
+    user_profile = UserProfile.objects.get_or_create(user=user)[0]
+    user_profile.bio = bio
+    user_profile.user_slug = user_slug
+    user_profile.is_owner = is_owner
+    user_profile.is_comp_org = is_comp_org
+    user_profile.save()
+    return user_profile
+
+
+
 def add_breed(name, descrip, follows=0):
     b = Breed.objects.get_or_create(name=name)[0]
     b.description = descrip
     b.follows = follows
     b.save()
     return b
+
+
 
 # Add owner to args when implemented
 def add_dog(name, breed, follows=0):
