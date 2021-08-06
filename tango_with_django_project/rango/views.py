@@ -191,6 +191,29 @@ def dog_profile(request, breed_name_slug, dog_slug):
         dprofile_context['breed'] = None
         dprofile_context['participations'] = None
 
+    # Check for user following breed, if so pass a flag
+    try:
+        username = request.user.get_username()
+        print('printing username: ',username)
+        user=User.objects.get(username=username)
+        try:            
+            user_profile = UserProfile.objects.get(user=user)
+            dogs = user_profile.followed_dogs
+            
+            if user_profile.followed_dogs.filter(slug=dog_slug).exists():
+                print('Already following')
+                dprofile_context['following'] = dog
+            else:
+                print('Not following')
+
+        except UserProfile.DoesNotExist:
+            print('no user here')
+            return render(request, 'rango/index.html', {})
+
+    except User.DoesNotExist:
+        print('user does not exist')
+        return render(request, 'rango/index.html', {})
+
     return render(request, 'rango/yapper/dog_profile.html', dprofile_context)
 
 # Add user_slug to args when /user/ is implemented
@@ -210,13 +233,13 @@ def add_dog(request):
             #dog.owner = UserProfile.objects.get(slug=user_slug)
             dog = form.save()
             # manually update slug + resave as auto increment dog_id occurs end of/post-save
-            #dog.slug = slugify("{d.dog_id}-{d.name}".format(d=dog))
+            #dog.slug = slugify("{d.id}-{d.name}".format(d=dog))
             #dog.save()
 
             breed = Breed.objects.get(name=dog.breed)
             print(breed.name)
             print(dog.name)
-            print(dog.dog_id)
+            print(dog.id)
             print(dog.slug)
 
             return redirect(reverse('rango:dog_profile', kwargs={'breed_name_slug': breed.slug, 'dog_slug': dog.slug}))
@@ -254,6 +277,30 @@ def sports_profile(request, sports_name_slug):
     except Sport.DoesNotExist:
         context_dict['sport'] = None
         context_dict['competitions'] = None
+
+
+    # Check for user following breed, if so pass a flag
+    try:
+        username = request.user.get_username()
+        print('printing username: ',username)
+        user=User.objects.get(username=username)
+        try:            
+            user_profile = UserProfile.objects.get(user=user)
+            sports = user_profile.followed_sports
+            
+            if user_profile.followed_sports.filter(slug=sports_name_slug).exists():
+                print('Already following')
+                context_dict['following'] = sport
+            else:
+                print('Not following')
+
+        except UserProfile.DoesNotExist:
+            print('no user here')
+            return render(request, 'rango/index.html', {})
+
+    except User.DoesNotExist:
+        print('user does not exist')
+        return render(request, 'rango/index.html', {})
 
     return render(request, 'rango/yapper/sports_profile.html', context_dict)
 
@@ -457,3 +504,87 @@ class FollowBreedView(View):
             return render(request, 'rango/index.html', {})
 
         return HttpResponse(breed.follows)
+
+
+
+class FollowDogView(View):
+    @method_decorator(login_required)
+
+    def get(self, request):
+        dog_id = request.GET['dog_id']
+
+        try:
+            dog = Dog.objects.get(id=int(dog_id))
+            print(dog.id)
+        except Dog.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        dog.follows = dog.follows + 1
+        dog.save()
+
+        # Need to update the user
+        # Get user
+        try:
+            username = request.user.get_username()
+            print('printing username: ',username)
+            user=User.objects.get(username=username)
+
+            try:
+                
+                user_profile = UserProfile.objects.get(user=user)
+                user_profile.followed_dogs.add(dog)
+                user_profile.save()
+
+            except UserProfile.DoesNotExist:
+                print('no user here')
+                return render(request, 'rango/index.html', {})
+
+        except User.DoesNotExist:
+            print('user does not exist')
+            return render(request, 'rango/index.html', {})
+
+        return HttpResponse(dog.follows)
+    
+
+
+class FollowSportView(View):
+    @method_decorator(login_required)
+
+    def get(self, request):
+        sport_id = request.GET['sport_id']
+
+        try:
+            sport = Sport.objects.get(id=int(sport_id))
+            print(sport.id)
+        except Sport.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+
+        sport.follows = sport.follows + 1
+        sport.save()
+
+        # Need to update the user
+        # Get user
+        try:
+            username = request.user.get_username()
+            print('printing username: ',username)
+            user=User.objects.get(username=username)
+
+            try:
+                
+                user_profile = UserProfile.objects.get(user=user)
+                user_profile.followed_sports.add(sport)
+                user_profile.save()
+
+            except UserProfile.DoesNotExist:
+                print('no user here')
+                return render(request, 'rango/index.html', {})
+
+        except User.DoesNotExist:
+            print('user does not exist')
+            return render(request, 'rango/index.html', {})
+
+        return HttpResponse(sport.follows)

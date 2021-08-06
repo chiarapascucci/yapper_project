@@ -27,11 +27,27 @@
             <h3 id="cardtitle">
                 <a class="text-dark" href="#">{{sport.name}}</a>
             </h3>
+            
             <div class="card-body">
-                <p class="card-text">Breed restrictions: {{sport.breed_restrictions}}</p>
+                <p class="card-text">Breed restrictions: {{sport.breed_restrictions}}<br></p>
+                <p class="card-text"><b><i>Followers: </b></i> 
+                    <div id="follow_counts">{{ sport.follows }}</div>
+                </p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                         <a role="button" class="btn btn-sm btn-outline-secondary" href="{% url 'rango:sports' %}">Back</a>
+                    </div>
+                    <div class = "btn-group">
+                        {% if user.is_authenticated %}
+    
+                        {% if following %}
+                        {% else %}
+                          <button id="fllw_btns" data-sportid="{{ sport.id }}" class="btn btn-primary btn-sm" type="button">
+                            Follow
+                          </button>
+                        {% endif %}
+        
+                      {% endif %}
                     </div>
                     <small class="text-muted">Mango Django</small>
                 </div>

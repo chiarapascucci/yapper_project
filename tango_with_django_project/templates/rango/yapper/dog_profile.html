@@ -58,6 +58,18 @@
             </div>
             <div class="col-6">     
             <div class="p-3 mb-3 rounded">
+                <div class = "float-right">
+                    {% if user.is_authenticated %}
+
+                    {% if following %}
+                    {% else %}
+                      <button id="fllw_btnd" data-dogid="{{ dog.id }}" class="btn btn-primary btn-sm" type="button">
+                        Follow
+                      </button>
+                    {% endif %}
+    
+                  {% endif %}
+                </div>
                 <h4 class="font-italic">Bio</h4>
                 <p class="mb-0">
                     {% if dog.main_about %}
@@ -80,16 +92,16 @@
                         <p class="card-text">
                             <table>
                                 <tr>
-                                    <td>Name:</td>
+                                    <td><b>Name:</b></td>
                                     <td>{{ dog.name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Breed:</td>
+                                    <td><b>Breed:</b></td>
                                     <td>{{ dog.breed.name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Follows:</td>
-                                    <td>{{ dog.follows }}</td>
+                                    <td><b>Follows:</b></td>
+                                    <td id="follow_countd">{{ dog.follows }}</td>
                                 </tr>
                             </table>
                         </p>
@@ -111,7 +123,7 @@
                                     <td>Award:</td>
                                     <td><a href="{% url 'rango:competition_name' p.competition.slug %}" >{{ p.award }}</a></td>
                                     {%else%}
-                                    <strong>No awards</strong>
+                                    <strong>No awards</strong><br>
                                     {%endif%}
 
                                 </tr>
