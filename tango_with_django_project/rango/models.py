@@ -188,11 +188,6 @@ class Competition(models.Model):
     name = models.CharField(max_length=NAME_MAX_LENGTH)
     address = models.CharField(max_length=ADDRESS_MAX_LENGTH)   # Address of compititon
     location = models.CharField(max_length=100, null=True)      # Google API information in String form
-    
-    latitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
-    longitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
-    loc_image = models.URLField(blank=True)
-
     date = models.DateField(null=True)                          # Date object
     eventpage = models.URLField(null=True)                      # Url of event page if avaialble
     isCompleted = models.BooleanField(default=False)            # Boolean field for is completed or not 
