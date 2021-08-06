@@ -24,6 +24,7 @@
         background-color: thistle;
     }
 
+    
     .card {
       height: 100%; 
       width: 100%; 
@@ -85,8 +86,8 @@
       <div class="col-md-4">
           <div class="card mb-4 box-shadow">
         {% if user.is_authenticated %}
-            <h2 id="registertitle">Profile</h2>
-            <p><a class="nav-link" href="{% url 'rango:user' user_profile.user_slug %}">Profile</a></p>
+        <h2 id="registertitle"><a class="nav-link" href="{% url 'rango:user' user_profile.user_slug %}">Profile</a></h2>
+        
         {% else %}
             <h2 id="registertitle"><a class="text-dark" href = "{% url 'registration_register' %}">Register</a></h2>
             <p>{{ user.user.is_authenticated }}</p>
