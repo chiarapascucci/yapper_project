@@ -2,7 +2,6 @@
 {% load staticfiles %}
 
 
-
 {% block bootstrap_element_override_block %}
 <style>
     #categorytitle {
@@ -33,7 +32,7 @@
     .container {
         background-color: snow;
     }
-    
+
 </style>
 {% endblock %}
 
@@ -48,7 +47,7 @@
     {% if dog %}
 
         <h2 id="categorytitle">
-            {{d.name}}
+            {{dog.name}}
         </h2>
         
         <div class="row">
@@ -108,8 +107,13 @@
                             <table>
                                 {% for p in participations %}
                                 <tr>
+                                    {%if p.award.certificate_path%}
                                     <td>Award:</td>
                                     <td><a href="{% url 'rango:competition_name' p.competition.slug %}" >{{ p.award }}</a></td>
+                                    {%else%}
+                                    <strong>No awards</strong>
+                                    {%endif%}
+
                                 </tr>
                                 {%endfor%}
                             </table>
@@ -130,10 +134,12 @@
                                 {% if participations %}
                                 <table>
                                     {% for p in participations %}
-                                    <tr>
-                                        <td>Cert. File:</td>
-                                        <td>{{ p.award.certificate }}</a></td>
-                                    </tr>
+                                    {%if p.award.certificate_path%} 
+                                        <tr>
+                                            <td>Certification File:</td>
+                                            <td><a href = "{{ MEDIA_URL }}{{p.award.certificate_path}}" >{{p.award.name}} certificate</a></td>
+                                        </tr>
+                                    {%endif%}
                                     {%endfor%}
                                 </table>
                                 {%endif%}

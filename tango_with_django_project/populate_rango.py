@@ -6,6 +6,9 @@ django.setup()
 from rango.models import Category, Page, Sport, Dog, Competition, Breed, Award, Participation
 import datetime
 import random as rand
+from django.core.files import File
+import tango_with_django_project.settings as Psettings
+
 
 # For an explanation of what is going on here, please refer to the TwD book.
 
@@ -134,51 +137,7 @@ def populate():
                     'breed_restrictions': 'No restrictions.',
                     'follows': 250}}
 
-    # Yapper popultation
-    for sport_name, sport_data in sports.items():
-        sport = add_sport(sport_name,sport_data['description'], sport_data['breed_restrictions'], sport_data['follows'])
-        for c in sport_data['competitions']:
-            add_competition(sport, c['name'], c['description'], c['address'], c['location'], c['date'], c['eventpage'], c['isCompleted'])
-
-
     # Dog & Breed population
-    # Messy version for testing purposes for now
-
-    # Breeds
-    bernese_mountain_dog = {'name':'Bernese Mountain Dog',
-                            'description':'Descrip A',}
-    chow_chow = {'name':'Chow Chow',
-            'description':'Descrip B',}
-    dachshund = {'name':'Dachshund',
-            'description':'Descrip C',}
-    irish_wolfhound = {'name':'Irish Wolfhound',
-            'description':'Descrip D',}
-    leonberger = {'name':'Leonberger',
-                'description':'Descrip E',}
-
-    # Dogs
-    anaconda = {'name':'Anaconda',
-            'breed':dachshund,}
-    fluffy = {'name':'Mr Fluffykins VI',
-            'breed':dachshund,}
-    
-    b = add_breed(bernese_mountain_dog["name"],bernese_mountain_dog["description"],1)
-    print(b)
-    b = add_breed(chow_chow["name"],chow_chow["description"])
-    print(b)
-    b = add_breed(dachshund["name"],dachshund["description"],2)
-    # Add owner to args
-    d = add_dog(anaconda["name"],b,9001)
-    print(b)
-    print(d)
-    d = add_dog(fluffy["name"],b,8999)
-    print(b)
-    print(d)
-    b = add_breed(irish_wolfhound["name"],irish_wolfhound["description"],2)
-    print(b)
-    b = add_breed(leonberger["name"],leonberger["description"],10)
-    print(b)
-
     bernese_dogs = [
         {'name': 'anaconda'},
         {'name': 'Berni'},
@@ -286,10 +245,10 @@ def populate():
     awards = [         
         {'name':'Best girl',
          'description':'Best girl description',
-         'certificate': None},
+         'certificate': "/dogcertificates/BestGirlAward.pdf"},
         {'name':'Best boy',
          'description':'Best boy description',
-         'certificate': None},    
+         'certificate': "/dogcertificates/BestBoyAward.pdf"},    
     ]
 
 
@@ -412,7 +371,8 @@ def add_award(name, description, certificate):
 
     a.name = name
     a.description = description
-    a.certificate = certificate
+    a.certificate_path = certificate
+    a.certificate = None
     a.save()
     return a
 

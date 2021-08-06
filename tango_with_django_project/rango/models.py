@@ -3,7 +3,11 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 from django_google_maps import fields as map_fields
+import tango_with_django_project.settings as settings
+from django.core.files.storage import FileSystemStorage
 
+# Storage systsem for certificates
+#certificate_storage = FileSystemStorage(location='/media/dogcertificates/')
 
 
 class Category(models.Model):
@@ -216,8 +220,9 @@ class Award(models.Model):
     # Model attributes 
     name = models.CharField(max_length=NAME_MAX_LENGTH)
     description = models.TextField()                            # Description about award
-    certificate = models.FileField()
-    
+    certificate = models.FileField(upload_to= 'media/dogcertificates/')                            #storage=certificate_storage
+    certificate_path = models.CharField(max_length=500)
+
     # Verbose print
     def __str__(self):
         return self.name
