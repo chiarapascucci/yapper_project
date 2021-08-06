@@ -3,23 +3,51 @@
 
 {% block title_block %}
     Breeds
+
+{% endblock %}
+
+{% block bootstrap_element_override_block %}
+<style>
+
+    .col-1 {width: 28%}
+    .col-2 {width: 28%}
+
+    .img {
+        object-fit: cover;
+    }
+
+
+    [class*="col-"] {
+        float: left;
+        padding: 15px;
+}
+</style>
 {% endblock %}
 
 {% block body_block %}
+
+<h1><center><u>Breeds</u></center></h1><br>
+
     {% if breeds %}
 
-    <h1>Breeds</h1>
-
         {% for b in breeds %}
-            <ul>
-                    <a href="{% url 'rango:breed_profile' b.slug %}">
-                        <img src="{% static 'breed_content/breed_media/images/'|add:b.slug|add:'.jpg' %}" alt="{{ b.name }}" /><br><br>
-                        <!---<img src="{% static 'images/BreedBoxTemplate.jpg' %}" alt="{{ b.name }}" /><br>--->
-                        {{ b.name }}<br>
-                    </a>
+                <div class="container">
 
-            </ul>
-        {% endfor %}
+                <div class="album py-7 bg-light">
+                    <div class="col-md-6">
+                        <a href = "{% url 'rango:breed_profile' b.slug %}">
+                            <div class="card bg-dark text-white">
+                                <img id = "main" class="card-img" src="{% static 'breed_content/breed_media/images/'|add:b.slug|add:'.jpg' %}" alt="{{ b.name }}">
+                                <div class="card-img-overlay">
+                                <h5 class="card-title">{{ b.name }}</h5>
+                                <p class="card-text">{{ b.follows }} followers</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}    
 
     {% else %}
         No breeds registered.

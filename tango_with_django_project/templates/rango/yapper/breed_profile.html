@@ -1,6 +1,7 @@
 {% extends 'rango/base.html' %}
 {% load staticfiles %}
 
+
 {% block title_block %}
 
     {% if breed %}
@@ -9,24 +10,51 @@
 
 {% endblock %}
 
+
+
 {% block body_block %}
 
+    <main>
+
     {% if breed %}
-        <h1>{{ breed.name }}</h1><br>
-        <p>
-            Follows: {{ breed.follows }}<br>
-        </p>
-        <img src="{% static 'breed_content/breed_media/images/'|add:breed.slug|add:'.jpg' %}" alt="{{ breed.name }}" /><br>
 
-        <p>
-            {{ breed.description }}
-        </p>
+    <div class="container py-4">
+  
+      <div class="p-5 mb-4 bg-light rounded-5">
+        <div class="container-fluid py-2"></div>
+          <h1 class="display-5 fw-bold">{{ breed.name }}</h1>
+          <p class="col-md-8 fs-4">{{ breed.description }}</p>
+          <div class="container-fluid py-2">
+            <div class = "float-left">
+              Followers = {{ breed.follows }} 
+            </div>
+            <div class = "float-right">
+              <button class="btn btn-primary btn-md" type="button" onclick="this.class = 'btn btn-primary btn-outline-secondary'">Follow</button>
+            </div>
+          </div>
+       </div>
+      </div>
+  
+      <hr>
 
-        <hr>
+      <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+          <div class="h-100 p-5 text-white bg-dark rounded-3">
+            <h2>Resources</h2>
+            <p><ul>
+              <li><a href="https://www.akc.org/dog-breeds/{{ breed.slug }}/">[American Kennel Club] Breed Information</a></li>
+              <li><a href="https://www.pets4homes.co.uk/dog-breeds/{{ breed.slug }}/">[Pets4Homes] Breed Overview</a></li>
 
-        <p>
+            </ul></p>
+          </div>
+        </div>
 
-            {% if dogs %}
+      
+        <div class="col-md-6">
+          <div class="h-100 p-5 bg-light border rounded-3">
+            <h2>Registered Dogs</h2>
+            <p>
+              {% if dogs %}
                 <ul>
                     {% for dog in dogs %}
                         <li><a href="{% url 'rango:dog_profile' breed.slug dog.slug %}">{{ dog.name }}</a></li>
@@ -35,12 +63,43 @@
             {% else %}
                 There are no registered dogs for this breed.
             {% endif %}
-            
-        </p>
+            </p>
+          </div>
+        </div>
+      </div>
+  
 
+    </div>
 
     {% else %}
-        No breed found.
+    No breed found.
     {% endif %}
+    </main>
+
+
 
 {% endblock %}
+
+
+      <!---Button ref from template + others
+        
+        <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+          <div class="h-100 p-5 text-white bg-dark rounded-3">
+            <h2>Resources</h2>
+            <p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
+            <button class="btn btn-outline-light" type="button">Example button</button>
+          </div>
+        </div>
+
+      
+        <div class="col-md-6">
+          <div class="h-100 p-5 bg-light border rounded-3">
+            <h2>Registered Dogs</h2>
+            <p>Or, keep it light and add a border for some added definition to the boundaries of your content. Be sure to look under the hood at the source HTML here as we've adjusted the alignment and sizing of both column's content for equal-height.</p>
+            <button class="btn btn-outline-secondary" type="button">Example button</button>
+          </div>
+        </div>
+      </div>
+        
+      --->
