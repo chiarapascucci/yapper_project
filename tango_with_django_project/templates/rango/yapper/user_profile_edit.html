@@ -3,14 +3,15 @@
 
 {% block title_block %}
     <h1>Edit your info</h1>
-        <form method="post" action=".">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Save" />
-            <input type="hidden" name="next" value="{{ next }}" />
-        </form>
-    <br>
+    
 {% endblock %}
 
 {% block body_block %}
+<form method="post" action=".">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+<br>
 {% endblock %}
