@@ -8,7 +8,7 @@
     background-image: url('../images/black-dog.jpg');
     background-color: grey; 
     margin-top: 30px;
-    margin-bottom: 50px;
+    margin-bottom: 0px;
     font-size: 50px;
     }
     #site_banner{
@@ -45,6 +45,7 @@
         font-size: 40px; 
         font-weight: 500;
         color: black;
+        
 
         padding: 70px 0;
         text-align: center;

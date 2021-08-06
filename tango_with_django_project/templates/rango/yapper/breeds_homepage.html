@@ -12,47 +12,45 @@
     .col-1 {width: 28%}
     .col-2 {width: 28%}
 
-    .img {
+    .card-img {
         object-fit: cover;
     }
 
     .col-md-6 {
         float: left;
         padding-bottom: 30px;
-}
+    }
+
+    .container {
+        background-color: ghostwhite;
+    }
+
 </style>
 {% endblock %}
 
+
+
 {% block body_block %}
-
-<h1 id="categorytitle">Breeds </h1>
-
-
-<div class="container">
-
-    {% if breeds %} 
-    
+<h1 id="categorytitle">
+    Breeds 
+</h1>
+     {% if breeds %}
     <div class="row mb-2">
-
-    {% for b in breeds %}
-    <div class="col-md-6">
-
-        <a href="{% url 'rango:breed_profile' b.slug %}">
-            <div class="card bg-dark text-white">
-                <img id="main" class="card-img" src="{% static 'breed_content/breed_media/images/'|add:b.slug|add:'.jpg' %}" alt="{{ b.name }}">
-                <div class="card-img-overlay">
-                    <h5 class="card-title">{{ b.name }}</h5>
-                    <p class="card-text">{{ b.follows }} followers</p>
+    
+        {% for b in breeds %}
+        <div class="col-md-6">
+    
+            <a href="{% url 'rango:breed_profile' b.slug %}">
+                <div class="card bg-dark text-white">
+                    <img id="main" class="card-img" src="{% static 'breed_content/breed_media/images/'|add:b.slug|add:'.jpg' %}" alt="{{ b.name }}">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">{{ b.name }}</h5>
+                        <p class="card-text">{{ b.follows }} followers</p>
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
+        {% endfor %}
     </div>
-
-
-    {% endfor %}
-    </div> 
-    {% else %} 
-    No breeds registered.
-    {% endif %}
-</div>
+    {% else %} No breeds registered. {% endif %}
 {% endblock %}
