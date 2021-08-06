@@ -51,6 +51,17 @@
         text-align: center;
     }
 
+    #registertitle {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 40px; 
+        font-weight: 500;
+        color: black;
+        
+        padding-top: 240px ;
+        text-align: center;
+
+    }
+
     #cardtitle {
         font-family: 'Times New Roman', Times, serif;
         font-size: 50px; 

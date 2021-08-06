@@ -293,16 +293,11 @@ def populate():
     }
 
     user_profile = {
-        '111':{'id':'111', 'followed_dogs': [dog1, dog2], 'followed_breeds': [chow_chow, bernese_mountain_dog], 'followed_sports' : sports['Agility'], 
-        'bio':'I am awesome', 'user_slug' : 'chp', 'owned_dogs' : anaconda, 'is_owner' : True, 'is_comp_org': False },
-        '22':{'id':'22', 'followed_dogs': [dog1, fluffy, dog2], 'followed_breeds': [chow_chow, bernese_mountain_dog], 'followed_sports' : sports['Herding'], 
-        'bio':'I am awesome', 'user_slug' : 'chpa', 'is_owner' : False, 'is_comp_org': False },
-        '3232':{'id':'3232', 'followed_dogs': [anaconda, dog2], 'followed_breeds': [dachshund, chow_chow, leonberger], 'followed_sports' : sports['Flyball'], 
-        'bio':'I am awesome', 'user_slug' : 'chpas', 'is_owner' : False, 'is_comp_org': False },
-        '3434':{'id':'3434', 'followed_dogs': [fluffy, dog1], 'followed_breeds': [dachshund, chow_chow, leonberger], 'followed_sports' : sports['Agility'], 
-        'bio':'I am awesome', 'user_slug' : 'chpi', 'owned_dogs': fluffy, 'is_owner' : True, 'is_comp_org': False },
-        '254':{'id':'254', 'followed_dogs': [anaconda, dog1], 'followed_breeds': [dachshund, chow_chow, leonberger], 'followed_sports' : sports['Agility'], 
-        'bio':'I am awesome', 'user_slug' : 'chpic', 'owned_dogs': [dog1, dog2], 'is_owner' : True, 'is_comp_org': False },
+        'a':{'bio':'I am awesome', 'user_slug' : 'chp', 'is_owner' : True, 'is_comp_org': False },
+        'b':{'bio':'I am awesome', 'user_slug' : 'chpa', 'is_owner' : True, 'is_comp_org': False },
+        'c':{'bio':'I am awesome', 'user_slug' : 'chpas', 'is_owner' : True, 'is_comp_org': False },
+        'd':{'bio':'I am awesome', 'user_slug' : 'chpi', 'is_owner' : True, 'is_comp_org': True },
+        'e':{'bio':'I am awesome', 'user_slug' : 'chpic', 'is_owner' : True, 'is_comp_org': False },
     }
 
     ################ SCRIPT POPULATION LOGIC #########################
@@ -418,9 +413,7 @@ def populate():
         if i==5:
             break
 
-    print(len(dog_list))
-    d = dog_list[0]
-    print(d)
+   
     #user_profile_list[0].followed_dogs.add(d)
 
     for dog in dog_list:
@@ -444,14 +437,6 @@ def populate():
         user_profile_list[i].save()
         print(user_profile_list[i], " breed ", breed)
 
-
-
-    #user_profile_list[1].followed_dogs.add(dog_list[10:20])
-    #user_profile_list[2].followed_dogs.add(dog_list[20:39])
-
-
-
-   
 
 ###############HELPER METHODS##########################
 def create_user(username, email, password):
