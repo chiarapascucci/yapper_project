@@ -68,10 +68,6 @@
         <p>this empty?</p>
         <ul>
             {% for breed in followed_breeds.all %}
-<<<<<<< HEAD
-=======
-                print(breed)
->>>>>>> main
                 <li><a href = "{% url 'rango:breed_profile' breed.slug %}">{{ breed.name }}</a></li> 
             {% endfor %}
         </ul>
