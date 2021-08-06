@@ -40,3 +40,5 @@ https://www.pexels.com/@connor-danylenko-534256
 Other stuff:
 default dog profile pic:
 https://www.pexels.com/@ilargian-faus-763704
+default user profile pic:
+https://www.pexels.com/@rodnae-prod
