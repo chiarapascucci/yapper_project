@@ -15,13 +15,22 @@
 
     <div class="starter-template">
       <h1>You got questions?</h1>
-      <p class="lead">So do we<br> The answer to most is 42. For the rest there is Google</p>
-      <br>
-      <p class="lead">...We know it better than most</p>
+      <p class="lead">So do we.<br>
+        <p class="lead" style="text-indent:10%">The answer to most is 42.<br>
+          <p class="text-muted" style="text-indent:40%">(For the rest there is Google)</small><br>
+        </p>
+      </p>
+
+
+    </div>
+    <br><br>
+    <div >
+       <p class="lead">...We know it better than most.</p>
+        <p><img id="meme" src="{% static 'images/meme.jpg' %}"   alt="meme"></p>
     </div>
 
-    <div >
-        <img id="meme" src="{% static 'images/meme.jpg' %}"   alt="meme"> 
+    <div class="help">
+      If you have any concerns or problems with your experience or the website, please <a href="mailto:djangomangocont@gmail.com">contact the development team</a>.
     </div>
 
   </main><!-- /.container -->

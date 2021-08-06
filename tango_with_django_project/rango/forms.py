@@ -47,6 +47,7 @@ class EditUserProfileForm(forms.ModelForm):
 
 # Add owner here
 class AddDogForm(forms.ModelForm):
+    id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     name = forms.CharField(max_length=128, required=True, help_text="Enter dog name")
     breed = forms.ModelChoiceField(queryset=Breed.objects.all(), empty_label="Select", help_text="Select a breed", required=True)
     #owner = forms.HiddenInput()

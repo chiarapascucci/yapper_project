@@ -99,7 +99,7 @@ class Sport(models.Model):
 class Dog(models.Model):
 
     # Necessary
-    dog_id = models.BigAutoField(primary_key = True)
+    #dog_id = models.BigAutoField(primary_key = True)
     name = models.CharField(max_length=128)
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE)
     #owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True)        # Temp blank until Users properly implemented
@@ -124,27 +124,22 @@ class Dog(models.Model):
  
     def save(self, *args, **kwargs):
         # setup slug to reflect none id before save (when dog-id autofield fills)
-        #if self.dog_id is None:
+        #if self.id is None:
         #self.slug = slugify("{self.name}".format(self=self))
-        self.slug = slugify("{self.dog_id}-{self.name}".format(self=self))
+        self.slug = slugify("{self.id}-{self.name}".format(self=self))
         super(Dog, self).save(*args, **kwargs)
 
         # Set media path dynamically if still set to default --- probably wrong now, just do this when a form is sent
 #        if self.display_pic.storage.location == "dog_profiles/temp":
-#            self.display_pic.storage.location = "dog_profiles/{}-{}".format(self.dog_id,self.slug)
+#            self.display_pic.storage.location = "dog_profiles/{}-{}".format(self.id,self.slug)
 #            print(self.display_pic.storage.location)
 
     class Meta:
         verbose_name_plural = "Dogs"
 
     def __str__(self):
-        return str(self.dog_id) + " " + self.name + ", " + self.breed.name
+        return str(self.id) + " " + self.name + ", " + self.breed.name
 
-    # Full debug method, prints all attributes of dog instance
-    def printDog(self):
-        for a in dir(self):
-            if not a.startswith("__") and not callable(getattr(self,a)):
-                print(a)
 
 
 class UserProfile(models.Model):
@@ -154,9 +149,11 @@ class UserProfile(models.Model):
     followed_sports = models.ManyToManyField(Sport, blank=True)
     followed_dogs= models.ManyToManyField(Dog, blank=True)
     bio = models.CharField(max_length=300, blank=True)
+
     latitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
     longitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
     loc_image = models.URLField(blank=True)
+
     picture = models.ImageField(upload_to='profile_images', default='profile_images/default.jpg', blank=True)
     user_slug = models.SlugField(unique=True)
     owned_dogs = models.ManyToManyField(Dog, blank=True, related_name='dogs')
@@ -188,11 +185,6 @@ class Competition(models.Model):
     name = models.CharField(max_length=NAME_MAX_LENGTH)
     address = models.CharField(max_length=ADDRESS_MAX_LENGTH)   # Address of compititon
     location = models.CharField(max_length=100, null=True)      # Google API information in String form
-    
-    latitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
-    longitude = models.DecimalField(max_digits=9,decimal_places=6, blank=True, default=0)
-    loc_image = models.URLField(blank=True)
-
     date = models.DateField(null=True)                          # Date object
     eventpage = models.URLField(null=True)                      # Url of event page if avaialble
     isCompleted = models.BooleanField(default=False)            # Boolean field for is completed or not 

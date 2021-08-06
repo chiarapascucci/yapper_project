@@ -24,5 +24,9 @@ urlpatterns = [
     path('user/<slug:user_name_slug>/edit/', views.edit_profile, name='edit'),
     path('register_competition/', views.add_competition, name='register_competition'),
     path('explore/', views.explore, name='explore'),
-    path('user/<slug:user_name_slug>/edit_competition/', views.edit_competition, name='edit_competition')
+    path('user/<slug:user_name_slug>/edit_competition/', views.edit_competition, name='edit_competition'),
+
+    path('follow_breed/', views.FollowBreedView.as_view(), name='follow_breed'),
+    path('follow_dog/', views.FollowDogView.as_view(), name='follow_dog'),
+    path('follow_sport/', views.FollowSportView.as_view(), name='follow_sport'),
 ]
