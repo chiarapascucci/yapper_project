@@ -18,7 +18,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <img src="{{ MEDIA_URL}}{{ user_profile.picture }}" width="200" height="200" alt="user's pic" class="rounded-circle"/>
         </div>
         <div class="col-md-4">
             <h2>Your Dogs</h2>
@@ -56,7 +55,11 @@
       <div class="col-md-4">
         <h3>Location</h3><br>
             <p>
-                <img src = "{{ user_profile.loc_image }}" style="height:300px; width:300px" >
+                {% if user_profile.loc_image is None %}
+                    No location given.
+                {% else %}
+                    <img src = "{{ user_profile.loc_image }}" style="height:300px; width:300px" >
+                {% endif %}
             </p>
       </div>
       <div class="col-md-4">

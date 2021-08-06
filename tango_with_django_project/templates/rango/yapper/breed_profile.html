@@ -28,9 +28,11 @@
             <div class = "float-left">
               <b><i>Followers:</i></b> {{ breed.follows }} 
             </div>
+            
             <div class = "float-right">
-              <button class="btn btn-primary btn-md" type="button" onclick="this.class = 'btn btn-primary btn-outline-secondary'">Follow</button>
+              <button class="btn btn-primary btn-md" type="button" onclick=follow()>Follow</button>
             </div>
+            
           </div>
        </div>
       </div>
@@ -80,6 +82,11 @@
 
 {% endblock %}
 
+<script>
+
+  follow()
+
+</script>
 
       <!---Button ref from template + others
         
