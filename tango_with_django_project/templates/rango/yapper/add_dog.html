@@ -12,9 +12,8 @@
         <h1> Register dog</h1>
         <hr>
 
-        <form id="add_dog_form" method="post" action="{% url 'rango:add_dog' %}">
+        <form id="add_dog_form" method="post" action="{% url 'rango:add_dog' {{  }} %}" enctype="multipart/form-data">
 
-            {% csrf_token %}
             {% csrf_token %}
             
             {% for hidden in form.hidden_fields %}
