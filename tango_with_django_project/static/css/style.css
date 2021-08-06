@@ -63,7 +63,19 @@
         padding-top: 60px;
     }
 
-    #bodybackground {
-        background-image: url("{% static 'images/black-dog.jpg' %}"); 
-        background-repeat: repeat;
+    #aboutpagetitle {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 50px; 
+        font-weight: 500;
+        color: black;
+
+        padding-top: 50px;
+        text-align: center;
+    }
+    #aboutpagetitletext {
+        font-family: 'Times New Roman', Times, serif;
+        text-align: center;
+        color: black;
+        font-weight: 500;
+        padding-bottom: 50px;
     }
